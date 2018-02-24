@@ -1,4 +1,5 @@
 import UIKit
+import PhysicsEngine
 
 /**
  A GameBubble subclass that encapsulates a movable bubble that is ready to be launched.

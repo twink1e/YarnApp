@@ -1,6 +1,7 @@
 // Copyright © 2018 nus.cs3217. All rights reserved.
 import UIKit
 import CoreData
+import PhysicsEngine
 
 /**
  View model for the level designer.

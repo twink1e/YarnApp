@@ -1,6 +1,7 @@
 //  Copyright © 2018 nus.cs3217. All rights reserved.
 
 import UIKit
+import PhysicsEngine
 
 /**
  View model that encapsulates the image of the bubble.

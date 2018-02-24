@@ -3,9 +3,9 @@ import UIKit
 /**
  A class that encapsulates the physical dimension and the UIImageView of the bubble in the game.
  */
-public class GameBubble {
-    public let color: BubbleColor
-    public let view: UIImageView
+open class GameBubble {
+    public var color: BubbleColor
+    public var view: UIImageView
 
     // - MARK: Computed properties
     public var centerX: CGFloat {

@@ -1,4 +1,5 @@
 import UIKit
+import PhysicsEngine
 
 /**
  A renderer class that deals with presenting graphics and animation in the game.
