@@ -4,7 +4,8 @@ excluded:
 disabled_rules:
   - type_name
   - valid_docs
-  - trailing_comma
+  - force_cast
+  - discouraged_object_literal
 
 opt_in_rules:
   - array_init
@@ -18,7 +19,6 @@ opt_in_rules:
   - explicit_init
   - fatal_error_message
   - first_where
-  - force_unwrapping
   - implicitly_unwrapped_optional
   - joined_default_parameter
   - nimble_operator
@@ -35,7 +35,4 @@ opt_in_rules:
 
 line_length:
   warning: 120
-  # Some improbably large number because we don't want compile errors 
-  # just because of style problems
-  error: 300 
-  ignores_urls: true
+  error: 150

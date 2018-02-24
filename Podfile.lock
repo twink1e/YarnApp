@@ -1,0 +1,22 @@
+PODS:
+  - PhysicsEngine (0.0.1)
+
+DEPENDENCIES:
+  - PhysicsEngine (from `git@github.com:cs3217/2018-ps4-twink1e.git`, branch `cocoapod`)
+
+EXTERNAL SOURCES:
+  PhysicsEngine:
+    :branch: cocoapod
+    :git: git@github.com:cs3217/2018-ps4-twink1e.git
+
+CHECKOUT OPTIONS:
+  PhysicsEngine:
+    :commit: c6b77b4e78cc1afd83c3ed3386449075206a9bfd
+    :git: git@github.com:cs3217/2018-ps4-twink1e.git
+
+SPEC CHECKSUMS:
+  PhysicsEngine: 69b3296da7a50c4ff81f65a8c52fc015dd1cdb50
+
+PODFILE CHECKSUM: 8e1c2464d0e3e64bf696be7c0a92c5c30d390435
+
+COCOAPODS: 1.4.0
