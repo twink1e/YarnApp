@@ -38,12 +38,11 @@ class Renderer: NSObject {
         return (leftOffset + CGFloat(col) * bubbleDiameter, CGFloat(row) * rowHeight)
     }
 
-    // Snap the bubble to grid position.
-    func snapBubble(_ projectile: ProjectileBubble) {
-        let pos = snappedPos(projectile.leftX, projectile.topY)
-        UIView.animate(withDuration: 0.2) { projectile.setOrigin(pos) }
+    // Snap the bubble so the origin become `newPos`.
+    func snapBubble(_ projectile: ProjectileBubble, to newPos: CGPoint) {
+        UIView.animate(withDuration: 0.2) { projectile.setOrigin(newPos) }
     }
-    private func snappedPos(_ originalX: CGFloat, _ originalY: CGFloat) -> CGPoint {
+    func snappedPos(_ originalX: CGFloat, _ originalY: CGFloat) -> CGPoint {
         var row = floor(originalY / rowHeight)
         var remain = originalY - row * rowHeight
         row += remain > rowHeight / 2 ? 1 : 0

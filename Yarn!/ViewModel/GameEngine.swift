@@ -11,7 +11,7 @@ class GameEngine {
     var projectile: ProjectileBubble!
     let renderer: Renderer
     let physicsEngine: PhysicsEngine
-
+    var snapping = true
     var pauseGameLoop: (() -> Void)?
 
     var screenWidth: CGFloat {
@@ -47,8 +47,8 @@ class GameEngine {
     func moveProjectile(_ duration: CGFloat) {
         backtrackProjectileToInScreen()
        // Collided.
-        if let collidedBubble = physicsEngine.closestCollidedBubble(projectile) {
-            handleCollision(collidedBubble)
+        if let collidedBubbleAndDistance = physicsEngine.closestCollidedBubbleAndDistance(projectile) {
+            handleCollision(collidedBubbleAndDistance)
             return
         }
 
@@ -75,24 +75,45 @@ class GameEngine {
             projectile.moveForX(screenWidth - projectile.rightX)
         }
     }
-    private func handleCollision(_ collidedBubble: GameBubble) {
-        physicsEngine.backtrackToTouching(projectile, with: collidedBubble)
-        if !collidedBubble.snapping {
-            projectile.setNonSnapping()
+    private func handleCollision(_ collided: (GameBubble, CGFloat)) {
+        var collidedBubbleAndDistance: (GameBubble, CGFloat)? = collided
+        while let collidedBubble = collidedBubbleAndDistance?.0, let distance = collidedBubbleAndDistance?.1, distance < -Config.calculationErrorMargin {
+            physicsEngine.backtrackToTouching(projectile, with: collidedBubble)
+            if !collidedBubble.snapping {
+                projectile.setNonSnapping()
+            }
+            collidedBubbleAndDistance = physicsEngine.closestCollidedBubbleAndDistance(projectile)
         }
         stopProjectileAndRemoveBubbles()
     }
 
     private func stopProjectileAndRemoveBubbles() {
-        print (physicsEngine.closestDistanceFromExistingBubble(projectile))
         projectile.stop()
         pauseGameLoop?()
-        if projectile.snapping {
-            renderer.snapBubble(projectile)
-        }
+        maybeSnapProjectile()
+        // Ensure no overlap with other bubbles
+        print ("after snap", physicsEngine.closestCollidedBubbleAndDistance(projectile))
+        print ("dist", physicsEngine.closestDistanceFromExistingBubble(projectile))
+
+        assert(physicsEngine.closestDistanceFromExistingBubble(projectile) >= -Config.calculationErrorMargin)
         physicsEngine.addToGraph(projectile)
+        print ("before removal", physicsEngine.adjList)
         clearRemovedBubbles()
+        print ("after removal", physicsEngine.adjList)
         addNewProjectile()
+    }
+
+    private func maybeSnapProjectile() {
+        if !projectile.snapping {
+            return
+        }
+        let originalPos = CGPoint(x: projectile.leftX, y: projectile.topY)
+        let gridPos = renderer.snappedPos(projectile.leftX, projectile.topY)
+        renderer.snapBubble(projectile, to: gridPos)
+        if let collidedBubble = physicsEngine.closestCollidedBubbleAndDistance(projectile)?.0, !collidedBubble.snapping {
+            projectile.setNonSnapping()
+            renderer.snapBubble(projectile, to: originalPos)
+        }
     }
 
     // Clear bursted and fallen bubbles.
@@ -109,6 +130,12 @@ class GameEngine {
         projectile = ProjectileBubble(color: colors[colorIndex], startCenterX: screenWidth / 2,
                                       startCenterY: screenHeight - bubbleRadius - renderer.canonHeight,
                                       radius: bubbleRadius)
+        if snapping {
+            snapping = false
+        } else {
+            projectile.setNonSnapping()
+            snapping = true
+        }
         renderer.addViewToScreen?(projectile.view)
     }
 

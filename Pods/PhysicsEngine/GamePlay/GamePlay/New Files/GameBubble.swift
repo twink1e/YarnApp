@@ -6,6 +6,7 @@ import UIKit
 open class GameBubble {
     public var color: BubbleColor
     public var view: UIImageView
+    public var snapping = true
 
     // - MARK: Computed properties
     public var centerX: CGFloat {
@@ -18,7 +19,7 @@ open class GameBubble {
         return view.frame.width / 2.0
     }
     public var touchingCeiling: Bool {
-        return topY == 0
+        return abs(topY) <= Config.calculationErrorMargin
     }
     public var leftX: CGFloat {
         return centerX - radius

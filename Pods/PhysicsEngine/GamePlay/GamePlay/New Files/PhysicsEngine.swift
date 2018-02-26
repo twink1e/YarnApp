@@ -5,9 +5,9 @@ import UIKit
  Bubble graph is represented as an adjacency list.
  */
 public class PhysicsEngine {
-    var adjList: [GameBubble: [GameBubble]] = [:]
-    let screenHeight: CGFloat
-    let bubbleDiameter: CGFloat
+    public var adjList: [GameBubble: [GameBubble]] = [:]
+    public let screenHeight: CGFloat
+    public let bubbleDiameter: CGFloat
 
     public init(screenHeight: CGFloat, bubbleDiameter: CGFloat) {
         self.screenHeight = screenHeight
@@ -142,7 +142,7 @@ public class PhysicsEngine {
 
     // Return the minimum distance between 2 bubbles.
     // Distance is negative they are overlapping.
-    private func distanceBetween(_ bubble1: GameBubble, with bubble2: GameBubble) -> CGFloat {
+    public func distanceBetween(_ bubble1: GameBubble, with bubble2: GameBubble) -> CGFloat {
         let xDiff = bubble1.centerX - bubble2.centerX
         let yDiff = bubble1.centerY - bubble2.centerY
         let distance = sqrt(pow(xDiff, 2) + pow(yDiff, 2))
