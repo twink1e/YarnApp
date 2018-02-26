@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C06A477520425F6A004DBA07 /* PhysicsEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = C06A477420425F6A004DBA07 /* PhysicsEngine.swift */; };
 		C0917DAC2041C31200F7B093 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0917DAB2041C31200F7B093 /* AppDelegate.swift */; };
 		C0917DB12041C31200F7B093 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C0917DAF2041C31200F7B093 /* Main.storyboard */; };
 		C0917DB62041C31200F7B093 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C0917DB52041C31200F7B093 /* Assets.xcassets */; };
@@ -29,6 +30,7 @@
 		C0917DF12041D2E000F7B093 /* GamePlayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0917DEB2041D2DF00F7B093 /* GamePlayViewController.swift */; };
 		C0917DF22041D2E000F7B093 /* HexGridCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0917DEC2041D2E000F7B093 /* HexGridCellViewModel.swift */; };
 		C0917DF52041D3DA00F7B093 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0917DF42041D3DA00F7B093 /* Config.swift */; };
+		C0917DF7204257C600F7B093 /* GameBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0917DF6204257C600F7B093 /* GameBubble.swift */; };
 		F43583BB3478AB1EA9E31D9A /* Pods_Yarn_.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8D854523CDFC91FDBAFE8EDD /* Pods_Yarn_.framework */; };
 /* End PBXBuildFile section */
 
@@ -36,6 +38,7 @@
 		5D2EFECFCAE2CDB2FB4EFF51 /* Pods-Yarn!.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Yarn!.release.xcconfig"; path = "Pods/Target Support Files/Pods-Yarn!/Pods-Yarn!.release.xcconfig"; sourceTree = "<group>"; };
 		6A35562CBA02802D7EA62E0C /* Pods-Yarn!.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Yarn!.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Yarn!/Pods-Yarn!.debug.xcconfig"; sourceTree = "<group>"; };
 		8D854523CDFC91FDBAFE8EDD /* Pods_Yarn_.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Yarn_.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C06A477420425F6A004DBA07 /* PhysicsEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysicsEngine.swift; sourceTree = "<group>"; };
 		C0917DA82041C31200F7B093 /* Yarn!.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Yarn!.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0917DAB2041C31200F7B093 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C0917DB02041C31200F7B093 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -60,6 +63,7 @@
 		C0917DEB2041D2DF00F7B093 /* GamePlayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamePlayViewController.swift; sourceTree = "<group>"; };
 		C0917DEC2041D2E000F7B093 /* HexGridCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HexGridCellViewModel.swift; sourceTree = "<group>"; };
 		C0917DF42041D3DA00F7B093 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
+		C0917DF6204257C600F7B093 /* GameBubble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameBubble.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -146,6 +150,7 @@
 				C0917DE02041D2CA00F7B093 /* ProjectileBubble.swift */,
 				C0917DDF2041D2CA00F7B093 /* Storage.swift */,
 				C0917DF42041D3DA00F7B093 /* Config.swift */,
+				C0917DF6204257C600F7B093 /* GameBubble.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -159,6 +164,7 @@
 				C0917DE72041D2DE00F7B093 /* HistoryLevelsTableCellViewModel.swift */,
 				C0917DE82041D2DF00F7B093 /* LevelDesignerViewModel.swift */,
 				C0917DEA2041D2DF00F7B093 /* Renderer.swift */,
+				C06A477420425F6A004DBA07 /* PhysicsEngine.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -309,7 +315,9 @@
 				C0917DAC2041C31200F7B093 /* AppDelegate.swift in Sources */,
 				C0917DF02041D2E000F7B093 /* Renderer.swift in Sources */,
 				C0917DE42041D2CA00F7B093 /* CodableBubble.swift in Sources */,
+				C0917DF7204257C600F7B093 /* GameBubble.swift in Sources */,
 				C0917DF12041D2E000F7B093 /* GamePlayViewController.swift in Sources */,
+				C06A477520425F6A004DBA07 /* PhysicsEngine.swift in Sources */,
 				C0917DD52041D27E00F7B093 /* HistoryLevelsTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

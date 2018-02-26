@@ -45,36 +45,51 @@ class GameEngine {
     // e.g. overlapping with another bubble, out of screen.
     // Then stop or move the projectile accordingly.
     func moveProjectile(_ duration: CGFloat) {
-        let closetDistance = physicsEngine.closestDistanceFromExistingBubble(projectile)
-        // Collided.
-        if closetDistance <= 0 {
-            projectile.moveForDistance(closetDistance)
-            stopProjectileAndRemoveBubbles()
+        backtrackProjectileToInScreen()
+       // Collided.
+        if let collidedBubble = physicsEngine.closestCollidedBubble(projectile) {
+            handleCollision(collidedBubble)
             return
         }
+
         // Hitting ceiling.
-        if projectile.topY <= 0 {
-            projectile.translateY(-projectile.topY)
+        if abs(projectile.topY) <= Config.calculationErrorMargin {
             stopProjectileAndRemoveBubbles()
             return
         }
-        // Hitting left wall.
-       if projectile.leftX <= 0 {
-            projectile.translateX(-projectile.leftX)
-            projectile.reverse()
-        }
-        // Hitting right wall.
-        if projectile.rightX >= screenWidth {
-            projectile.translateX(screenWidth - projectile.rightX)
+        // Hitting side wall.
+       if abs(projectile.leftX) <= Config.calculationErrorMargin || abs(projectile.rightX - screenWidth) <= Config.calculationErrorMargin {
             projectile.reverse()
         }
         projectile.moveForTime(duration)
     }
 
+    private func backtrackProjectileToInScreen() {
+        if projectile.topY < 0 {
+            projectile.moveForY(-projectile.topY)
+        }
+        if projectile.leftX < 0 {
+            projectile.moveForX(-projectile.leftX)
+        }
+        if projectile.rightX > screenWidth {
+            projectile.moveForX(screenWidth - projectile.rightX)
+        }
+    }
+    private func handleCollision(_ collidedBubble: GameBubble) {
+        physicsEngine.backtrackToTouching(projectile, with: collidedBubble)
+        if !collidedBubble.snapping {
+            projectile.setNonSnapping()
+        }
+        stopProjectileAndRemoveBubbles()
+    }
+
     private func stopProjectileAndRemoveBubbles() {
+        print (physicsEngine.closestDistanceFromExistingBubble(projectile))
         projectile.stop()
         pauseGameLoop?()
-        renderer.snapBubble(projectile)
+        if projectile.snapping {
+            renderer.snapBubble(projectile)
+        }
         physicsEngine.addToGraph(projectile)
         clearRemovedBubbles()
         addNewProjectile()

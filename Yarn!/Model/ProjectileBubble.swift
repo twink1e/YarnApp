@@ -5,8 +5,8 @@ import PhysicsEngine
  A GameBubble subclass that encapsulates a movable bubble that is ready to be launched.
  */
 class ProjectileBubble: GameBubble {
-    private var sin: CGFloat = 0
-    private var cos: CGFloat = 0
+    private(set) var sin: CGFloat = 0
+    private(set) var cos: CGFloat = 0
     private(set) var launched = false
     let startCenterX: CGFloat
     let startCenterY: CGFloat
@@ -32,6 +32,7 @@ class ProjectileBubble: GameBubble {
         view.frame = CGRect(x: startCenterX - radius, y: startCenterY - radius, width: radius * 2, height: radius * 2)
         view.layer.cornerRadius = radius
         super.init(color: color, view: view)
+        super.setNonSnapping()
     }
 
     // Launch the bubble in the direction that goes towards the given point, if it is above the starting point.
@@ -57,11 +58,21 @@ class ProjectileBubble: GameBubble {
     func setOrigin(_ origin: CGPoint) {
         view.frame.origin = origin
     }
-    func translateX(_ distance: CGFloat) {
-        view.frame.origin = CGPoint(x: leftX + distance, y: topY)
+    // Move projectile such that x distance moved is specified.
+    // Do nothing if it is impossible.
+    func moveForX(_ distance: CGFloat) {
+        guard cos != 0 else {
+            return
+        }
+        view.frame.origin = CGPoint(x: leftX + distance, y: topY + distance * sin / cos)
     }
-    func translateY(_ distance: CGFloat) {
-        view.frame.origin = CGPoint(x: leftX, y: topY + distance)
+    // Move projectile such that y distance moved is specified.
+    // Do nothing if it is impossible.
+    func moveForY(_ distance: CGFloat) {
+        guard sin != 0 else {
+            return
+        }
+        view.frame.origin = CGPoint(x: leftX + distance * cos / sin, y: topY + distance)
     }
     // Stop the bubble.
     func stop() {
