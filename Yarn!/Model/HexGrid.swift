@@ -66,6 +66,18 @@ class HexGrid {
         assert(_checkRep())
     }
 
+    /// Add a `SpecialBubble` at the position specified.
+    /// Overwrite any existing bubble at the position.
+    /// Do nothing if position is out of grid.
+    func setSpecialBubble(rowIndex: Int, colIndex: Int, power: BubblePower) {
+        guard _positionValid(rowIndex: rowIndex, colIndex: colIndex) else {
+            return
+        }
+        bubbles[rowIndex][colIndex] = SpecialBubble(power)
+        assert(_checkRep())
+    }
+
+
     private func _positionValid(rowIndex: Int, colIndex: Int) -> Bool {
         guard rowIndex >= 0 && rowIndex < row else {
             return false
@@ -111,7 +123,6 @@ class HexGrid {
     }
 
     private func _checkRep() -> Bool {
-        print(bubbles)
         if bubbles.count != row {
             return false
         }

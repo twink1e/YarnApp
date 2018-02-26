@@ -119,7 +119,7 @@
                                             <action selector="resetButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ZSf-FW-Xkp"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jld-xs-8uN" userLabel="indestruct">
+                                    <button opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jld-xs-8uN" userLabel="indestruct">
                                         <rect key="frame" x="50" y="120" width="60" height="60"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="60" id="W3x-18-RB1"/>
@@ -131,7 +131,7 @@
                                             <action selector="bubbleSelectorPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="aBH-DK-86v"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mdF-BL-l1f" userLabel="magnet">
+                                    <button opaque="NO" tag="5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mdF-BL-l1f" userLabel="magnet">
                                         <rect key="frame" x="160" y="120" width="60" height="60"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="60" id="NFS-ka-Rsl"/>
@@ -143,7 +143,7 @@
                                             <action selector="bubbleSelectorPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="DeB-es-9d5"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J2f-Hc-PiU" userLabel="bomb">
+                                    <button opaque="NO" tag="6" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J2f-Hc-PiU" userLabel="bomb">
                                         <rect key="frame" x="270" y="120" width="60" height="60"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="J2f-Hc-PiU" secondAttribute="height" multiplier="1:1" id="a0h-jF-bXK"/>
@@ -155,7 +155,7 @@
                                             <action selector="bubbleSelectorPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="gUx-0e-bvW"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="apf-ra-eUX" userLabel="lightning">
+                                    <button opaque="NO" tag="7" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="apf-ra-eUX" userLabel="lightning">
                                         <rect key="frame" x="380" y="120" width="60" height="60"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="60" id="FPZ-iw-CJy"/>
@@ -167,7 +167,7 @@
                                             <action selector="bubbleSelectorPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="7K3-sl-VDd"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SXh-QY-dv7" userLabel="star">
+                                    <button opaque="NO" tag="8" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SXh-QY-dv7" userLabel="star">
                                         <rect key="frame" x="490" y="120" width="60" height="60"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="SXh-QY-dv7" secondAttribute="height" multiplier="1:1" id="02x-Wj-dtU"/>

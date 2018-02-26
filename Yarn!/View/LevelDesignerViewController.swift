@@ -98,13 +98,13 @@ class LevelDesignerViewController: UIViewController {
         for i in 0 ..< viewModel.gridRow {
             for j in 0 ..< (i % 2 == 0 ? viewModel.gridColEvenRow : viewModel.gridColOddRow) {
                 let cellModel = viewModel.getCollectionCellViewModel(at: [i, j])
-                guard let color = cellModel.color, let cell = gridView.cellForItem(at: [i, j]) else {
+                guard let color = cellModel.color, let power = cellModel.power, let cell = gridView.cellForItem(at: [i, j]) else {
                     continue
                 }
                 let views = cell.contentView.subviews.filter { $0 is UIImageView }
                 let (actualX, actualY) = gameEngine.renderer.upperLeftCoord(for: [i, j])
-                views[0].frame = CGRect(x: actualX, y: actualY, width: cellWidth, height: cellWidth)
-                bubbles.append(GameBubble(color: color, view: views[0] as! UIImageView))
+                views.first?.frame = CGRect(x: actualX, y: actualY, width: cellWidth, height: cellWidth)
+                bubbles.append(GameBubble(color: color, power: power, view: views.first as! UIImageView))
             }
         }
         return bubbles
@@ -139,11 +139,14 @@ class LevelDesignerViewController: UIViewController {
         }
     }
 
-    /// Update bubbles that have been touched while dragging.
+    /// Update bubbles that have been touched while dragging if a color or power is selected.
     @objc
     func gridViewPanned(_ sender: UITapGestureRecognizer) {
         let locationInView = sender.location(in: gridView)
         let indexPath = gridView.indexPathForItem(at: locationInView)
+        guard viewModel.currentColor != nil || viewModel.currentPower != nil else {
+            return
+        }
         viewModel.updateBubble(at: indexPath)
     }
 
@@ -162,6 +165,7 @@ class LevelDesignerViewController: UIViewController {
             button.transform = CGAffineTransform.identity
         }
         viewModel.currentColor = nil
+        viewModel.currentPower = nil
         viewModel.isErasing = false
     }
 
@@ -169,12 +173,19 @@ class LevelDesignerViewController: UIViewController {
     @IBAction func eraserPressed(_ sender: UIButton) {
         viewModel.isErasing = true
         viewModel.currentColor = nil
+        viewModel.currentPower = nil
     }
 
     /// Update the current selected bubble type.
     @IBAction func bubbleSelectorPressed(_ button: UIButton) {
         viewModel.isErasing = false
-        viewModel.currentColor = viewModel.colors[button.tag]
+        if let color = viewModel.tagToColor[button.tag] {
+            viewModel.currentColor = color
+            viewModel.currentPower = nil
+        } else if let power = viewModel.tagToPower[button.tag] {
+            viewModel.currentColor = nil
+            viewModel.currentPower = power
+        }
     }
 
     /// Show which bubble type is currently selected with animation.
@@ -207,7 +218,7 @@ class LevelDesignerViewController: UIViewController {
                 saveAction.isEnabled = false
             }
         }
-        alert.textFields?[0].delegate = self
+        alert.textFields?.first?.delegate = self
         NotificationCenter.default.addObserver(forName: .UITextFieldTextDidChange,
                                                object:alert.textFields?[0], queue: OperationQueue.main) { _ -> Void in
             let name = alert.textFields?[0]

@@ -16,7 +16,20 @@ class LevelDesignerViewModel {
     }
     private(set) var grid: HexGrid
     let colors: [BubbleColor] = [.red, .orange, .green, .blue]
-
+    var powers: [BubblePower] = [.indestructible, .magnetic, .bomb, .lightning, .star]
+    let tagToColor: [Int: BubbleColor] = [
+        0: .red,
+        1: .orange,
+        2: .green,
+        3: .blue
+    ]
+    let tagToPower: [Int: BubblePower] = [
+        4: .indestructible,
+        5: .magnetic,
+        6: .bomb,
+        7: .lightning,
+        8: .star
+    ]
     var storage: Storage?
     var storedLevels: [NSManagedObject]? {
         return storage?.storedLevels
@@ -27,6 +40,7 @@ class LevelDesignerViewModel {
 
     var isErasing = false
     var currentColor: BubbleColor?
+    var currentPower: BubblePower?
     var reloadGridView: (() -> Void)?
     var reloadGridCells: (([IndexPath]) -> Void)?
     var alertStorageError: ((String) -> Void)?
@@ -99,7 +113,7 @@ class LevelDesignerViewModel {
         if isErasing {
             eraseBubble(at: indexPath)
         } else {
-            colorBubble(indexPath)
+            setBubble(indexPath)
         }
     }
 
@@ -113,32 +127,60 @@ class LevelDesignerViewModel {
         reloadGridCells?([path])
     }
 
-    private func colorBubble(_ indexPath: IndexPath?) {
+    private func setBubble(_ indexPath: IndexPath?) {
         guard let path = indexPath else {
             return
         }
         let row = path.section
         let col = path.row
-        guard let color = currentColor ?? getNextColor(row, col) else {
-            return
+        if let color = currentColor {
+            grid.setColoredBubble(rowIndex: row, colIndex: col, color: color)
+        } else if let power = currentPower {
+            grid.setSpecialBubble(rowIndex: row, colIndex: col, power: power)
+        } else {
+            setToNextBubble(row, col)
         }
-        grid.setColoredBubble(rowIndex: row, colIndex: col, color: color)
         reloadGridCells?([path])
     }
 
-    private func getNextColor(_ row: Int, _ col: Int) -> BubbleColor? {
-        guard let currentColor = getBubbleColor(row, col) else {
-            return nil
+    private func setToNextBubble(_ row: Int, _ col: Int) {
+        if let currentColor = getBubbleColor(row, col) {
+            guard let currentColorIndex = colors.index(of: currentColor) else {
+                return
+            }
+            setToNextBubbleFromIndex(row, col, currentIndex: currentColorIndex, currentType: .colored)
+        } else if let currentPower = getBubblePower(row, col) {
+            guard let currentPowerIndex = powers.index(of: currentPower) else {
+                return
+            }
+            setToNextBubbleFromIndex(row, col, currentIndex: currentPowerIndex, currentType: .special)
         }
-        guard let currentColorIndex = colors.index(of: currentColor) else {
-            return nil
-        }
-        return colors[(currentColorIndex + 1) % colors.count]
     }
 
+    private func setToNextBubbleFromIndex(_ row: Int, _ col: Int, currentIndex: Int, currentType: BubbleType) {
+        var nextIndex = currentIndex + 1
+        var nextType = currentType
+        if currentType == .colored && nextIndex >= colors.count {
+            nextType = .special
+            nextIndex = 0
+        } else if currentType == .special && nextIndex >= powers.count {
+            nextType = .colored
+            nextIndex = 0
+        }
+        if nextType == .colored {
+            grid.setColoredBubble(rowIndex: row, colIndex: col, color: colors[nextIndex])
+        } else if nextType == .special {
+            grid.setSpecialBubble(rowIndex: row, colIndex: col, power: powers[nextIndex])
+        }
+    }
     private func getBubbleColor(_ row: Int, _ col: Int) -> BubbleColor? {
         let bubble = grid.getBubble(rowIndex: row, colIndex: col) as? ColoredBubble
         return bubble?.color
+    }
+
+    private func getBubblePower(_ row: Int, _ col: Int) -> BubblePower? {
+        let bubble = grid.getBubble(rowIndex: row, colIndex: col) as? SpecialBubble
+        return bubble?.power
     }
 
     func reset() {

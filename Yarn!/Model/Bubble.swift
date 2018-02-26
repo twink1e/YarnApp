@@ -5,12 +5,14 @@
  Necessary for encoding and decoding of `Bubble`.
  */
 enum BubbleType: String, Codable {
-    case colored
+    case colored, special
 
     var metatype: Bubble.Type {
         switch self {
         case .colored:
             return ColoredBubble.self
+        case .special:
+            return SpecialBubble.self
         }
     }
 }

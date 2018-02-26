@@ -5,6 +5,7 @@ import UIKit
  */
 open class GameBubble {
     public var color: BubbleColor
+    public var power: BubblePower
     public var view: UIImageView
     public var snapping = true
 
@@ -31,8 +32,9 @@ open class GameBubble {
         return centerY - radius
     }
 
-    public init(color: BubbleColor, view: UIImageView) {
+    public init(color: BubbleColor, power: BubblePower,view: UIImageView) {
         self.color = color
+        self.power = power
         self.view = view
     }
 }

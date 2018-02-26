@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C027BFBA204451F4008A487A /* SpecialBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = C027BFB9204451F4008A487A /* SpecialBubble.swift */; };
 		C06A477520425F6A004DBA07 /* PhysicsEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = C06A477420425F6A004DBA07 /* PhysicsEngine.swift */; };
 		C0917DAC2041C31200F7B093 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0917DAB2041C31200F7B093 /* AppDelegate.swift */; };
 		C0917DB12041C31200F7B093 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C0917DAF2041C31200F7B093 /* Main.storyboard */; };
@@ -38,6 +39,7 @@
 		5D2EFECFCAE2CDB2FB4EFF51 /* Pods-Yarn!.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Yarn!.release.xcconfig"; path = "Pods/Target Support Files/Pods-Yarn!/Pods-Yarn!.release.xcconfig"; sourceTree = "<group>"; };
 		6A35562CBA02802D7EA62E0C /* Pods-Yarn!.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Yarn!.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Yarn!/Pods-Yarn!.debug.xcconfig"; sourceTree = "<group>"; };
 		8D854523CDFC91FDBAFE8EDD /* Pods_Yarn_.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Yarn_.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C027BFB9204451F4008A487A /* SpecialBubble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecialBubble.swift; sourceTree = "<group>"; };
 		C06A477420425F6A004DBA07 /* PhysicsEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysicsEngine.swift; sourceTree = "<group>"; };
 		C0917DA82041C31200F7B093 /* Yarn!.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Yarn!.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0917DAB2041C31200F7B093 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -151,6 +153,7 @@
 				C0917DDF2041D2CA00F7B093 /* Storage.swift */,
 				C0917DF42041D3DA00F7B093 /* Config.swift */,
 				C0917DF6204257C600F7B093 /* GameBubble.swift */,
+				C027BFB9204451F4008A487A /* SpecialBubble.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -315,6 +318,7 @@
 				C0917DAC2041C31200F7B093 /* AppDelegate.swift in Sources */,
 				C0917DF02041D2E000F7B093 /* Renderer.swift in Sources */,
 				C0917DE42041D2CA00F7B093 /* CodableBubble.swift in Sources */,
+				C027BFBA204451F4008A487A /* SpecialBubble.swift in Sources */,
 				C0917DF7204257C600F7B093 /* GameBubble.swift in Sources */,
 				C0917DF12041D2E000F7B093 /* GamePlayViewController.swift in Sources */,
 				C06A477520425F6A004DBA07 /* PhysicsEngine.swift in Sources */,

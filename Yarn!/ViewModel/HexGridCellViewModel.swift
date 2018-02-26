@@ -7,8 +7,10 @@ import PhysicsEngine
  View model that encapsulates the image of the bubble.
  */
 struct HexGridCellViewModel {
-    let background: UIImage?
-    let color: BubbleColor?
+    var background: UIImage?
+    var type: BubbleType?
+    var color: BubbleColor?
+    var power: BubblePower?
 
     private let colorToImage = [
         BubbleColor.blue: #imageLiteral(resourceName: "bubble-blue"),
@@ -16,13 +18,24 @@ struct HexGridCellViewModel {
         BubbleColor.orange: #imageLiteral(resourceName: "bubble-orange"),
         BubbleColor.green: #imageLiteral(resourceName: "bubble-green")
     ]
+    private let powerToImage = [
+        BubblePower.bomb: #imageLiteral(resourceName: "bubble-bomb"),
+        BubblePower.indestructible: #imageLiteral(resourceName: "bubble-indestructible"),
+        BubblePower.magnetic: #imageLiteral(resourceName: "bubble-magnetic"),
+        BubblePower.lightning: #imageLiteral(resourceName: "bubble-lightning"),
+        BubblePower.star: #imageLiteral(resourceName: "bubble-star")
+    ]
     init(_ bubble: Bubble?) {
-        guard let coloredBubble = bubble as? ColoredBubble else {
-            background = nil
-            color = nil
-            return
+        if let coloredBubble = bubble as? ColoredBubble {
+            type = .colored
+            color = coloredBubble.color
+            power = BubblePower.none
+            background = colorToImage[coloredBubble.color]
+        } else if let specialBubble = bubble as? SpecialBubble {
+            type = .special
+            color = BubbleColor.none
+            power = specialBubble.power
+            background = powerToImage[specialBubble.power]
         }
-        color = coloredBubble.color
-        background = colorToImage[color!]
     }
 }
