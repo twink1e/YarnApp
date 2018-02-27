@@ -31,7 +31,7 @@ class ProjectileBubble: GameBubble {
         let view = UIImageView(image: colorToImage[color])
         view.frame = CGRect(x: startCenterX - radius, y: startCenterY - radius, width: radius * 2, height: radius * 2)
         view.layer.cornerRadius = radius
-        super.init(color: color, power: .none, view: view)
+        super.init(color: color, power: .noPower, view: view)
     }
 
     // Launch the bubble in the direction that goes towards the given point, if it is above the starting point.

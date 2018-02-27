@@ -9,8 +9,8 @@ import PhysicsEngine
 struct HexGridCellViewModel {
     var background: UIImage?
     var type: BubbleType?
-    var color: BubbleColor?
-    var power: BubblePower?
+    var color: BubbleColor = .noColor
+    var power: BubblePower = .noPower
 
     private let colorToImage = [
         BubbleColor.blue: #imageLiteral(resourceName: "bubble-blue"),
@@ -29,11 +29,9 @@ struct HexGridCellViewModel {
         if let coloredBubble = bubble as? ColoredBubble {
             type = .colored
             color = coloredBubble.color
-            power = BubblePower.none
             background = colorToImage[coloredBubble.color]
         } else if let specialBubble = bubble as? SpecialBubble {
             type = .special
-            color = BubbleColor.none
             power = specialBubble.power
             background = powerToImage[specialBubble.power]
         }

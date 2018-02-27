@@ -54,6 +54,6 @@ extension GameBubble: Hashable {
 // - MARK: CustomStringConvertible
 extension GameBubble: CustomStringConvertible {
     public var description: String {
-        return "(\(centerX), \(centerY), \(color), \(touchingCeiling))"
+        return "(\(centerX), \(centerY), \(color), \(power), \(touchingCeiling))"
     }
 }

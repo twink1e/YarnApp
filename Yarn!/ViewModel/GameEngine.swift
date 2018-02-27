@@ -92,14 +92,14 @@ class GameEngine {
         pauseGameLoop?()
         maybeSnapProjectile()
         // Ensure no overlap with other bubbles
-        print ("after snap", physicsEngine.closestCollidedBubbleAndDistance(projectile))
-        print ("dist", physicsEngine.closestDistanceFromExistingBubble(projectile))
+        //print ("after snap", physicsEngine.closestCollidedBubbleAndDistance(projectile))
+        //print ("dist", physicsEngine.closestDistanceFromExistingBubble(projectile))
 
         assert(physicsEngine.closestDistanceFromExistingBubble(projectile) >= -Config.calculationErrorMargin)
         physicsEngine.addToGraph(projectile)
-        print ("before removal", physicsEngine.adjList)
+        //print ("before removal", physicsEngine.adjList)
         clearRemovedBubbles()
-        print ("after removal", physicsEngine.adjList)
+        //print ("after removal", physicsEngine.adjList)
         addNewProjectile()
     }
 
@@ -118,8 +118,12 @@ class GameEngine {
 
     // Clear bursted and fallen bubbles.
     private func clearRemovedBubbles() {
-        let bursted = physicsEngine.getBurstedBubbles(projectile)
-        let fell = physicsEngine.getFellBubbles(bursted)
+        var bursted = physicsEngine.bubblesBurstedByPower(projectile)
+        var fell = physicsEngine.getFellBubbles(bursted)
+        removeBurstedBubbles(Array(bursted))
+        removeFellBubbles(Array(fell))
+        bursted = physicsEngine.getBurstedBubbles(projectile)
+        fell = physicsEngine.getFellBubbles(bursted)
         removeBurstedBubbles(Array(bursted))
         removeFellBubbles(Array(fell))
     }

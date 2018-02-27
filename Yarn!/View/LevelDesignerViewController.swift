@@ -98,13 +98,13 @@ class LevelDesignerViewController: UIViewController {
         for i in 0 ..< viewModel.gridRow {
             for j in 0 ..< (i % 2 == 0 ? viewModel.gridColEvenRow : viewModel.gridColOddRow) {
                 let cellModel = viewModel.getCollectionCellViewModel(at: [i, j])
-                guard let color = cellModel.color, let power = cellModel.power, let cell = gridView.cellForItem(at: [i, j]) else {
+                guard cellModel.type != nil, let cell = gridView.cellForItem(at: [i, j]) else {
                     continue
                 }
                 let views = cell.contentView.subviews.filter { $0 is UIImageView }
                 let (actualX, actualY) = gameEngine.renderer.upperLeftCoord(for: [i, j])
                 views.first?.frame = CGRect(x: actualX, y: actualY, width: cellWidth, height: cellWidth)
-                bubbles.append(GameBubble(color: color, power: power, view: views.first as! UIImageView))
+                bubbles.append(GameBubble(color: cellModel.color, power: cellModel.power, view: views.first as! UIImageView))
             }
         }
         return bubbles
