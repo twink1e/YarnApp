@@ -16,7 +16,7 @@ extension PhysicsEngine {
 
     // Move the projectile in its reverse direction so that it just touches the collided bubble.
     func backtrackToTouching(_ projectile: ProjectileBubble, with collidedBubble: GameBubble) {
-        print ("overlapping", collidedBubble)
+        // print ("overlapping", collidedBubble)
         let xDiff = collidedBubble.centerX - projectile.centerX
         let yDiff = projectile.centerY - collidedBubble.centerY
         // Solve quadratic equation
@@ -49,6 +49,7 @@ extension PhysicsEngine {
         }
         return allRemovedBubbles
     }
+    
     private func bubblesBurstedByStar(_ activatorBubble: GameBubble) -> Set<GameBubble> {
         guard let neighbors = adjList[activatorBubble] else {
             return []

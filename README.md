@@ -44,8 +44,25 @@ Your answer here
 Please save your diagram as `class-diagram.png` in the root directory of the repository.
 
 ### Problem 8: Testing
+#### Test normal colored bubbles
+- When there is no path made up of bubbles connected to each other from certain bubbles to the ceiling (definition of unsupported bubbles), these bubbles fall off. Unsupported will only not fall off if they are made in the level designer. However, if any bubbles that are connected to them is removed, the falling will be triggered.
 
-Your answer here
+#### Test special bubbles
+1. Indestructable
+  - It cannot be removed by shooting any number of any normal colored bubbles around it.
+  - It falls off when becoming unsupported like normal bubbles.
+  - Bomb and lightning can remove indestructable, but not star.
+2. Star
+  - When any colored projectile lands next to it, all the bubbles of the projectile color (including the projectile itself) and the star bubble itself burst. So if the projectile is the only bubble of its color, only the projectile and the star bubble is removed.
+  - It can be removed by bomb, lightning and falling without power being triggered.
+3. Bomb
+  - When a projectile lands next to it, all the bubbles connected to the bomb and bomb itself is removed.
+  - When removed by lightning, its power is triggered.
+  - When removed by falling, its power is not triggered.
+4. Lightning
+  - When a projectile lands next to it, all the bubbles in the same row as the lightning and lightning itself is removed. A bubble is considered being in the same row if its centerY is within (including) the top and the bottom of the lighning bubble.
+  - When removed by bomb, its power is triggered.
+  - When removed by falling, its power is not triggered.
 
 
 ### Problem 9: The Bells & Whistles
