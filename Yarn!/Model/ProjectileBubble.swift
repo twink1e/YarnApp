@@ -51,7 +51,7 @@ class ProjectileBubble: GameBubble {
         let yDiff = y - centerY
         let dist = sqrt(pow(xDiff, 2) + pow(yDiff, 2))
         let unitVectorX = xDiff / dist
-        let unitVectorY = xDiff / dist
+        let unitVectorY = yDiff / dist
         guard dist > 0 else {
             return
         }
