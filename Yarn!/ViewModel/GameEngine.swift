@@ -61,7 +61,9 @@ class GameEngine {
        if abs(projectile.leftX) <= Config.calculationErrorMargin || abs(projectile.rightX - screenWidth) <= Config.calculationErrorMargin {
             projectile.reverse()
         }
+        physicsEngine.attractToMagnets(projectile)
         projectile.moveForTime(duration)
+        // renderer.rotateBubble(projectile)
     }
 
     private func backtrackProjectileToInScreen() {

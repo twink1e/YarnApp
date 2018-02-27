@@ -10,12 +10,8 @@ class ProjectileBubble: GameBubble {
     private(set) var launched = false
     let startCenterX: CGFloat
     let startCenterY: CGFloat
-    var vectorX: CGFloat {
-        return cos * Config.projectileSpeed
-    }
-    var vectorY: CGFloat {
-        return sin * Config.projectileSpeed
-    }
+    private(set) var vectorX: CGFloat = 0
+    private(set) var vectorY: CGFloat = 0
 
     private let colorToImage = [
         BubbleColor.blue: #imageLiteral(resourceName: "bubble-blue"),
@@ -44,7 +40,22 @@ class ProjectileBubble: GameBubble {
         let dist = sqrt(pow(xDist, 2) + pow(yDist, 2))
         cos = xDist / dist
         sin = yDist / dist
+        vectorX = cos * Config.projectileSpeed
+        vectorY = sin * Config.projectileSpeed
         launched = true
+    }
+
+    func attractsTowards(x: CGFloat, y: CGFloat) {
+        print(vectorX, vectorY)
+        let xDiff = x - centerX
+        let yDiff = y - centerY
+        vectorX += Config.magneticAttraction / xDiff
+        vectorY += Config.magneticAttraction / yDiff
+//        let dist = sqrt(pow(xDiff, 2) + pow(yDiff, 2))
+//        let unitVectorX = xDiff / dist
+//        let unitVectorY = xDiff / dist
+//        vectorX += Config.magneticAttraction * unitVectorX / dist
+//        vectorY += Config.magneticAttraction * unitVectorY / pow(dist, 2)
     }
 
     // - MARK: Projectile movement methods.
@@ -77,9 +88,12 @@ class ProjectileBubble: GameBubble {
     func stop() {
         cos = 0
         sin = 0
+        vectorX = 0
+        vectorY = 0
     }
     // Reverse the direction the bubble is travelling.
     func reverse() {
         cos *= -1
+        vectorX *= -1
     }
 }

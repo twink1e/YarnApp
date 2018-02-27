@@ -66,6 +66,17 @@ class Renderer: NSObject {
         addViewToScreen?(canon)
     }
 
+    func animateMagneticAttration(_ bubble: GameBubble) {
+        UIView.animate(withDuration: 0.5, animations: {
+            bubble.view.transform = CGAffineTransform(scaleX: 1.5, y: 1.5)
+            bubble.view.alpha = 0
+        })
+    }
+
+    func rotateBubble(_ bubble: GameBubble) {
+        bubble.view.transform = CGAffineTransform(rotationAngle: 10)
+    }
+
     // Show falling effects with gravity and bouncing.
     func animateFellBubbles(_ bubbles: [GameBubble]) {
         let bubbleViews = bubbles.map { $0.view }

@@ -1,6 +1,15 @@
 import PhysicsEngine
 
 extension PhysicsEngine {
+
+    func attractToMagnets(_ projectile: ProjectileBubble) {
+        adjList.keys
+            .filter { $0.power == .magnetic }
+            .forEach {
+                projectile.attractsTowards(x: $0.centerX, y: $0.centerY)
+            }
+    }
+
     // Return a tuple of the closest collided existing bubble to the projectile and the distance.
     // Return a nil if such bubble does not exist.
     func closestCollidedBubbleAndDistance(_ projectile: GameBubble) -> (GameBubble, CGFloat)? {
