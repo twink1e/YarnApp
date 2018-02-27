@@ -49,13 +49,14 @@ class ProjectileBubble: GameBubble {
         print(vectorX, vectorY)
         let xDiff = x - centerX
         let yDiff = y - centerY
-        vectorX += Config.magneticAttraction / xDiff
-        vectorY += Config.magneticAttraction / yDiff
-//        let dist = sqrt(pow(xDiff, 2) + pow(yDiff, 2))
-//        let unitVectorX = xDiff / dist
-//        let unitVectorY = xDiff / dist
-//        vectorX += Config.magneticAttraction * unitVectorX / dist
-//        vectorY += Config.magneticAttraction * unitVectorY / pow(dist, 2)
+        let dist = sqrt(pow(xDiff, 2) + pow(yDiff, 2))
+        let unitVectorX = xDiff / dist
+        let unitVectorY = xDiff / dist
+        guard dist > 0 else {
+            return
+        }
+        vectorX += Config.magneticAttraction * unitVectorX / dist
+        vectorY += Config.magneticAttraction * unitVectorY / dist
     }
 
     // - MARK: Projectile movement methods.

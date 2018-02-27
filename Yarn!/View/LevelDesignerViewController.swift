@@ -144,7 +144,7 @@ class LevelDesignerViewController: UIViewController {
     func gridViewPanned(_ sender: UITapGestureRecognizer) {
         let locationInView = sender.location(in: gridView)
         let indexPath = gridView.indexPathForItem(at: locationInView)
-        guard viewModel.currentColor != nil || viewModel.currentPower != nil else {
+        guard viewModel.currentColor != nil || viewModel.currentPower != nil || viewModel.isErasing else {
             return
         }
         viewModel.updateBubble(at: indexPath)
