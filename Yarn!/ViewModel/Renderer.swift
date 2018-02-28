@@ -77,6 +77,14 @@ class Renderer: NSObject {
         bubble.view.transform = CGAffineTransform(rotationAngle: 10)
     }
 
+    func showInactiveMagnet(_ magnet: GameBubble) {
+        magnet.view.alpha = 0.5
+    }
+
+    func showActiveMagnet(_ magnet: GameBubble) {
+        magnet.view.alpha = 1
+    }
+
     // Show falling effects with gravity and bouncing.
     func animateFellBubbles(_ bubbles: [GameBubble]) {
         let bubbleViews = bubbles.map { $0.view }

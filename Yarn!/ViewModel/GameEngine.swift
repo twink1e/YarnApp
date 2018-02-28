@@ -61,9 +61,23 @@ class GameEngine {
        if abs(projectile.leftX) <= Config.calculationErrorMargin || abs(projectile.rightX - screenWidth) <= Config.calculationErrorMargin {
             projectile.reverse()
         }
-        physicsEngine.attractToMagnets(projectile)
+        checkMagnets(attract: true)
         projectile.moveForTime(duration)
         // renderer.rotateBubble(projectile)
+    }
+
+    // Attract projectile to magnets that are not obstructed.
+    func checkMagnets(attract: Bool) {
+        let magnets = physicsEngine.adjList.keys.filter { $0.power == .magnetic }
+        magnets.forEach { renderer.showInactiveMagnet($0) }
+        magnets
+            .filter { physicsEngine.clearPath(projectile, to: $0) }
+            .forEach {
+                renderer.showActiveMagnet($0)
+                if attract {
+                    projectile.attractsTowards(x: $0.centerX, y: $0.centerY)
+                }
+            }
     }
 
     private func backtrackProjectileToInScreen() {
@@ -101,6 +115,7 @@ class GameEngine {
         physicsEngine.addToGraph(projectile)
         //print ("before removal", physicsEngine.adjList)
         clearRemovedBubbles()
+        checkMagnets(attract: false)
         //print ("after removal", physicsEngine.adjList)
         addNewProjectile()
     }

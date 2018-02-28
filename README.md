@@ -63,7 +63,11 @@ Please save your diagram as `class-diagram.png` in the root directory of the rep
   - When a projectile lands next to it, all the bubbles in the same row as the lightning and lightning itself is removed. A bubble is considered being in the same row if its centerY is within (including) the top and the bottom of the lighning bubble.
   - When removed by bomb, its power is triggered.
   - When removed by falling, its power is not triggered.
-
+5. Magnetic
+  - The magnetic force should not be too strong. Even when the entire design grid is filled with magnets, projectiles shouldn't move so fast that game logic breaks or bubbles become outside the screen. Hence it is acceptable that a single magnet exerts very little attraction force. It takes about 4 magnets together for the projectile to be moving in a visible curve.
+  - Magnets make projectile move towards them. The closer their distance, the faster the projectile move towards magnets.
+  - Like indestructable, magnets can be removed by lightning, bomb and falling. They can't be removed by color-matching or star.
+6. 
 
 ### Problem 9: The Bells & Whistles
 

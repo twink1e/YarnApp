@@ -45,8 +45,9 @@ class ProjectileBubble: GameBubble {
         launched = true
     }
 
+    // Give projectile acceleration towards the given point.
+    // Magnitude of acceleration is inversely proportional to the distance.
     func attractsTowards(x: CGFloat, y: CGFloat) {
-        print(vectorX, vectorY)
         let xDiff = x - centerX
         let yDiff = y - centerY
         let dist = sqrt(pow(xDiff, 2) + pow(yDiff, 2))

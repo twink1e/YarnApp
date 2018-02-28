@@ -2,14 +2,25 @@ import PhysicsEngine
 
 extension PhysicsEngine {
 
-    func attractToMagnets(_ projectile: ProjectileBubble) {
-        adjList.keys
-            .filter { $0.power == .magnetic }
-            .forEach {
-                projectile.attractsTowards(x: $0.centerX, y: $0.centerY)
-            }
-    }
+    // Return true if the path from bubble1's center to bubble2's center is not obstructed.
+    func clearPath(_ bubble1: GameBubble, to bubble2: GameBubble) -> Bool {
+        // line from bubble1 center (as origin) to bubble2 center, y = ax
+        let a = (bubble2.centerY - bubble1.centerY) / (bubble2.centerX - bubble1.centerX)
+        let flexibleX = abs(a) > 1
+        let rangeMin = flexibleX ? min(bubble1.centerY, bubble2.centerY) : min(bubble1.centerX, bubble2.centerX)
+        let rangeMax = flexibleX ? max(bubble1.centerY, bubble2.centerY) : max(bubble1.centerX, bubble2.centerX)
 
+        for bubble in adjList.keys {
+            guard (flexibleX && bubble.centerY < rangeMax && bubble.centerY > rangeMin) || (!flexibleX && bubble.centerX < rangeMax && bubble.centerX > rangeMin) else {
+                continue
+            }
+            let diff = flexibleX ? abs((bubble.centerY - bubble1.centerY) / a + bubble1.centerX - bubble.centerX) : abs(a * (bubble.centerX - bubble1.centerX) + bubble1.centerY - bubble.centerY)
+            if diff < bubbleDiameter / 2 {
+                return false
+            }
+        }
+        return true
+    }
     // Return a tuple of the closest collided existing bubble to the projectile and the distance.
     // Return a nil if such bubble does not exist.
     func closestCollidedBubbleAndDistance(_ projectile: GameBubble) -> (GameBubble, CGFloat)? {
