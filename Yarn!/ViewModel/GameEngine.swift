@@ -135,12 +135,10 @@ class GameEngine {
 
     // Clear bursted and fallen bubbles.
     private func clearRemovedBubbles() {
-        var bursted = physicsEngine.bubblesBurstedByPower(projectile)
-        var fell = physicsEngine.getFellBubbles(bursted)
-        removeBurstedBubbles(Array(bursted))
-        removeFellBubbles(Array(fell))
-        bursted = physicsEngine.getBurstedBubbles(projectile)
-        fell = physicsEngine.getFellBubbles(bursted)
+        let powerBursted = physicsEngine.bubblesBurstedByPower(projectile)
+        let colorBursted = physicsEngine.getBurstedBubbles(projectile)
+        let bursted = powerBursted.union(colorBursted)
+        let fell = physicsEngine.getFellBubbles(bursted)
         removeBurstedBubbles(Array(bursted))
         removeFellBubbles(Array(fell))
     }
