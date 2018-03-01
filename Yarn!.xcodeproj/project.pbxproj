@@ -31,7 +31,6 @@
 		C0917DF12041D2E000F7B093 /* GamePlayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0917DEB2041D2DF00F7B093 /* GamePlayViewController.swift */; };
 		C0917DF22041D2E000F7B093 /* HexGridCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0917DEC2041D2E000F7B093 /* HexGridCellViewModel.swift */; };
 		C0917DF52041D3DA00F7B093 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0917DF42041D3DA00F7B093 /* Config.swift */; };
-		C0917DF7204257C600F7B093 /* GameBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0917DF6204257C600F7B093 /* GameBubble.swift */; };
 		F43583BB3478AB1EA9E31D9A /* Pods_Yarn_.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8D854523CDFC91FDBAFE8EDD /* Pods_Yarn_.framework */; };
 /* End PBXBuildFile section */
 
@@ -65,7 +64,6 @@
 		C0917DEB2041D2DF00F7B093 /* GamePlayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamePlayViewController.swift; sourceTree = "<group>"; };
 		C0917DEC2041D2E000F7B093 /* HexGridCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HexGridCellViewModel.swift; sourceTree = "<group>"; };
 		C0917DF42041D3DA00F7B093 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
-		C0917DF6204257C600F7B093 /* GameBubble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameBubble.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -135,6 +133,7 @@
 			isa = PBXGroup;
 			children = (
 				C0917DD02041D27D00F7B093 /* HexGridViewCell.swift */,
+				C0917DEB2041D2DF00F7B093 /* GamePlayViewController.swift */,
 				C0917DD12041D27D00F7B093 /* HistoryLevelsTableViewCell.swift */,
 				C0917DD22041D27E00F7B093 /* HistoryLevelsViewController.swift */,
 				C0917DD32041D27E00F7B093 /* LevelDesignerViewController.swift */,
@@ -152,7 +151,6 @@
 				C0917DE02041D2CA00F7B093 /* ProjectileBubble.swift */,
 				C0917DDF2041D2CA00F7B093 /* Storage.swift */,
 				C0917DF42041D3DA00F7B093 /* Config.swift */,
-				C0917DF6204257C600F7B093 /* GameBubble.swift */,
 				C027BFB9204451F4008A487A /* SpecialBubble.swift */,
 			);
 			path = Model;
@@ -162,7 +160,6 @@
 			isa = PBXGroup;
 			children = (
 				C0917DE92041D2DF00F7B093 /* GameEngine.swift */,
-				C0917DEB2041D2DF00F7B093 /* GamePlayViewController.swift */,
 				C0917DEC2041D2E000F7B093 /* HexGridCellViewModel.swift */,
 				C0917DE72041D2DE00F7B093 /* HistoryLevelsTableCellViewModel.swift */,
 				C0917DE82041D2DF00F7B093 /* LevelDesignerViewModel.swift */,
@@ -319,7 +316,6 @@
 				C0917DF02041D2E000F7B093 /* Renderer.swift in Sources */,
 				C0917DE42041D2CA00F7B093 /* CodableBubble.swift in Sources */,
 				C027BFBA204451F4008A487A /* SpecialBubble.swift in Sources */,
-				C0917DF7204257C600F7B093 /* GameBubble.swift in Sources */,
 				C0917DF12041D2E000F7B093 /* GamePlayViewController.swift in Sources */,
 				C06A477520425F6A004DBA07 /* PhysicsEngine.swift in Sources */,
 				C0917DD52041D27E00F7B093 /* HistoryLevelsTableViewCell.swift in Sources */,

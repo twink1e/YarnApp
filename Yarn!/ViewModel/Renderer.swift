@@ -57,13 +57,20 @@ class Renderer: NSObject {
         return CGPoint(x: finalX, y: finalY)
     }
 
-    // Present a canon to elevate the projectile bubble.
-    func showCanon() {
-        let canon = UIView(frame: CGRect(x: (screenWidth - canonWidth) / 2,
-                                         y: screenHeight - canonHeight, width: canonWidth, height: canonHeight))
-        canon.backgroundColor = UIColor.black
-        canon.layer.zPosition = 1
-        addViewToScreen?(canon)
+    func rotateCanon(_ canonView: UIView, to targetPoint: CGPoint) {
+        canonView.transform = CGAffineTransform(rotationAngle: rotationAngle(from: canonView.center, to: targetPoint))
+    }
+    func resetCanon(_ canonView: UIView) {
+        canonView.transform = CGAffineTransform.identity
+    }
+    private func rotationAngle(from: CGPoint, to: CGPoint) -> CGFloat {
+        let xDiff = from.x - to.x
+        let yDiff = from.y - to.y
+        return atan(xDiff / -yDiff)
+    }
+
+    func releaseCanon() {
+
     }
 
     func animateMagneticAttration(_ bubble: GameBubble) {
@@ -71,10 +78,6 @@ class Renderer: NSObject {
             bubble.view.transform = CGAffineTransform(scaleX: 1.5, y: 1.5)
             bubble.view.alpha = 0
         })
-    }
-
-    func rotateBubble(_ bubble: GameBubble) {
-        bubble.view.transform = CGAffineTransform(rotationAngle: 10)
     }
 
     func showInactiveMagnet(_ magnet: GameBubble) {

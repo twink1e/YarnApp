@@ -7,7 +7,7 @@ import PhysicsEngine
 class ProjectileBubble: GameBubble {
     private(set) var sin: CGFloat = 0
     private(set) var cos: CGFloat = 0
-    private(set) var launched = false
+    private var launched = false
     let startCenterX: CGFloat
     let startCenterY: CGFloat
     private(set) var vectorX: CGFloat = 0
@@ -28,14 +28,20 @@ class ProjectileBubble: GameBubble {
         view.frame = CGRect(x: startCenterX - radius, y: startCenterY - radius, width: radius * 2, height: radius * 2)
         view.layer.cornerRadius = radius
         super.init(color: color, power: .noPower, view: view)
+        target = false
     }
 
-    // Launch the bubble in the direction that goes towards the given point, if it is above the starting point.
-    func setLaunchDirection(_ targetPoint: CGPoint) {
+    // Launch the bubble in the direction that goes towards the given point, if it has not been launched yet and it is above the starting point.
+    // Return true if the bubble is launched in this call.
+    func setLaunchDirection(_ targetPoint: CGPoint) -> Bool{
+        guard !launched else {
+            return false
+        }
         let xDist = targetPoint.x - startCenterX
         let yDist = targetPoint.y - startCenterY
+        print (yDist)
         guard yDist < 0 else {
-            return
+            return false
         }
         let dist = sqrt(pow(xDist, 2) + pow(yDist, 2))
         cos = xDist / dist
@@ -43,6 +49,15 @@ class ProjectileBubble: GameBubble {
         vectorX = cos * Config.projectileSpeed
         vectorY = sin * Config.projectileSpeed
         launched = true
+        return true
+    }
+
+    // Set the bubble to be non snapping. Indicated with purple border.
+    func setNonSnapping() {
+        snapping = false
+        view.layer.borderColor = UIColor.purple.cgColor
+        view.layer.borderWidth = 2
+        view.layer.masksToBounds = true
     }
 
     // Give projectile acceleration towards the given point.

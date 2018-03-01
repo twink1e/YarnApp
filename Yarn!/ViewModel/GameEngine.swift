@@ -7,10 +7,11 @@ import PhysicsEngine
  and a PhysicsEngine for path computation and collision detection.
  */
 class GameEngine {
-    let colors: [BubbleColor] = [.red, .orange, .green, .blue]
+    let allColors: [BubbleColor] = [.red, .orange, .green, .blue]
     var projectile: ProjectileBubble!
     let renderer: Renderer
     let physicsEngine: PhysicsEngine
+    var numOfProjectileLeft = 100
     var snapping = true
     var pauseGameLoop: (() -> Void)?
 
@@ -41,6 +42,13 @@ class GameEngine {
         projectile = nil
     }
 
+    func getCanon() -> UIImageView {
+        let canonWidth = bubbleRadius * 3
+        let canonHeight = bubbleRadius * 4
+        return UIImageView(frame: CGRect(x: (screenWidth - canonWidth) / 2,
+                                  y: screenHeight - canonHeight, width: canonWidth, height: canonHeight))
+    }
+    
     // Backtrack the projectile if it has moved excessively,
     // e.g. overlapping with another bubble, out of screen.
     // Then stop or move the projectile accordingly.
@@ -63,9 +71,14 @@ class GameEngine {
         }
         checkMagnets(attract: true)
         projectile.moveForTime(duration)
-        // renderer.rotateBubble(projectile)
     }
 
+    func winGame() {
+        print ("win")
+    }
+    func loseGame() {
+        print ("lose")
+    }
     // Attract projectile to magnets that are not obstructed.
     func checkMagnets(attract: Bool) {
         let magnets = physicsEngine.adjList.keys.filter { $0.power == .magnetic }
@@ -115,11 +128,30 @@ class GameEngine {
         physicsEngine.addToGraph(projectile)
         //print ("before removal", physicsEngine.adjList)
         clearRemovedBubbles()
-        checkMagnets(attract: false)
+        guard targetBubbleExists() else {
+            winGame()
+            return
+        }
         //print ("after removal", physicsEngine.adjList)
+        guard numOfProjectileLeft > 0 else {
+            loseGame()
+            return
+        }
         addNewProjectile()
+        checkMagnets(attract: false)
     }
 
+    private func targetBubbleExists() -> Bool {
+        let targets = physicsEngine.adjList.keys.filter { $0.target }
+        return !targets.isEmpty
+    }
+    private func targetColors() -> [BubbleColor]? {
+        var colors: Set<BubbleColor> = []
+        physicsEngine.adjList.keys
+            .filter { $0.target && $0.color != .noColor }
+            .forEach { colors.insert($0.color) }
+        return colors.isEmpty ? nil : Array(colors)
+    }
     private func maybeSnapProjectile() {
         if !projectile.snapping {
             return
@@ -143,19 +175,23 @@ class GameEngine {
         removeFellBubbles(Array(fell))
     }
 
-    // Add a new projectile waiting to be launched with a random color.
+    // Add a new projectile waiting to be launched.
+    // Color is a random color of the target bubbles.
+    // If all target bubbles have no color, randomly choose from all colors.
+    // Non-snapping will be set with a probability that respects snappingToNonSnappingRatio.
     func addNewProjectile() {
+        let colors = targetColors() ?? allColors
         let colorIndex = Int(arc4random_uniform(UInt32(colors.count)))
         projectile = ProjectileBubble(color: colors[colorIndex], startCenterX: screenWidth / 2,
                                       startCenterY: screenHeight - bubbleRadius - renderer.canonHeight,
                                       radius: bubbleRadius)
-        if snapping {
-            snapping = false
-        } else {
+        let nonSnappingDraw = Int(arc4random_uniform(UInt32(Config.snappingToNonSnappingRatio + 1)))
+        let lotteryNumber = 0
+        if nonSnappingDraw == lotteryNumber {
             projectile.setNonSnapping()
-            snapping = true
         }
         renderer.addViewToScreen?(projectile.view)
+        numOfProjectileLeft -= 1
     }
 
     // Build up existing bubble graph.

@@ -67,7 +67,11 @@ Please save your diagram as `class-diagram.png` in the root directory of the rep
   - The magnetic force should not be too strong. Even when the entire design grid is filled with magnets, projectiles shouldn't move so fast that game logic breaks or bubbles become outside the screen. Hence it is acceptable that a single magnet exerts very little attraction force. It takes about 4 magnets together for the projectile to be moving in a visible curve.
   - Magnets make projectile move towards them. The closer their distance, the faster the projectile move towards magnets.
   - Like indestructable, magnets can be removed by lightning, bomb and falling. They can't be removed by color-matching or star.
-6. 
+
+#### Test normal & special bubbles together
+When normal and special bubbles are both present in the game, their behavior as mentioned above should not change.
+This means that when a projectile lands connected to both special bubbles and normal bubbles, both special and normal bubbles will react accordingly.
+
 
 ### Problem 9: The Bells & Whistles
 

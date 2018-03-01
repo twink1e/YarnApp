@@ -23,7 +23,7 @@
                             <imageView opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background" translatesAutoresizingMaskIntoConstraints="NO" id="Waq-hS-2YR">
                                 <rect key="frame" x="0.0" y="20" width="768" height="1004"/>
                             </imageView>
-                            <view alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="boa-eZ-ke3" userLabel="Control Area">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="boa-eZ-ke3" userLabel="Control Area">
                                 <rect key="frame" x="0.0" y="724" width="768" height="300"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ba2-Ph-Kcj">
@@ -433,7 +433,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="background" width="512" height="683"/>
+        <image name="background" width="768" height="1024"/>
         <image name="bubble-blue" width="102" height="103"/>
         <image name="bubble-bomb" width="168" height="168"/>
         <image name="bubble-green" width="103" height="103"/>

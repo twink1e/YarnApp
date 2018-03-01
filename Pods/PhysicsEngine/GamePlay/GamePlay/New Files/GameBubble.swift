@@ -8,6 +8,7 @@ open class GameBubble {
     public var power: BubblePower
     public var view: UIImageView
     public var snapping = true
+    public var target = true
 
     // - MARK: Computed properties
     public var centerX: CGFloat {
