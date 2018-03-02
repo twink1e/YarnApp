@@ -208,8 +208,7 @@
                                     <constraint firstItem="MCU-tX-FKW" firstAttribute="leading" secondItem="boa-eZ-ke3" secondAttribute="leading" constant="60" id="EXJ-1L-L9C"/>
                                     <constraint firstAttribute="bottom" secondItem="J5K-vy-DEo" secondAttribute="bottom" constant="30" id="FQD-dh-1c8"/>
                                     <constraint firstItem="2zN-aK-o2H" firstAttribute="top" secondItem="boa-eZ-ke3" secondAttribute="top" constant="30" id="HT8-Sd-ThJ"/>
-                                    <constraint firstItem="J2f-Hc-PiU" firstAttribute="leading" relation="lessThanOrEqual" secondItem="mdF-BL-l1f" secondAttribute="trailing" constant="50" id="It9-q6-SzX"/>
-                                    <constraint firstItem="J2f-Hc-PiU" firstAttribute="leading" relation="lessThanOrEqual" secondItem="mdF-BL-l1f" secondAttribute="trailing" constant="50" id="M9R-Bp-36i"/>
+                                    <constraint firstItem="mdF-BL-l1f" firstAttribute="trailing" relation="lessThanOrEqual" secondItem="J2f-Hc-PiU" secondAttribute="leading" constant="-50" id="It9-q6-SzX"/>
                                     <constraint firstItem="mdF-BL-l1f" firstAttribute="top" secondItem="luQ-tr-Wel" secondAttribute="bottom" constant="30" id="MQt-Wf-QEZ"/>
                                     <constraint firstAttribute="bottom" secondItem="ba2-Ph-Kcj" secondAttribute="bottom" constant="30" id="NUI-gT-USU"/>
                                     <constraint firstItem="ba2-Ph-Kcj" firstAttribute="trailing" relation="lessThanOrEqual" secondItem="btI-Oc-pEy" secondAttribute="leading" constant="1560" id="SCh-ph-ahD"/>
@@ -231,18 +230,15 @@
                                     <constraint firstAttribute="height" constant="300" id="qmn-mN-vtQ"/>
                                     <constraint firstItem="btI-Oc-pEy" firstAttribute="top" secondItem="J2f-Hc-PiU" secondAttribute="bottom" constant="30" id="rr0-gM-IJO"/>
                                     <constraint firstItem="luQ-tr-Wel" firstAttribute="leading" secondItem="CaS-hY-l2q" secondAttribute="trailing" constant="50" id="sVH-CS-U2p"/>
-                                    <constraint firstItem="Vzf-Gc-Fsz" firstAttribute="leading" secondItem="SXh-QY-dv7" secondAttribute="trailing" constant="98" id="uzM-sP-OJb"/>
+                                    <constraint firstItem="Vzf-Gc-Fsz" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="SXh-QY-dv7" secondAttribute="trailing" constant="98" id="uzM-sP-OJb"/>
                                     <constraint firstItem="J5K-vy-DEo" firstAttribute="top" secondItem="SXh-QY-dv7" secondAttribute="bottom" constant="30" id="vop-UY-Uic"/>
                                     <constraint firstItem="bmC-Uc-IgC" firstAttribute="top" secondItem="boa-eZ-ke3" secondAttribute="top" constant="30" id="ybn-Bi-BhG"/>
                                     <constraint firstItem="Vzf-Gc-Fsz" firstAttribute="top" secondItem="boa-eZ-ke3" secondAttribute="top" constant="120" id="zbD-Yn-VHj"/>
                                 </constraints>
                             </view>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="45t-nO-28i">
-                                <rect key="frame" x="0.0" y="20" width="768" height="600"/>
+                                <rect key="frame" x="0.0" y="20" width="768" height="704"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="600" id="Wqe-Py-lBp"/>
-                                </constraints>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="d2a-0y-Mmu">
                                     <size key="itemSize" width="240" height="240"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -267,6 +263,7 @@
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="45t-nO-28i" firstAttribute="top" secondItem="Waq-hS-2YR" secondAttribute="top" id="C7c-Fp-7Sl"/>
+                            <constraint firstItem="boa-eZ-ke3" firstAttribute="top" secondItem="45t-nO-28i" secondAttribute="bottom" id="Dtt-cV-3F9"/>
                             <constraint firstItem="Waq-hS-2YR" firstAttribute="width" secondItem="6Tk-OE-BBY" secondAttribute="width" id="F2t-VP-jx7"/>
                             <constraint firstItem="boa-eZ-ke3" firstAttribute="leading" secondItem="Waq-hS-2YR" secondAttribute="leading" id="QbL-3j-ug2"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="top" secondItem="Waq-hS-2YR" secondAttribute="top" id="Stv-Ct-vbF"/>

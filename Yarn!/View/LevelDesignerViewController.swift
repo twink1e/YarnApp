@@ -40,7 +40,7 @@ class LevelDesignerViewController: UIViewController {
         // Customise grid according to screensize.
         screenWidth = min(UIScreen.main.bounds.width, UIScreen.main.bounds.height)
         screenHeight = max(UIScreen.main.bounds.width, UIScreen.main.bounds.height)
-        gridView.frame = CGRect(x: 0, y: 20, width: screenWidth, height: screenWidth)
+        gridView.frame = CGRect(x: 0, y: 0, width: screenWidth, height: screenWidth)
         cellWidth = screenWidth / CGFloat(viewModel.gridColEvenRow)
         levelDesignCellWidth = cellWidth - Config.levelDesignCellWidthReduction
 
