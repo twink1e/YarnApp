@@ -38,6 +38,15 @@ open class GameBubble {
         self.power = power
         self.view = view
     }
+
+    /// Create a deep copy of the given bubble.
+    public convenience init(_ bubble: GameBubble) {
+        let view = UIImageView(image: bubble.view.image)
+        let radius = bubble.view.frame.width / 2.0
+        view.frame = CGRect(x: bubble.centerX - radius, y: bubble.centerY - radius, width: radius * 2, height: radius * 2)
+        view.layer.cornerRadius = radius
+        self.init(color: bubble.color, power: bubble.power, view: view)
+    }
 }
 
 // - MARK: Hashable

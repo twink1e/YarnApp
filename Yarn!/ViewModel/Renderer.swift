@@ -58,8 +58,8 @@ class Renderer: NSObject {
 
     func clearBubbleViews(_ bubbles: [GameBubble]) {
         bubbles.forEach { removeViewFromScreen($0.view) }
-        itemsAnimator?.removeAllBehaviors()
     }
+    
     private func cropSpriteSheet(_ sheet: UIImage, row: Int, col: Int) -> [UIImage] {
         var images: [UIImage] = []
         let width = sheet.size.width * UIScreen.main.scale / CGFloat(col)

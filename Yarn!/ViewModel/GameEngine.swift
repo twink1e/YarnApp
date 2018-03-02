@@ -52,7 +52,8 @@ class GameEngine {
         numOfProjectileLeft = 100
     }
 
-    func startGame(_ bubbles: [GameBubble]) {
+    func startGame(_ initialBubbles: [GameBubble]) {
+        let bubbles = initialBubbles.map { GameBubble($0) }
         buildGraph(bubbles)
         addNewProjectile()
         guard moveUpProjectile() else {
