@@ -402,9 +402,10 @@
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VLz-I4-D2u">
                                 <rect key="frame" x="20" y="968" width="44" height="36"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <state key="normal" title="Back">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
                                     <action selector="backToDesigner:" destination="yBG-Lq-Qxv" eventType="touchUpInside" id="VPG-DK-1Ga"/>
@@ -485,6 +486,109 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8uC-X7-ras" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-330.46875" y="956.83593749999989"/>
+        </scene>
+        <!--Win-->
+        <scene sceneID="1mX-Ph-H9d">
+            <objects>
+                <viewController storyboardIdentifier="win" title="Win" id="YFi-gw-E7w" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="DJK-eO-Ktk">
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="win" translatesAutoresizingMaskIntoConstraints="NO" id="pDs-On-icJ">
+                                <rect key="frame" x="144" y="352" width="480" height="320"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="320" id="eCk-xB-Kxg"/>
+                                    <constraint firstAttribute="width" secondItem="pDs-On-icJ" secondAttribute="height" multiplier="3:2" id="rEy-we-1Ky"/>
+                                </constraints>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xp0-U6-BHS">
+                                <rect key="frame" x="414" y="607" width="150" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="Xp0-U6-BHS" secondAttribute="height" multiplier="3:1" id="0lk-yR-urd"/>
+                                    <constraint firstAttribute="height" constant="50" id="qeh-B9-gA3"/>
+                                </constraints>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="W46-pQ-pb7">
+                                <rect key="frame" x="204" y="607" width="150" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="ygc-7r-CdX"/>
+                                </constraints>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="1,000,000,000" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OwU-fd-HKl">
+                                <rect key="frame" x="441" y="545" width="137" height="27"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="pDs-On-icJ" firstAttribute="leading" secondItem="W46-pQ-pb7" secondAttribute="trailing" constant="-210" id="5rh-qp-QgK"/>
+                            <constraint firstItem="pDs-On-icJ" firstAttribute="centerX" secondItem="DJK-eO-Ktk" secondAttribute="centerX" id="N1R-EH-ug2"/>
+                            <constraint firstItem="Xp0-U6-BHS" firstAttribute="top" secondItem="pDs-On-icJ" secondAttribute="bottom" constant="-65" id="VwJ-gg-6pS"/>
+                            <constraint firstItem="Xp0-U6-BHS" firstAttribute="leading" secondItem="pDs-On-icJ" secondAttribute="trailing" constant="-210" id="WXq-an-IKU"/>
+                            <constraint firstItem="pDs-On-icJ" firstAttribute="leading" secondItem="W46-pQ-pb7" secondAttribute="leading" constant="-60" id="gSo-ZO-xBH"/>
+                            <constraint firstItem="W46-pQ-pb7" firstAttribute="width" secondItem="W46-pQ-pb7" secondAttribute="height" multiplier="3:1" id="i0j-uV-wn1"/>
+                            <constraint firstItem="pDs-On-icJ" firstAttribute="centerY" secondItem="DJK-eO-Ktk" secondAttribute="centerY" id="lBY-Ph-pcl"/>
+                            <constraint firstItem="Xp0-U6-BHS" firstAttribute="trailing" secondItem="pDs-On-icJ" secondAttribute="trailing" constant="-60" id="lwW-xE-gTf"/>
+                            <constraint firstItem="W46-pQ-pb7" firstAttribute="top" secondItem="pDs-On-icJ" secondAttribute="bottom" constant="-65" id="oSU-yw-BZI"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="v6A-HF-1Wq"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="IEf-90-pEV" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="447.65625" y="904.68749999999989"/>
+        </scene>
+        <!--Lose-->
+        <scene sceneID="BlW-9d-rb2">
+            <objects>
+                <viewController storyboardIdentifier="lose" title="Lose" id="jPX-5P-zfW" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Wyv-RE-e8k">
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="lose" translatesAutoresizingMaskIntoConstraints="NO" id="iIO-78-fdC">
+                                <rect key="frame" x="144" y="352" width="480" height="320"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="iIO-78-fdC" secondAttribute="height" multiplier="3:2" id="907-LK-rt7"/>
+                                    <constraint firstAttribute="height" constant="320" id="PXN-ME-Jut"/>
+                                </constraints>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gWN-Vb-mLi">
+                                <rect key="frame" x="414" y="607" width="150" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="gWN-Vb-mLi" secondAttribute="height" multiplier="3:1" id="pyb-Wu-Zeu"/>
+                                    <constraint firstAttribute="height" constant="50" id="rvS-sM-ZJ0"/>
+                                </constraints>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ka6-uB-iCx">
+                                <rect key="frame" x="204" y="607" width="150" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="hvZ-lU-Jz6"/>
+                                </constraints>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="gWN-Vb-mLi" firstAttribute="trailing" secondItem="iIO-78-fdC" secondAttribute="trailing" constant="-60" id="17g-l4-biR"/>
+                            <constraint firstItem="iIO-78-fdC" firstAttribute="leading" secondItem="ka6-uB-iCx" secondAttribute="leading" constant="-60" id="3zr-Ox-dRc"/>
+                            <constraint firstItem="iIO-78-fdC" firstAttribute="centerX" secondItem="Wyv-RE-e8k" secondAttribute="centerX" id="RR4-dx-tyD"/>
+                            <constraint firstItem="ka6-uB-iCx" firstAttribute="width" secondItem="ka6-uB-iCx" secondAttribute="height" multiplier="3:1" id="S91-NN-d8K"/>
+                            <constraint firstItem="iIO-78-fdC" firstAttribute="centerY" secondItem="Wyv-RE-e8k" secondAttribute="centerY" id="STF-TB-hrz"/>
+                            <constraint firstItem="iIO-78-fdC" firstAttribute="leading" secondItem="ka6-uB-iCx" secondAttribute="trailing" constant="-210" id="TRX-Ac-fea"/>
+                            <constraint firstItem="gWN-Vb-mLi" firstAttribute="top" secondItem="iIO-78-fdC" secondAttribute="bottom" constant="-65" id="WyY-Vj-tFZ"/>
+                            <constraint firstItem="ka6-uB-iCx" firstAttribute="top" secondItem="iIO-78-fdC" secondAttribute="bottom" constant="-65" id="YgT-6a-Fit"/>
+                            <constraint firstItem="gWN-Vb-mLi" firstAttribute="leading" secondItem="iIO-78-fdC" secondAttribute="trailing" constant="-210" id="f76-rB-qH5"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="LrT-JW-UZQ"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hoa-s4-tf6" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1107" y="913"/>
         </scene>
     </scenes>
     <resources>
@@ -23948,5 +24052,7 @@ bAAVdHMAFXR4ABV0hQAVdIgAFXSVABV0mgAVdKIAFXSlABV0qgAVdLIAFXS1ABV0xwAVdMoAFXTPAAAA
 AAAABAEAAAAAAAAAWQAAAAAAAAAAAAAAAAAVdNE
 </mutableData>
         </image>
+        <image name="lose" width="960" height="640"/>
+        <image name="win" width="960" height="640"/>
     </resources>
 </document>
