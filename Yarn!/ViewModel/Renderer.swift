@@ -12,6 +12,9 @@ class Renderer: NSObject {
     var bubbleBurstAnimationImages: [UIImage] = []
     weak var gamePlayDelegate: GamePlayDelegate?
     var itemsAnimator: UIDynamicAnimator?
+    var gravityBehavior: UIGravityBehavior?
+    var boundaryCollisionBehavior: UICollisionBehavior?
+    var elasticityBehavior: UIDynamicItemBehavior?
 
     var bubbleDiameter: CGFloat {
         return 2 * bubbleRadius
@@ -27,9 +30,22 @@ class Renderer: NSObject {
         gamePlayDelegate = delegate
         super.init()
         itemsAnimator = gamePlayDelegate?.itemsAnimator
-        itemsAnimator?.delegate = self
+        setUpDynamicAnimator()
         canonAnimationImages = cropSpriteSheet(#imageLiteral(resourceName: "canon-animation"), row: Config.canonAnimationSpriteRow, col: Config.canonAnimationSpriteCol)
         bubbleBurstAnimationImages = cropSpriteSheet(#imageLiteral(resourceName: "bubble-burst"), row: 1, col: 4)
+    }
+
+    private func setUpDynamicAnimator() {
+        itemsAnimator?.delegate = self
+        gravityBehavior = UIGravityBehavior(items: [])
+        gravityBehavior?.magnitude = 3
+        boundaryCollisionBehavior = UICollisionBehavior(items: [])
+        boundaryCollisionBehavior?.translatesReferenceBoundsIntoBoundary = true
+        elasticityBehavior = UIDynamicItemBehavior(items: [])
+        elasticityBehavior?.elasticity = 0.5
+        itemsAnimator?.addBehavior(gravityBehavior!)
+        itemsAnimator?.addBehavior(boundaryCollisionBehavior!)
+        itemsAnimator?.addBehavior(elasticityBehavior!)
     }
 
     func removeViewFromScreen(_ view: UIView) {
@@ -42,6 +58,7 @@ class Renderer: NSObject {
 
     func clearBubbleViews(_ bubbles: [GameBubble]) {
         bubbles.forEach { removeViewFromScreen($0.view) }
+        itemsAnimator?.removeAllBehaviors()
     }
     private func cropSpriteSheet(_ sheet: UIImage, row: Int, col: Int) -> [UIImage] {
         var images: [UIImage] = []
@@ -93,6 +110,9 @@ class Renderer: NSObject {
         return true
     }
 
+    func resetCanon(_ canonView: UIView) {
+        canonView.transform = CGAffineTransform.identity
+    }
     private func rotationAngle(from: CGPoint, to: CGPoint) -> CGFloat {
         let xDiff = from.x - to.x
         let yDiff = from.y - to.y
@@ -122,17 +142,14 @@ class Renderer: NSObject {
 
     // Show falling effects with gravity and bouncing.
     func animateFellBubbles(_ bubbles: [GameBubble]) {
-        let bubbleViews = bubbles.map { $0.view }
-        bubbleViews.forEach { $0.alpha = 0.5 }
-        let gravityBehavior = UIGravityBehavior(items: bubbleViews)
-        gravityBehavior.magnitude = 3
-        let boundaryCollisionBehavior = UICollisionBehavior(items: bubbleViews)
-        boundaryCollisionBehavior.translatesReferenceBoundsIntoBoundary = true
-        let elasticityBehavior = UIDynamicItemBehavior(items: bubbleViews)
-        elasticityBehavior.elasticity = 0.5
-        itemsAnimator?.addBehavior(gravityBehavior)
-        itemsAnimator?.addBehavior(boundaryCollisionBehavior)
-        itemsAnimator?.addBehavior(elasticityBehavior)
+        bubbles
+            .map { $0.view }
+            .forEach {
+                $0.alpha = 0.5; $0.layer.borderWidth = 0
+                gravityBehavior?.addItem($0)
+                boundaryCollisionBehavior?.addItem($0)
+                elasticityBehavior?.addItem($0)
+            }
     }
 
     // Show bursting effects before removing the bubble views.
@@ -140,18 +157,13 @@ class Renderer: NSObject {
         bubbles
             .map { $0.view }
             .forEach {
+                $0.layer.borderWidth = 0
                 $0.animationImages = bubbleBurstAnimationImages
                 $0.animationRepeatCount = 1
                 $0.animationDuration = Config.bubbleBurstAnimationDuration
                 $0.startAnimating()
                 Timer.scheduledTimer(timeInterval: Config.bubbleBurstAnimationDuration, target: self, selector: #selector(removeBubble(_:)), userInfo: $0, repeats: false)
             }
-//        for bubble in bubbles {
-//            UIView.animate(withDuration: 0.5, animations: {
-//                bubble.view.transform = CGAffineTransform(scaleX: 1.5, y: 1.5)
-//                bubble.view.alpha = 0
-//            }, completion: { _ in self.removeViewFromScreen?(bubble.view) })
-//        }
     }
     @objc func removeBubble(_ timer: Timer) {
         self.removeViewFromScreen(timer.userInfo as! UIView)
@@ -164,6 +176,11 @@ extension Renderer: UIDynamicAnimatorDelegate {
         // Remove all animated bubbles.
         let bubbleViews = animator.items(in: CGRect(origin: CGPoint(x: 0, y: 0),
                                                     size: CGSize(width: screenWidth, height: screenHeight)))
-        bubbleViews.forEach { removeViewFromScreen($0 as! UIView) }
+        bubbleViews.forEach {
+            gravityBehavior?.removeItem($0)
+            elasticityBehavior?.removeItem($0)
+            boundaryCollisionBehavior?.removeItem($0)
+            removeViewFromScreen($0 as! UIView)
+        }
     }
 }

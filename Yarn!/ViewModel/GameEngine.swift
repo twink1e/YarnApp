@@ -186,8 +186,6 @@ class GameEngine {
         let fell = physicsEngine.getFellBubbles(bursted)
         removeBurstedBubbles(Array(bursted))
         removeFellBubbles(Array(fell))
-        print (bursted.count, bursted)
-        print (fell.count, fell)
         points += Config.burstPoints * bursted.count + Config.fellPoints * fell.count
         gamePlayDelegate?.updatePoints(pointString)
     }

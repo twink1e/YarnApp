@@ -74,6 +74,7 @@ class GamePlayViewController: UIViewController {
     }
 
     func restartGame() {
+        gameEngine.renderer.resetCanon(canonView)
         gameEngine.clear()
         gameEngine.startGame(initialBubbles)
     }
