@@ -12,7 +12,7 @@ class LevelDesignerViewController: UIViewController {
     @IBOutlet private var controlArea: UIView!
     @IBOutlet private var saveButton: UIButton!
     @IBOutlet private var bubbleModifierButtons: [UIButton]!
-    var viewModel = LevelDesignerViewModel()
+    var viewModel: LevelDesignerViewModel!
     let reuseIdentifier = "hexGridCell"
     var cellWidth: CGFloat = 0
     var levelDesignCellWidth: CGFloat = 0
@@ -31,23 +31,7 @@ class LevelDesignerViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Delegate methods to the view model.
-        viewModel.reloadGridCells = { [weak self] (_ paths: [IndexPath]) in
-            DispatchQueue.main.async {
-                self?.gridView.reloadItems(at: paths)
-            }
-        }
-        viewModel.reloadGridView = { [weak self] () in
-            DispatchQueue.main.async {
-                self?.gridView.reloadData()
-            }
-        }
-        viewModel.alertStorageError = { [weak self] (_ msg: String) in
-            self?.showToast(msg)
-        }
-        viewModel.showSaveSuccess = { [weak self] in
-            self?.showToast(self?.saveSuccessMsg)
-        }
+        viewModel = LevelDesignerViewModel(self)
         loadStorageWithContext()
 
         gridView.delegate = self
@@ -293,5 +277,27 @@ UICollectionViewDelegate, UICollectionViewDataSource {
         return section % 2 == 0 ? UIEdgeInsets(top: -verticalOffset, left: 0, bottom: verticalOffset, right: 0) :
             UIEdgeInsets(top: -verticalOffset, left: levelDesignCellWidth / 2.0,
                          bottom: verticalOffset, right: levelDesignCellWidth / 2.0)
+    }
+}
+
+extension LevelDesignerViewController: LevelDesignerDelegate {
+    func reloadGridCells(_ paths: [IndexPath]) {
+        DispatchQueue.main.async {
+            self.gridView.reloadItems(at: paths)
+        }
+    }
+
+    func reloadGridView() {
+        DispatchQueue.main.async {
+            self.gridView.reloadData()
+        }
+    }
+
+    func alertStorageError(_ msg: String) {
+        self.showToast(msg)
+    }
+
+    func showSaveSuccess() {
+        self.showToast(self.saveSuccessMsg)
     }
 }

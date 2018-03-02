@@ -1,6 +1,8 @@
 import PhysicsEngine
 
 extension Config {
+    static let gridRow = 9
+    static let gridColEvenRow = 12
     static let levelDesignCellWidthReduction: CGFloat = 2
     static let projectileSpeed: CGFloat = 1000
     static let framePerSecond = 60

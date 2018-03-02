@@ -9,8 +9,8 @@ import PhysicsEngine
  It does not own controller, but update controller by callbacks.
  */
 class LevelDesignerViewModel {
-    let gridRow = 9
-    let gridColEvenRow = 12
+    let gridRow = Config.gridRow
+    let gridColEvenRow = Config.gridColEvenRow
     var gridColOddRow: Int {
         return gridColEvenRow - 1
     }
@@ -41,28 +41,26 @@ class LevelDesignerViewModel {
     var isErasing = false
     var currentColor: BubbleColor?
     var currentPower: BubblePower?
-    var reloadGridView: (() -> Void)?
-    var reloadGridCells: (([IndexPath]) -> Void)?
-    var alertStorageError: ((String) -> Void)?
-    var showSaveSuccess: (() -> Void)?
+    weak var levelDesignerDelegate: LevelDesignerDelegate?
 
-    init() {
+    init(_ delegate: LevelDesignerDelegate) {
         guard let grid = HexGrid(row: gridRow, col: gridColEvenRow) else {
             fatalError("Invalid grid size.")
         }
         self.grid = grid
+        levelDesignerDelegate = delegate
     }
 
     // Init core data storage with the given context.
     func setStorage(_ managedContext: NSManagedObjectContext) {
         guard let entity = NSEntityDescription.entity(forEntityName: "Level", in: managedContext) else {
-            alertStorageError?(storageLoadErrorMsg)
+            levelDesignerDelegate?.alertStorageError(storageLoadErrorMsg)
             return
         }
         do {
             try self.storage = Storage(managedContext, entity: entity)
         } catch {
-            alertStorageError?(storageLoadErrorMsg)
+            levelDesignerDelegate?.alertStorageError(storageLoadErrorMsg)
         }
     }
 
@@ -71,9 +69,9 @@ class LevelDesignerViewModel {
         do {
             try storage?.saveLevel(name, grid: grid, screenshot: screenshot)
             currentLevelName = name
-            showSaveSuccess?()
+            levelDesignerDelegate?.showSaveSuccess()
         } catch {
-            alertStorageError?(storageSaveErrorMsg)
+            levelDesignerDelegate?.alertStorageError(storageSaveErrorMsg)
         }
     }
 
@@ -82,11 +80,11 @@ class LevelDesignerViewModel {
     func setLevel(_ index: Int) {
         guard let gridString = storedLevels?[index].value(forKeyPath: "grid") as? String,
             let gridName = storedLevels?[index].value(forKeyPath: "name") as? String else {
-            alertStorageError?("Level not found!")
+            levelDesignerDelegate?.alertStorageError("Level not found!")
             return
         }
         guard let gridData = gridString.data(using: .utf8) else {
-            alertStorageError?("Fail to load level!")
+            levelDesignerDelegate?.alertStorageError("Fail to load level!")
             return
         }
         let jsonDecoder = JSONDecoder()
@@ -94,9 +92,9 @@ class LevelDesignerViewModel {
             let grid = try jsonDecoder.decode(HexGrid.self, from: gridData)
             self.grid = grid
             currentLevelName = gridName
-            reloadGridView?()
+            levelDesignerDelegate?.reloadGridView()
         } catch {
-            alertStorageError?("Level data is corrupted!")
+            levelDesignerDelegate?.alertStorageError("Level data is corrupted!")
         }
     }
 
@@ -104,7 +102,7 @@ class LevelDesignerViewModel {
         do {
             try storage?.deleteLevel(index)
         } catch {
-            alertStorageError?("Can't delete level!")
+            levelDesignerDelegate?.alertStorageError("Can't delete level!")
         }
     }
 
@@ -124,7 +122,7 @@ class LevelDesignerViewModel {
         let row = path.section
         let col = path.row
         grid.removeBubble(rowIndex: row, colIndex: col)
-        reloadGridCells?([path])
+        levelDesignerDelegate?.reloadGridCells([path])
     }
 
     private func setBubble(_ indexPath: IndexPath?) {
@@ -140,7 +138,7 @@ class LevelDesignerViewModel {
         } else {
             setToNextBubble(row, col)
         }
-        reloadGridCells?([path])
+        levelDesignerDelegate?.reloadGridCells([path])
     }
 
     private func setToNextBubble(_ row: Int, _ col: Int) {
@@ -185,7 +183,7 @@ class LevelDesignerViewModel {
 
     func reset() {
         grid.clearBubbles()
-        reloadGridView?()
+        levelDesignerDelegate?.reloadGridView()
     }
 
     /// - return `HexGridCellViewModel` constructed from the bubble at the given location for UICollectionView.

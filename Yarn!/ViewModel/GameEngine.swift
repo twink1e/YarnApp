@@ -14,18 +14,11 @@ class GameEngine {
     let renderer: Renderer
     let physicsEngine: PhysicsEngine
     var numOfProjectileLeft = 5
-    var snapping = true
     weak var gamePlayDelegate: GamePlayDelegate?
 
-    var screenWidth: CGFloat {
-        return renderer.screenWidth
-    }
-    var screenHeight: CGFloat {
-        return renderer.screenHeight
-    }
-    var bubbleRadius: CGFloat {
-        return renderer.bubbleRadius
-    }
+    let screenWidth: CGFloat
+    let screenHeight: CGFloat
+    let bubbleRadius: CGFloat
     var bubbleDiameter: CGFloat {
         return renderer.bubbleDiameter
     }
@@ -34,6 +27,9 @@ class GameEngine {
     }
 
     init(radius: CGFloat, width: CGFloat, height: CGFloat, delegate: GamePlayDelegate) {
+        bubbleRadius = radius
+        screenWidth = width
+        screenHeight = height
         gamePlayDelegate = delegate
         renderer = Renderer(bubbleRadius: radius, screenWidth: width, screenHeight: height, delegate: delegate)
         physicsEngine = PhysicsEngine(screenHeight: height, bubbleDiameter: radius * 2)
@@ -41,7 +37,6 @@ class GameEngine {
 
     // Clear the game state when player exits.
     func clear() {
-        physicsEngine.clear()
         currentProjectile = nil
         nextProjectile = nil
         numOfProjectileLeft = 100

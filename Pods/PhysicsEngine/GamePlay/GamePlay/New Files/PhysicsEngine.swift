@@ -14,12 +14,9 @@ public class PhysicsEngine {
         self.bubbleDiameter = bubbleDiameter
     }
 
-    public func clear() {
-        adjList = [:]
-    }
-
     // Build up `adjList` with the starting bubbles.
     public func buildGraph(_ bubbles: [GameBubble]) {
+        adjList = [:]
         for bubble in bubbles {
             adjList[bubble] = []
         }

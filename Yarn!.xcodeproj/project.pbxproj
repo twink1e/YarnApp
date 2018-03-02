@@ -11,6 +11,7 @@
 		C06A477520425F6A004DBA07 /* PhysicsEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = C06A477420425F6A004DBA07 /* PhysicsEngine.swift */; };
 		C07B29082048716900806774 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C07B29072048716800806774 /* Assets.xcassets */; };
 		C07B290A2049307C00806774 /* GamePlayDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C07B29092049307C00806774 /* GamePlayDelegate.swift */; };
+		C07B290C204944ED00806774 /* LevelDesignerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C07B290B204944ED00806774 /* LevelDesignerDelegate.swift */; };
 		C0917DAC2041C31200F7B093 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0917DAB2041C31200F7B093 /* AppDelegate.swift */; };
 		C0917DB12041C31200F7B093 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C0917DAF2041C31200F7B093 /* Main.storyboard */; };
 		C0917DB92041C31200F7B093 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C0917DB72041C31200F7B093 /* LaunchScreen.storyboard */; };
@@ -43,6 +44,7 @@
 		C06A477420425F6A004DBA07 /* PhysicsEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysicsEngine.swift; sourceTree = "<group>"; };
 		C07B29072048716800806774 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C07B29092049307C00806774 /* GamePlayDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GamePlayDelegate.swift; sourceTree = "<group>"; };
+		C07B290B204944ED00806774 /* LevelDesignerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelDesignerDelegate.swift; sourceTree = "<group>"; };
 		C0917DA82041C31200F7B093 /* Yarn!.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Yarn!.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0917DAB2041C31200F7B093 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C0917DB02041C31200F7B093 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -140,6 +142,7 @@
 				C0917DD22041D27E00F7B093 /* HistoryLevelsViewController.swift */,
 				C0917DD32041D27E00F7B093 /* LevelDesignerViewController.swift */,
 				C07B29092049307C00806774 /* GamePlayDelegate.swift */,
+				C07B290B204944ED00806774 /* LevelDesignerDelegate.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -317,6 +320,7 @@
 				C0917DEF2041D2E000F7B093 /* GameEngine.swift in Sources */,
 				C0917DD42041D27E00F7B093 /* HexGridViewCell.swift in Sources */,
 				C0917DAC2041C31200F7B093 /* AppDelegate.swift in Sources */,
+				C07B290C204944ED00806774 /* LevelDesignerDelegate.swift in Sources */,
 				C0917DF02041D2E000F7B093 /* Renderer.swift in Sources */,
 				C0917DE42041D2CA00F7B093 /* CodableBubble.swift in Sources */,
 				C027BFBA204451F4008A487A /* SpecialBubble.swift in Sources */,
