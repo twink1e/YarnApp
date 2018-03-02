@@ -94,6 +94,14 @@ class GamePlayViewController: UIViewController {
 }
 
 extension GamePlayViewController: GamePlayDelegate {
+    func updateCurrentBubbleLabel(_ label: String) {
+        currentBubbleLabel.text = label
+    }
+
+    func updateNextBubbleLabel(_ label: String) {
+        nextBubbleLabel.text = label
+    }
+
     func addViewToScreen (_ view: UIView) {
         self.view.addSubview(view)
     }

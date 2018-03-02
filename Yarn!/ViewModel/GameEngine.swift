@@ -7,6 +7,7 @@ import PhysicsEngine
  and a PhysicsEngine for path computation and collision detection.
  */
 class GameEngine {
+    let noBubbleLeftLabel = "0"
     let allColors: [BubbleColor] = [.red, .orange, .green, .blue]
     var currentProjectile: ProjectileBubble!
     var nextProjectile: ProjectileBubble?
@@ -187,6 +188,7 @@ class GameEngine {
     func addNewProjectile() {
         guard numOfProjectileLeft > 0 else {
             nextProjectile = nil
+            gamePlayDelegate?.updateNextBubbleLabel(noBubbleLeftLabel)
             return
         }
         let colors = targetColors() ?? allColors
@@ -199,23 +201,26 @@ class GameEngine {
         if nonSnappingDraw == lotteryNumber {
             newProjectile.setNonSnapping()
         }
-        print ("projectile", numOfProjectileLeft)
         renderer.addViewToScreen(newProjectile.view)
         nextProjectile = newProjectile
+        gamePlayDelegate?.updateNextBubbleLabel(newProjectile.label)
         numOfProjectileLeft -= 1
     }
 
     // Return false if there is no more bubble left to play.
     func moveUpProjectile() -> Bool {
         guard let next = nextProjectile else {
+            gamePlayDelegate?.updateCurrentBubbleLabel(noBubbleLeftLabel)
             return false
         }
         let newOrigin = CGPoint(x: screenWidth - Config.currentBubbleTrailing - bubbleRadius, y: screenHeight - Config.waitingBubbleBottomHeight - bubbleDiameter)
         next.setOrigin(newOrigin)
         currentProjectile = next
+        gamePlayDelegate?.updateCurrentBubbleLabel(currentProjectile.label)
         addNewProjectile()
         return true
     }
+
     // Build up existing bubble graph.
     func buildGraph(_ bubbles: [GameBubble]) {
         for bubble in bubbles {
