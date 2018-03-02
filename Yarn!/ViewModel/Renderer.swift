@@ -20,12 +20,7 @@ class Renderer: NSObject {
     var rowHeight: CGFloat {
         return sqrt(3) * bubbleRadius
     }
-    var canonHeight: CGFloat {
-        return bubbleRadius * 4
-    }
-    var canonWidth: CGFloat {
-        return bubbleRadius * 3
-    }
+
     init(bubbleRadius: CGFloat, screenWidth: CGFloat, screenHeight: CGFloat) {
         self.bubbleRadius = bubbleRadius
         self.screenWidth = screenWidth
@@ -77,18 +72,17 @@ class Renderer: NSObject {
         return CGPoint(x: finalX, y: finalY)
     }
 
-    func rotateCanon(_ canonView: UIView, to targetPoint: CGPoint) {
-       let angle = rotationAngle(from: canonView.center, to: targetPoint)
-//        print (angle)
-//        print (atan2(canonView.transform.b, canonView.transform.a), canonView.transform.b, canonView.transform.a)
-//        // cannot rotate more than 90 degrees
-//        guard abs(atan2(canonView.transform.b, canonView.transform.a)) < .pi / 2 else {
-//            canonView.transform = CGAffineTransform.identity
-//
-//            return
-//        }
+    // Rotate the canon so the center of the canon faces the target point.
+    // No rotation if the target point is lower than the cutting line of the game.
+    // Return true if the canon has been rotated.
+    func rotateCanon(_ canonView: UIView, to targetPoint: CGPoint) -> Bool {
+        guard targetPoint.y >= screenWidth else {
+            return false
+        }
+        let angle = rotationAngle(from: canonView.center, to: targetPoint)
         canonView.transform = CGAffineTransform.identity
         canonView.transform = CGAffineTransform(rotationAngle: angle)
+        return true
     }
 
     private func rotationAngle(from: CGPoint, to: CGPoint) -> CGFloat {

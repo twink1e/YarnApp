@@ -19,32 +19,38 @@ class GamePlayViewController: UIViewController {
         return true
     }
 
-    // Get the position of player's touch,
-    // set launuch direction and resume game loop if projectile is not launched yet.
+    // If projectile is not launched,
+    // rotate the canon to face the point user tapped and launch projectile.
     @objc func tapCanon(_ sender : UITapGestureRecognizer) {
         let position = sender.location(in: view)
-        if gameEngine.projectile.setLaunchDirection(position) {
-            gameEngine.renderer.rotateCanon(canonView, to: position)
-            gameEngine.renderer.releaseCanon(canonView)
-            addDisplaylink()
+        guard !gameEngine.projectile.launched && gameEngine.renderer.rotateCanon(canonView, to: position) else {
+            return
         }
+        launchProjectile(position)
     }
 
+    // Rotate the canon to face the point user is panning if projectile is not launched.
+    // Launch the projectile when pan ends.
     @objc func panCanon(_ sender : UIPanGestureRecognizer) {
         let state = sender.state
         guard state != .cancelled else {
             return
         }
         let targetPoint = sender.location(in: view)
-        gameEngine.renderer.rotateCanon(canonView, to: targetPoint)
-        print (targetPoint, sender.state)
+        guard !gameEngine.projectile.launched && gameEngine.renderer.rotateCanon(canonView, to: targetPoint) else {
+            return
+        }
         if sender.state == .ended {
-            if gameEngine.projectile.setLaunchDirection(targetPoint) {
-                gameEngine.renderer.releaseCanon(canonView)
-                addDisplaylink()
-            }
+            launchProjectile(targetPoint)
         }
     }
+
+    private func launchProjectile(_ targetPoint: CGPoint) {
+        gameEngine.projectile.setLaunchDirection(targetPoint)
+        gameEngine.renderer.releaseCanon(canonView)
+        addDisplaylink()
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -62,9 +68,6 @@ class GamePlayViewController: UIViewController {
 
         // Set game initial view
         gameEngine.buildGraph(initialBubbles)
-//        canonView = gameEngine.getCanon()
-//        canonView.backgroundColor = UIColor.black
-        canonView.layer.zPosition = 1
         setCanonControl()
         view.addSubview(canonView)
         gameEngine.addNewProjectile()

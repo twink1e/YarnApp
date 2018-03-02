@@ -413,7 +413,7 @@
                                     <action selector="backToDesigner:" destination="yBG-Lq-Qxv" eventType="touchUpInside" id="VPG-DK-1Ga"/>
                                 </connections>
                             </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="canon" translatesAutoresizingMaskIntoConstraints="NO" id="Y75-Qr-R8i">
+                            <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="canon" translatesAutoresizingMaskIntoConstraints="NO" id="Y75-Qr-R8i">
                                 <rect key="frame" x="309" y="814" width="150" height="450"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="450" id="RQG-Id-5MO"/>

@@ -7,7 +7,7 @@ import PhysicsEngine
 class ProjectileBubble: GameBubble {
     private(set) var sin: CGFloat = 0
     private(set) var cos: CGFloat = 0
-    private var launched = false
+    private(set) var launched = false
     let startCenterX: CGFloat
     let startCenterY: CGFloat
     private(set) var vectorX: CGFloat = 0
@@ -31,25 +31,17 @@ class ProjectileBubble: GameBubble {
         target = false
     }
 
-    // Launch the bubble in the direction that goes towards the given point, if it has not been launched yet and it is above the starting point.
-    // Return true if the bubble is launched in this call.
-    func setLaunchDirection(_ targetPoint: CGPoint) -> Bool{
-        guard !launched else {
-            return false
-        }
+    // Launch the bubble in the direction that goes towards the given point, if it has not been launched yet.
+    func setLaunchDirection(_ targetPoint: CGPoint) {
         let xDist = targetPoint.x - startCenterX
         let yDist = targetPoint.y - startCenterY
-        print (yDist)
-        guard yDist < 0 else {
-            return false
-        }
+        assert (yDist < 0 )
         let dist = sqrt(pow(xDist, 2) + pow(yDist, 2))
         cos = xDist / dist
         sin = yDist / dist
         vectorX = cos * Config.projectileSpeed
         vectorY = sin * Config.projectileSpeed
         launched = true
-        return true
     }
 
     // Set the bubble to be non snapping. Indicated with purple border.
