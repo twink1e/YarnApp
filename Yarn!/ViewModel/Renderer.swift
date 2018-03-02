@@ -73,13 +73,15 @@ class Renderer: NSObject {
     }
 
     // Rotate the canon so the center of the canon faces the target point.
-    // No rotation if the target point is lower than the cutting line of the game.
+    // No rotation if rotation angle is greater than the angle to reach the cutting line of the game.
     // Return true if the canon has been rotated.
     func rotateCanon(_ canonView: UIView, to targetPoint: CGPoint) -> Bool {
-        guard targetPoint.y >= screenWidth else {
+        let maxAngle = rotationAngle(from: canonView.center, to: CGPoint(x: 0, y: screenWidth))
+        let angle = rotationAngle(from: canonView.center, to: targetPoint)
+        guard abs(angle) <= abs(maxAngle) else {
+            canonView.transform = CGAffineTransform.identity
             return false
         }
-        let angle = rotationAngle(from: canonView.center, to: targetPoint)
         canonView.transform = CGAffineTransform.identity
         canonView.transform = CGAffineTransform(rotationAngle: angle)
         return true

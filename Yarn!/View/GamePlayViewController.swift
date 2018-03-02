@@ -46,7 +46,7 @@ class GamePlayViewController: UIViewController {
     }
 
     private func launchProjectile(_ targetPoint: CGPoint) {
-        gameEngine.projectile.setLaunchDirection(targetPoint)
+        gameEngine.projectile.setLaunchDirection(start: canonView.center, target: targetPoint)
         gameEngine.renderer.releaseCanon(canonView)
         addDisplaylink()
     }
@@ -69,6 +69,7 @@ class GamePlayViewController: UIViewController {
         // Set game initial view
         gameEngine.buildGraph(initialBubbles)
         setCanonControl()
+        canonView.layer.zPosition = 1
         view.addSubview(canonView)
         gameEngine.addNewProjectile()
     }
@@ -82,6 +83,7 @@ class GamePlayViewController: UIViewController {
         view.addGestureRecognizer(tap)
         view.isUserInteractionEnabled = true
     }
+
     // Set display link and update the previous frame time.
     func addDisplaylink() {
         displaylink = CADisplayLink(target: self, selector: #selector(step))

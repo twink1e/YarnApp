@@ -8,8 +8,6 @@ class ProjectileBubble: GameBubble {
     private(set) var sin: CGFloat = 0
     private(set) var cos: CGFloat = 0
     private(set) var launched = false
-    let startCenterX: CGFloat
-    let startCenterY: CGFloat
     private(set) var vectorX: CGFloat = 0
     private(set) var vectorY: CGFloat = 0
 
@@ -22,8 +20,6 @@ class ProjectileBubble: GameBubble {
 
     // Construct a new UIImageView based on the color and dimension given.
     init(color: BubbleColor, startCenterX: CGFloat, startCenterY: CGFloat, radius: CGFloat) {
-        self.startCenterX = startCenterX
-        self.startCenterY = startCenterY
         let view = UIImageView(image: colorToImage[color])
         view.frame = CGRect(x: startCenterX - radius, y: startCenterY - radius, width: radius * 2, height: radius * 2)
         view.layer.cornerRadius = radius
@@ -32,9 +28,10 @@ class ProjectileBubble: GameBubble {
     }
 
     // Launch the bubble in the direction that goes towards the given point, if it has not been launched yet.
-    func setLaunchDirection(_ targetPoint: CGPoint) {
-        let xDist = targetPoint.x - startCenterX
-        let yDist = targetPoint.y - startCenterY
+    func setLaunchDirection(start: CGPoint, target: CGPoint) {
+        view.frame.origin = CGPoint(x: start.x - radius, y: start.y - radius)
+        let xDist = target.x - start.x
+        let yDist = target.y - start.y
         assert (yDist < 0 )
         let dist = sqrt(pow(xDist, 2) + pow(yDist, 2))
         cos = xDist / dist

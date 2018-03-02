@@ -176,8 +176,8 @@ class GameEngine {
     func addNewProjectile() {
         let colors = targetColors() ?? allColors
         let colorIndex = Int(arc4random_uniform(UInt32(colors.count)))
-        projectile = ProjectileBubble(color: colors[colorIndex], startCenterX: screenWidth / 2,
-                                      startCenterY: screenHeight - bubbleRadius - renderer.canonHeight,
+        projectile = ProjectileBubble(color: colors[colorIndex], startCenterX: screenWidth / 2 + 100,
+                                      startCenterY: screenHeight - bubbleRadius,
                                       radius: bubbleRadius)
         let nonSnappingDraw = Int(arc4random_uniform(UInt32(Config.snappingToNonSnappingRatio + 1)))
         let lotteryNumber = 0
