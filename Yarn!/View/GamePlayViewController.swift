@@ -5,6 +5,9 @@ import PhysicsEngine
  View Controller for the game play scene.
  */
 class GamePlayViewController: UIViewController {
+    let storyboardName = "Main"
+    let winIdentifier = "win"
+    let loseIdentifier = "lose"
     var initialBubbles: [GameBubble] = []
     var bubbleRadius: CGFloat = 0
     var screenWidth: CGFloat = 0
@@ -25,6 +28,10 @@ class GamePlayViewController: UIViewController {
         return true
     }
 
+    func goBack() {
+        gameEngine.clear()
+        dismiss(animated: false, completion: nil)
+    }
     // If projectile is not launched,
     // rotate the canon to face the point user tapped and launch projectile.
     @objc func tapCanon(_ sender : UITapGestureRecognizer) {
@@ -65,6 +72,10 @@ class GamePlayViewController: UIViewController {
         gameEngine.startGame(initialBubbles)
     }
 
+    func restartGame() {
+        gameEngine.clear()
+        gameEngine.startGame(initialBubbles)
+    }
     func setCanonControl() {
         let pan = UIPanGestureRecognizer(target: self, action: #selector(self.panCanon(_:)))
         pan.minimumNumberOfTouches = 1
@@ -94,6 +105,19 @@ class GamePlayViewController: UIViewController {
 }
 
 extension GamePlayViewController: GamePlayDelegate {
+    func winGame(_ points: String) {
+        let storyboard = UIStoryboard(name: storyboardName, bundle: nil)
+        let controller = storyboard.instantiateViewController(withIdentifier: winIdentifier) as! GameResultViewController
+        controller.pointString = points
+        self.present(controller, animated: true, completion: nil)
+    }
+
+    func loseGame() {
+        let storyboard = UIStoryboard(name: storyboardName, bundle: nil)
+        let controller = storyboard.instantiateViewController(withIdentifier: loseIdentifier)
+        self.present(controller, animated: true, completion: nil)
+    }
+
     func updateCurrentBubbleLabel(_ label: String) {
         currentBubbleLabel.text = label
     }

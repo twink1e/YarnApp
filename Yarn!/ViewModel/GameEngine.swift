@@ -39,6 +39,8 @@ class GameEngine {
     func clear() {
         currentProjectile = nil
         nextProjectile = nil
+        renderer.clearBubbleViews(Array(physicsEngine.adjList.keys))
+        physicsEngine.clear()
         numOfProjectileLeft = 100
     }
 
@@ -46,7 +48,7 @@ class GameEngine {
         buildGraph(bubbles)
         addNewProjectile()
         guard moveUpProjectile() else {
-            loseGame()
+            gamePlayDelegate?.loseGame()
             return
         }
     }
@@ -75,12 +77,6 @@ class GameEngine {
         currentProjectile.moveForTime(duration)
     }
 
-    func winGame() {
-        print ("win")
-    }
-    func loseGame() {
-        print ("lose")
-    }
     // Attract projectile to magnets that are not obstructed.
     func checkMagnets(attract: Bool) {
         let magnets = physicsEngine.adjList.keys.filter { $0.power == .magnetic }
@@ -131,12 +127,12 @@ class GameEngine {
         //print ("before removal", physicsEngine.adjList)
         clearRemovedBubbles()
         guard targetBubbleExists() else {
-            winGame()
+            gamePlayDelegate?.winGame("1")
             return
         }
         //print ("after removal", physicsEngine.adjList)
         guard moveUpProjectile() else {
-            loseGame()
+            gamePlayDelegate?.loseGame()
             return
         }
         checkMagnets(attract: false)

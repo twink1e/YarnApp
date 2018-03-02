@@ -490,7 +490,7 @@
         <!--Win-->
         <scene sceneID="1mX-Ph-H9d">
             <objects>
-                <viewController storyboardIdentifier="win" title="Win" id="YFi-gw-E7w" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="win" title="Win" modalPresentationStyle="overCurrentContext" id="YFi-gw-E7w" customClass="GameResultViewController" customModule="Yarn_" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="DJK-eO-Ktk">
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -508,27 +508,37 @@
                                     <constraint firstAttribute="width" secondItem="Xp0-U6-BHS" secondAttribute="height" multiplier="3:1" id="0lk-yR-urd"/>
                                     <constraint firstAttribute="height" constant="50" id="qeh-B9-gA3"/>
                                 </constraints>
+                                <connections>
+                                    <action selector="retry:" destination="YFi-gw-E7w" eventType="touchUpInside" id="YL0-yw-wMR"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="W46-pQ-pb7">
                                 <rect key="frame" x="204" y="607" width="150" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="ygc-7r-CdX"/>
                                 </constraints>
+                                <connections>
+                                    <action selector="goBack:" destination="YFi-gw-E7w" eventType="touchUpInside" id="OZg-Cb-RPJ"/>
+                                </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="1,000,000,000" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OwU-fd-HKl">
-                                <rect key="frame" x="441" y="545" width="137" height="27"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1,000,000,000" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OwU-fd-HKl">
+                                <rect key="frame" x="441" y="545" width="183" height="27"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="27" id="3kM-fd-NDj"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="pDs-On-icJ" firstAttribute="leading" secondItem="W46-pQ-pb7" secondAttribute="trailing" constant="-210" id="5rh-qp-QgK"/>
+                            <constraint firstItem="OwU-fd-HKl" firstAttribute="leading" secondItem="pDs-On-icJ" secondAttribute="trailing" constant="-183" id="J2L-xW-CJS"/>
                             <constraint firstItem="pDs-On-icJ" firstAttribute="centerX" secondItem="DJK-eO-Ktk" secondAttribute="centerX" id="N1R-EH-ug2"/>
+                            <constraint firstItem="OwU-fd-HKl" firstAttribute="trailing" secondItem="pDs-On-icJ" secondAttribute="trailing" id="SDX-Bz-hHB"/>
                             <constraint firstItem="Xp0-U6-BHS" firstAttribute="top" secondItem="pDs-On-icJ" secondAttribute="bottom" constant="-65" id="VwJ-gg-6pS"/>
                             <constraint firstItem="Xp0-U6-BHS" firstAttribute="leading" secondItem="pDs-On-icJ" secondAttribute="trailing" constant="-210" id="WXq-an-IKU"/>
+                            <constraint firstItem="Xp0-U6-BHS" firstAttribute="top" secondItem="OwU-fd-HKl" secondAttribute="bottom" constant="35" id="YZJ-X1-vDc"/>
                             <constraint firstItem="pDs-On-icJ" firstAttribute="leading" secondItem="W46-pQ-pb7" secondAttribute="leading" constant="-60" id="gSo-ZO-xBH"/>
                             <constraint firstItem="W46-pQ-pb7" firstAttribute="width" secondItem="W46-pQ-pb7" secondAttribute="height" multiplier="3:1" id="i0j-uV-wn1"/>
                             <constraint firstItem="pDs-On-icJ" firstAttribute="centerY" secondItem="DJK-eO-Ktk" secondAttribute="centerY" id="lBY-Ph-pcl"/>
@@ -537,15 +547,18 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="v6A-HF-1Wq"/>
                     </view>
+                    <connections>
+                        <outlet property="pointsView" destination="OwU-fd-HKl" id="ybZ-p4-or2"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IEf-90-pEV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="447.65625" y="904.68749999999989"/>
+            <point key="canvasLocation" x="374" y="1465"/>
         </scene>
         <!--Lose-->
         <scene sceneID="BlW-9d-rb2">
             <objects>
-                <viewController storyboardIdentifier="lose" title="Lose" id="jPX-5P-zfW" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="lose" title="Lose" id="jPX-5P-zfW" customClass="GameResultViewController" customModule="Yarn_" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Wyv-RE-e8k">
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -563,15 +576,20 @@
                                     <constraint firstAttribute="width" secondItem="gWN-Vb-mLi" secondAttribute="height" multiplier="3:1" id="pyb-Wu-Zeu"/>
                                     <constraint firstAttribute="height" constant="50" id="rvS-sM-ZJ0"/>
                                 </constraints>
+                                <connections>
+                                    <action selector="retry:" destination="jPX-5P-zfW" eventType="touchUpInside" id="JY9-wM-Y66"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ka6-uB-iCx">
                                 <rect key="frame" x="204" y="607" width="150" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="hvZ-lU-Jz6"/>
                                 </constraints>
+                                <connections>
+                                    <action selector="goBack:" destination="jPX-5P-zfW" eventType="touchUpInside" id="2pH-ME-Rxh"/>
+                                </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="gWN-Vb-mLi" firstAttribute="trailing" secondItem="iIO-78-fdC" secondAttribute="trailing" constant="-60" id="17g-l4-biR"/>
                             <constraint firstItem="iIO-78-fdC" firstAttribute="leading" secondItem="ka6-uB-iCx" secondAttribute="leading" constant="-60" id="3zr-Ox-dRc"/>
