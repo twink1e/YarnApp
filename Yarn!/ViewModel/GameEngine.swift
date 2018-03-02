@@ -40,13 +40,7 @@ class GameEngine {
     func clear() {
         physicsEngine.clear()
         projectile = nil
-    }
-
-    func getCanon() -> UIImageView {
-        let canonWidth = bubbleRadius * 3
-        let canonHeight = bubbleRadius * 4
-        return UIImageView(frame: CGRect(x: (screenWidth - canonWidth) / 2,
-                                  y: screenHeight - canonHeight, width: canonWidth, height: canonHeight))
+        numOfProjectileLeft = 100
     }
     
     // Backtrack the projectile if it has moved excessively,
@@ -190,6 +184,7 @@ class GameEngine {
         if nonSnappingDraw == lotteryNumber {
             projectile.setNonSnapping()
         }
+        print ("projectile", numOfProjectileLeft)
         renderer.addViewToScreen?(projectile.view)
         numOfProjectileLeft -= 1
     }

@@ -9,8 +9,7 @@ class GamePlayViewController: UIViewController {
     var gameEngine: GameEngine!
     var prevFrameTime: CFTimeInterval = 0
     var displaylink: CADisplayLink!
-    var canonView: UIImageView!
-
+    @IBOutlet var canonView: UIImageView!
     @IBAction func backToDesigner(_ sender: Any) {
         displaylink?.invalidate()
         gameEngine.clear()
@@ -25,8 +24,8 @@ class GamePlayViewController: UIViewController {
     @objc func tapCanon(_ sender : UITapGestureRecognizer) {
         let position = sender.location(in: view)
         if gameEngine.projectile.setLaunchDirection(position) {
-            gameEngine.renderer.resetCanon(canonView)
             gameEngine.renderer.rotateCanon(canonView, to: position)
+            gameEngine.renderer.releaseCanon(canonView)
             addDisplaylink()
         }
     }
@@ -37,13 +36,11 @@ class GamePlayViewController: UIViewController {
             return
         }
         let targetPoint = sender.location(in: view)
-        if sender.state == .began {
-            gameEngine.renderer.resetCanon(canonView)
-        }
         gameEngine.renderer.rotateCanon(canonView, to: targetPoint)
         print (targetPoint, sender.state)
         if sender.state == .ended {
             if gameEngine.projectile.setLaunchDirection(targetPoint) {
+                gameEngine.renderer.releaseCanon(canonView)
                 addDisplaylink()
             }
         }
@@ -65,8 +62,8 @@ class GamePlayViewController: UIViewController {
 
         // Set game initial view
         gameEngine.buildGraph(initialBubbles)
-        canonView = gameEngine.getCanon()
-        canonView.backgroundColor = UIColor.black
+//        canonView = gameEngine.getCanon()
+//        canonView.backgroundColor = UIColor.black
         canonView.layer.zPosition = 1
         setCanonControl()
         view.addSubview(canonView)

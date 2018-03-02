@@ -8,6 +8,8 @@ class Renderer: NSObject {
     let bubbleRadius: CGFloat
     let screenWidth: CGFloat
     let screenHeight: CGFloat
+    var canonAnimationImages: [UIImage] = []
+    var bubbleBurstAnimationImages: [UIImage] = []
     var itemsAnimator: UIDynamicAnimator?
     var removeViewFromScreen: ((UIView) -> Void)?
     var addViewToScreen: ((UIView) -> Void)?
@@ -28,8 +30,26 @@ class Renderer: NSObject {
         self.bubbleRadius = bubbleRadius
         self.screenWidth = screenWidth
         self.screenHeight = screenHeight
+        super.init()
+        canonAnimationImages = cropSpriteSheet(#imageLiteral(resourceName: "canon-animation"), row: Config.canonAnimationSpriteRow, col: Config.canonAnimationSpriteCol)
+        bubbleBurstAnimationImages = cropSpriteSheet(#imageLiteral(resourceName: "bubble-burst"), row: 1, col: 4)
     }
 
+    private func cropSpriteSheet(_ sheet: UIImage, row: Int, col: Int) -> [UIImage] {
+        var images: [UIImage] = []
+        let width = sheet.size.width * UIScreen.main.scale / CGFloat(col)
+        let height = sheet.size.height * UIScreen.main.scale / CGFloat(row)
+        for i in 0 ..< row {
+            for j in 0 ..< col {
+                let frame = CGRect(x: CGFloat(j) * width, y: CGFloat(i) * height, width: width, height: height)
+                guard let cgImage = sheet.cgImage?.cropping(to: frame) else {
+                    continue
+                }
+                images.append(UIImage(cgImage: cgImage))
+            }
+        }
+        return images
+    }
     // Calculate the origin point of the bubble view given its grid position in designer.
     func upperLeftCoord(for path: IndexPath) -> (CGFloat, CGFloat) {
         let row = path[0]
@@ -58,19 +78,29 @@ class Renderer: NSObject {
     }
 
     func rotateCanon(_ canonView: UIView, to targetPoint: CGPoint) {
-        canonView.transform = CGAffineTransform(rotationAngle: rotationAngle(from: canonView.center, to: targetPoint))
-    }
-    func resetCanon(_ canonView: UIView) {
+       let angle = rotationAngle(from: canonView.center, to: targetPoint)
+//        print (angle)
+//        print (atan2(canonView.transform.b, canonView.transform.a), canonView.transform.b, canonView.transform.a)
+//        // cannot rotate more than 90 degrees
+//        guard abs(atan2(canonView.transform.b, canonView.transform.a)) < .pi / 2 else {
+//            canonView.transform = CGAffineTransform.identity
+//
+//            return
+//        }
         canonView.transform = CGAffineTransform.identity
+        canonView.transform = CGAffineTransform(rotationAngle: angle)
     }
+
     private func rotationAngle(from: CGPoint, to: CGPoint) -> CGFloat {
         let xDiff = from.x - to.x
         let yDiff = from.y - to.y
         return atan(xDiff / -yDiff)
     }
 
-    func releaseCanon() {
-
+    func releaseCanon(_ canonView: UIImageView) {
+        canonView.animationImages = canonAnimationImages
+        canonView.animationRepeatCount = 1
+        canonView.startAnimating()
     }
 
     func animateMagneticAttration(_ bubble: GameBubble) {
@@ -105,12 +135,24 @@ class Renderer: NSObject {
 
     // Show bursting effects before removing the bubble views.
     func animateBurstedBubbles(_ bubbles: [GameBubble]) {
-        for bubble in bubbles {
-            UIView.animate(withDuration: 0.5, animations: {
-                bubble.view.transform = CGAffineTransform(scaleX: 1.5, y: 1.5)
-                bubble.view.alpha = 0
-            }, completion: { _ in self.removeViewFromScreen?(bubble.view) })
-        }
+        bubbles
+            .map { $0.view }
+            .forEach {
+                $0.animationImages = bubbleBurstAnimationImages
+                $0.animationRepeatCount = 1
+                $0.animationDuration = Config.bubbleBurstAnimationDuration
+                $0.startAnimating()
+                Timer.scheduledTimer(timeInterval: Config.bubbleBurstAnimationDuration, target: self, selector: #selector(removeBubble(_:)), userInfo: $0, repeats: false)
+            }
+//        for bubble in bubbles {
+//            UIView.animate(withDuration: 0.5, animations: {
+//                bubble.view.transform = CGAffineTransform(scaleX: 1.5, y: 1.5)
+//                bubble.view.alpha = 0
+//            }, completion: { _ in self.removeViewFromScreen?(bubble.view) })
+//        }
+    }
+    @objc func removeBubble(_ timer: Timer) {
+        self.removeViewFromScreen?(timer.userInfo as! UIView)
     }
 }
 

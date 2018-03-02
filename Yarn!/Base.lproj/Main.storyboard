@@ -413,12 +413,21 @@
                                     <action selector="backToDesigner:" destination="yBG-Lq-Qxv" eventType="touchUpInside" id="VPG-DK-1Ga"/>
                                 </connections>
                             </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="canon" translatesAutoresizingMaskIntoConstraints="NO" id="Y75-Qr-R8i">
+                                <rect key="frame" x="309" y="814" width="150" height="450"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="450" id="RQG-Id-5MO"/>
+                                    <constraint firstAttribute="width" constant="150" id="dMI-Ip-7E6"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="VLz-I4-D2u" firstAttribute="leading" secondItem="e3u-EV-9uz" secondAttribute="leading" constant="20" id="5xp-Gv-uSx"/>
                             <constraint firstItem="rle-Bu-GQ8" firstAttribute="trailing" secondItem="e3u-EV-9uz" secondAttribute="trailing" id="7IV-yd-tY7"/>
                             <constraint firstItem="rle-Bu-GQ8" firstAttribute="leading" secondItem="VLz-I4-D2u" secondAttribute="trailing" constant="-64" id="7sa-fg-7To"/>
+                            <constraint firstItem="Y75-Qr-R8i" firstAttribute="centerX" secondItem="xJs-p0-BDZ" secondAttribute="centerX" id="N0V-GG-zFs"/>
+                            <constraint firstItem="Y75-Qr-R8i" firstAttribute="top" secondItem="rle-Bu-GQ8" secondAttribute="bottom" constant="-210" id="WLq-26-TEu"/>
                             <constraint firstItem="e3u-EV-9uz" firstAttribute="bottom" secondItem="rle-Bu-GQ8" secondAttribute="bottom" id="X4S-gV-wkm"/>
                             <constraint firstItem="rle-Bu-GQ8" firstAttribute="top" secondItem="xJs-p0-BDZ" secondAttribute="top" id="XRF-Xb-M9H"/>
                             <constraint firstItem="rle-Bu-GQ8" firstAttribute="leading" secondItem="e3u-EV-9uz" secondAttribute="leading" id="cCI-CX-eQ6"/>
@@ -426,6 +435,9 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="e3u-EV-9uz"/>
                     </view>
+                    <connections>
+                        <outlet property="canonView" destination="Y75-Qr-R8i" id="btb-8b-udK"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8uC-X7-ras" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -443,6 +455,7 @@
         <image name="bubble-orange" width="103" height="103"/>
         <image name="bubble-red" width="103" height="103"/>
         <image name="bubble-star" width="168" height="168"/>
+        <image name="canon" width="500" height="1500"/>
         <image name="erase" width="168" height="168"/>
         <image name="imageView:ZFp-4e-qPS:image" width="512" height="683">
             <mutableData key="keyedArchiveRepresentation">

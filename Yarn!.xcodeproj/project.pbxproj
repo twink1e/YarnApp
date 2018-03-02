@@ -9,9 +9,9 @@
 /* Begin PBXBuildFile section */
 		C027BFBA204451F4008A487A /* SpecialBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = C027BFB9204451F4008A487A /* SpecialBubble.swift */; };
 		C06A477520425F6A004DBA07 /* PhysicsEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = C06A477420425F6A004DBA07 /* PhysicsEngine.swift */; };
+		C07B29082048716900806774 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C07B29072048716800806774 /* Assets.xcassets */; };
 		C0917DAC2041C31200F7B093 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0917DAB2041C31200F7B093 /* AppDelegate.swift */; };
 		C0917DB12041C31200F7B093 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C0917DAF2041C31200F7B093 /* Main.storyboard */; };
-		C0917DB62041C31200F7B093 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C0917DB52041C31200F7B093 /* Assets.xcassets */; };
 		C0917DB92041C31200F7B093 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C0917DB72041C31200F7B093 /* LaunchScreen.storyboard */; };
 		C0917DCB2041C9A200F7B093 /* Yarn_.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C0917DC92041C9A200F7B093 /* Yarn_.xcdatamodeld */; };
 		C0917DD42041D27E00F7B093 /* HexGridViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0917DD02041D27D00F7B093 /* HexGridViewCell.swift */; };
@@ -40,10 +40,10 @@
 		8D854523CDFC91FDBAFE8EDD /* Pods_Yarn_.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Yarn_.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C027BFB9204451F4008A487A /* SpecialBubble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecialBubble.swift; sourceTree = "<group>"; };
 		C06A477420425F6A004DBA07 /* PhysicsEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysicsEngine.swift; sourceTree = "<group>"; };
+		C07B29072048716800806774 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C0917DA82041C31200F7B093 /* Yarn!.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Yarn!.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0917DAB2041C31200F7B093 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C0917DB02041C31200F7B093 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		C0917DB52041C31200F7B093 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C0917DB82041C31200F7B093 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C0917DBA2041C31200F7B093 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C0917DCA2041C9A200F7B093 /* Yarn_.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Yarn_.xcdatamodel; sourceTree = "<group>"; };
@@ -116,13 +116,13 @@
 		C0917DAA2041C31200F7B093 /* Yarn! */ = {
 			isa = PBXGroup;
 			children = (
+				C07B29072048716800806774 /* Assets.xcassets */,
 				C0917DF32041D2EA00F7B093 /* ViewModel */,
 				C0917DDA2041D2B800F7B093 /* Model */,
 				C0917DD92041D29F00F7B093 /* View */,
 				C0917DC92041C9A200F7B093 /* Yarn_.xcdatamodeld */,
 				C0917DAB2041C31200F7B093 /* AppDelegate.swift */,
 				C0917DAF2041C31200F7B093 /* Main.storyboard */,
-				C0917DB52041C31200F7B093 /* Assets.xcassets */,
 				C0917DB72041C31200F7B093 /* LaunchScreen.storyboard */,
 				C0917DBA2041C31200F7B093 /* Info.plist */,
 			);
@@ -232,7 +232,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C0917DB92041C31200F7B093 /* LaunchScreen.storyboard in Resources */,
-				C0917DB62041C31200F7B093 /* Assets.xcassets in Resources */,
+				C07B29082048716900806774 /* Assets.xcassets in Resources */,
 				C0917DB12041C31200F7B093 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
