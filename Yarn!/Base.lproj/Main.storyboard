@@ -420,23 +420,69 @@
                                     <constraint firstAttribute="width" constant="150" id="dMI-Ip-7E6"/>
                                 </constraints>
                             </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="box" translatesAutoresizingMaskIntoConstraints="NO" id="5wL-jN-uGy">
+                                <rect key="frame" x="668" y="959" width="100" height="65"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="65" id="1jU-2A-BTN"/>
+                                    <constraint firstAttribute="width" constant="100" id="cP4-p6-ix0"/>
+                                </constraints>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="box" translatesAutoresizingMaskIntoConstraints="NO" id="vFL-cJ-08F">
+                                <rect key="frame" x="568" y="959" width="100" height="65"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="65" id="ZUI-WO-ekg"/>
+                                    <constraint firstAttribute="width" constant="100" id="p0M-m5-HWg"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="999" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lo8-eG-aHX">
+                                <rect key="frame" x="597" y="1000" width="42" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="Lo8-eG-aHX" secondAttribute="height" multiplier="2:1" id="LxN-Em-gyB"/>
+                                    <constraint firstAttribute="height" constant="21" id="Mlv-NI-Yzo"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="999" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t5N-DR-HCU">
+                                <rect key="frame" x="697" y="1000" width="42" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="t5N-DR-HCU" secondAttribute="height" multiplier="2:1" id="0kl-a7-27c"/>
+                                    <constraint firstAttribute="height" constant="21" id="aiA-zU-TRP"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="e3u-EV-9uz" firstAttribute="trailing" secondItem="t5N-DR-HCU" secondAttribute="trailing" constant="29" id="564-uF-5uC"/>
                             <constraint firstItem="VLz-I4-D2u" firstAttribute="leading" secondItem="e3u-EV-9uz" secondAttribute="leading" constant="20" id="5xp-Gv-uSx"/>
                             <constraint firstItem="rle-Bu-GQ8" firstAttribute="trailing" secondItem="e3u-EV-9uz" secondAttribute="trailing" id="7IV-yd-tY7"/>
                             <constraint firstItem="rle-Bu-GQ8" firstAttribute="leading" secondItem="VLz-I4-D2u" secondAttribute="trailing" constant="-64" id="7sa-fg-7To"/>
+                            <constraint firstItem="t5N-DR-HCU" firstAttribute="leading" secondItem="vFL-cJ-08F" secondAttribute="trailing" constant="29" id="G67-LR-CvK"/>
+                            <constraint firstItem="vFL-cJ-08F" firstAttribute="top" secondItem="rle-Bu-GQ8" secondAttribute="bottom" constant="-65" id="I4L-vg-F2A"/>
                             <constraint firstItem="Y75-Qr-R8i" firstAttribute="centerX" secondItem="xJs-p0-BDZ" secondAttribute="centerX" id="N0V-GG-zFs"/>
+                            <constraint firstItem="e3u-EV-9uz" firstAttribute="bottom" secondItem="t5N-DR-HCU" secondAttribute="bottom" constant="3" id="Od8-OK-EEc"/>
                             <constraint firstItem="Y75-Qr-R8i" firstAttribute="top" secondItem="rle-Bu-GQ8" secondAttribute="bottom" constant="-210" id="WLq-26-TEu"/>
+                            <constraint firstItem="5wL-jN-uGy" firstAttribute="leading" secondItem="rle-Bu-GQ8" secondAttribute="trailing" constant="-100" id="Wc5-8E-GoU"/>
                             <constraint firstItem="e3u-EV-9uz" firstAttribute="bottom" secondItem="rle-Bu-GQ8" secondAttribute="bottom" id="X4S-gV-wkm"/>
                             <constraint firstItem="rle-Bu-GQ8" firstAttribute="top" secondItem="xJs-p0-BDZ" secondAttribute="top" id="XRF-Xb-M9H"/>
+                            <constraint firstItem="Lo8-eG-aHX" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Y75-Qr-R8i" secondAttribute="trailing" constant="138" id="ZxR-JW-kTn"/>
                             <constraint firstItem="rle-Bu-GQ8" firstAttribute="leading" secondItem="e3u-EV-9uz" secondAttribute="leading" id="cCI-CX-eQ6"/>
                             <constraint firstItem="e3u-EV-9uz" firstAttribute="bottom" secondItem="VLz-I4-D2u" secondAttribute="bottom" constant="20" id="chE-hw-UJ2"/>
+                            <constraint firstItem="5wL-jN-uGy" firstAttribute="leading" secondItem="Lo8-eG-aHX" secondAttribute="trailing" constant="29" id="lRb-Sq-URI"/>
+                            <constraint firstItem="e3u-EV-9uz" firstAttribute="bottom" secondItem="Lo8-eG-aHX" secondAttribute="bottom" constant="3" id="tv9-L7-1ym"/>
+                            <constraint firstItem="5wL-jN-uGy" firstAttribute="leading" secondItem="vFL-cJ-08F" secondAttribute="trailing" id="x6w-YB-UII"/>
+                            <constraint firstItem="5wL-jN-uGy" firstAttribute="top" secondItem="rle-Bu-GQ8" secondAttribute="bottom" constant="-65" id="ypO-fC-yKY"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="e3u-EV-9uz"/>
                     </view>
                     <connections>
                         <outlet property="canonView" destination="Y75-Qr-R8i" id="btb-8b-udK"/>
+                        <outlet property="currentBubbleLabel" destination="Lo8-eG-aHX" id="Ljl-VY-C2t"/>
+                        <outlet property="nextBubbleLabel" destination="t5N-DR-HCU" id="x5f-Xm-r89"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8uC-X7-ras" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -446,6 +492,7 @@
     </scenes>
     <resources>
         <image name="background" width="768" height="1024"/>
+        <image name="box" width="200" height="130"/>
         <image name="bubble-blue" width="102" height="103"/>
         <image name="bubble-bomb" width="168" height="168"/>
         <image name="bubble-green" width="103" height="103"/>

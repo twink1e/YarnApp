@@ -13,10 +13,11 @@ class LevelDesignerViewController: UIViewController {
     @IBOutlet private var saveButton: UIButton!
     @IBOutlet private var bubbleModifierButtons: [UIButton]!
     var viewModel = LevelDesignerViewModel()
-    var gameEngine: GameEngine!
     let reuseIdentifier = "hexGridCell"
     var cellWidth: CGFloat = 0
     var levelDesignCellWidth: CGFloat = 0
+    var screenWidth: CGFloat = 0
+    var screenHeight: CGFloat = 0
 
     let saveLevelAlertTitle = "Save Level"
     let saveLevelAlertMsg = "Enter name (max 15 characters).\nOld level will be overwritten if the name is the same."
@@ -53,12 +54,11 @@ class LevelDesignerViewController: UIViewController {
         gridView.dataSource = self
 
         // Customise grid according to screensize.
-        let screenWidth = min(UIScreen.main.bounds.width, UIScreen.main.bounds.height)
-        let screenHeight = max(UIScreen.main.bounds.width, UIScreen.main.bounds.height)
+        screenWidth = min(UIScreen.main.bounds.width, UIScreen.main.bounds.height)
+        screenHeight = max(UIScreen.main.bounds.width, UIScreen.main.bounds.height)
         gridView.frame = CGRect(x: 0, y: 20, width: screenWidth, height: screenWidth)
         cellWidth = screenWidth / CGFloat(viewModel.gridColEvenRow)
         levelDesignCellWidth = cellWidth - Config.levelDesignCellWidthReduction
-        gameEngine = GameEngine(radius: cellWidth / 2.0, width: screenWidth, height: screenHeight)
 
         // Gesture recognisers.
         let gridViewPanGesture = UIPanGestureRecognizer(target: self, action: #selector(gridViewPanned(_:)))
@@ -87,7 +87,9 @@ class LevelDesignerViewController: UIViewController {
             historyLevels.viewModel = viewModel
         } else if let gamePlay = segue.destination as? GamePlayViewController {
             gamePlay.initialBubbles = gameBubbles
-            gamePlay.gameEngine = gameEngine
+            gamePlay.bubbleRadius = cellWidth / 2.0
+            gamePlay.screenWidth = screenWidth
+            gamePlay.screenHeight = screenHeight
         }
     }
 
@@ -102,7 +104,7 @@ class LevelDesignerViewController: UIViewController {
                     continue
                 }
                 let views = cell.contentView.subviews.filter { $0 is UIImageView }
-                let (actualX, actualY) = gameEngine.renderer.upperLeftCoord(for: [i, j])
+                let (actualX, actualY) = viewModel.upperLeftCoord(for: [i, j], bubbleRadius: cellWidth / 2.0)
                 views.first?.frame = CGRect(x: actualX, y: actualY, width: cellWidth, height: cellWidth)
                 bubbles.append(GameBubble(color: cellModel.color, power: cellModel.power, view: views.first as! UIImageView))
             }

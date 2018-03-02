@@ -6,10 +6,16 @@ import PhysicsEngine
  */
 class GamePlayViewController: UIViewController {
     var initialBubbles: [GameBubble] = []
+    var bubbleRadius: CGFloat = 0
+    var screenWidth: CGFloat = 0
+    var screenHeight: CGFloat = 0
     var gameEngine: GameEngine!
     var prevFrameTime: CFTimeInterval = 0
     var displaylink: CADisplayLink!
+
     @IBOutlet var canonView: UIImageView!
+    @IBOutlet var currentBubbleLabel: UILabel!
+    @IBOutlet var nextBubbleLabel: UILabel!
     @IBAction func backToDesigner(_ sender: Any) {
         displaylink?.invalidate()
         gameEngine.clear()
@@ -23,7 +29,7 @@ class GamePlayViewController: UIViewController {
     // rotate the canon to face the point user tapped and launch projectile.
     @objc func tapCanon(_ sender : UITapGestureRecognizer) {
         let position = sender.location(in: view)
-        guard !gameEngine.projectile.launched && gameEngine.renderer.rotateCanon(canonView, to: position) else {
+        guard !gameEngine.currentProjectile.launched && gameEngine.renderer.rotateCanon(canonView, to: position) else {
             return
         }
         launchProjectile(position)
@@ -37,7 +43,7 @@ class GamePlayViewController: UIViewController {
             return
         }
         let targetPoint = sender.location(in: view)
-        guard !gameEngine.projectile.launched && gameEngine.renderer.rotateCanon(canonView, to: targetPoint) else {
+        guard !gameEngine.currentProjectile.launched && gameEngine.renderer.rotateCanon(canonView, to: targetPoint) else {
             return
         }
         if sender.state == .ended {
@@ -46,32 +52,17 @@ class GamePlayViewController: UIViewController {
     }
 
     private func launchProjectile(_ targetPoint: CGPoint) {
-        gameEngine.projectile.setLaunchDirection(start: canonView.center, target: targetPoint)
+        gameEngine.currentProjectile.setLaunchDirection(start: canonView.center, target: targetPoint)
         gameEngine.renderer.releaseCanon(canonView)
         addDisplaylink()
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        gameEngine.renderer.addViewToScreen = { [weak self] (_ view: UIView)  in
-            self?.view.addSubview(view)
-        }
-        gameEngine.renderer.removeViewFromScreen = { (_ view: UIView) in
-            view.removeFromSuperview()
-        }
-        gameEngine.pauseGameLoop = { [weak self] in
-            self?.displaylink.invalidate()
-        }
-        gameEngine.renderer.itemsAnimator = UIDynamicAnimator(referenceView: view)
-        gameEngine.renderer.itemsAnimator?.delegate = gameEngine.renderer
-
-        // Set game initial view
-        gameEngine.buildGraph(initialBubbles)
+        gameEngine = GameEngine(radius: bubbleRadius, width: screenWidth, height: screenHeight, delegate: self)
         setCanonControl()
         canonView.layer.zPosition = 1
-        view.addSubview(canonView)
-        gameEngine.addNewProjectile()
+        gameEngine.startGame(initialBubbles)
     }
 
     func setCanonControl() {
@@ -100,4 +91,19 @@ class GamePlayViewController: UIViewController {
         gameEngine.moveProjectile(CGFloat(currentTime - prevFrameTime))
         prevFrameTime = currentTime
     }
+}
+
+extension GamePlayViewController: GamePlayDelegate {
+    func addViewToScreen (_ view: UIView) {
+        self.view.addSubview(view)
+    }
+
+    func pauseGameLoop() {
+        displaylink.invalidate()
+    }
+
+    var itemsAnimator: UIDynamicAnimator {
+        return UIDynamicAnimator(referenceView: view)
+    }
+
 }

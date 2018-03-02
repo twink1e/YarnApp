@@ -10,9 +10,8 @@ class Renderer: NSObject {
     let screenHeight: CGFloat
     var canonAnimationImages: [UIImage] = []
     var bubbleBurstAnimationImages: [UIImage] = []
+    weak var gamePlayDelegate: GamePlayDelegate?
     var itemsAnimator: UIDynamicAnimator?
-    var removeViewFromScreen: ((UIView) -> Void)?
-    var addViewToScreen: ((UIView) -> Void)?
 
     var bubbleDiameter: CGFloat {
         return 2 * bubbleRadius
@@ -21,13 +20,24 @@ class Renderer: NSObject {
         return sqrt(3) * bubbleRadius
     }
 
-    init(bubbleRadius: CGFloat, screenWidth: CGFloat, screenHeight: CGFloat) {
+    init(bubbleRadius: CGFloat, screenWidth: CGFloat, screenHeight: CGFloat, delegate: GamePlayDelegate) {
         self.bubbleRadius = bubbleRadius
         self.screenWidth = screenWidth
         self.screenHeight = screenHeight
+        gamePlayDelegate = delegate
         super.init()
+        itemsAnimator = gamePlayDelegate?.itemsAnimator
+        itemsAnimator?.delegate = self
         canonAnimationImages = cropSpriteSheet(#imageLiteral(resourceName: "canon-animation"), row: Config.canonAnimationSpriteRow, col: Config.canonAnimationSpriteCol)
         bubbleBurstAnimationImages = cropSpriteSheet(#imageLiteral(resourceName: "bubble-burst"), row: 1, col: 4)
+    }
+
+    func removeViewFromScreen(_ view: UIView) {
+        view.removeFromSuperview()
+    }
+
+    func addViewToScreen(_ view: UIView) {
+        gamePlayDelegate?.addViewToScreen(view)
     }
 
     private func cropSpriteSheet(_ sheet: UIImage, row: Int, col: Int) -> [UIImage] {
@@ -44,13 +54,6 @@ class Renderer: NSObject {
             }
         }
         return images
-    }
-    // Calculate the origin point of the bubble view given its grid position in designer.
-    func upperLeftCoord(for path: IndexPath) -> (CGFloat, CGFloat) {
-        let row = path[0]
-        let col = path[1]
-        let leftOffset = row % 2 == 0 ? 0 : bubbleRadius
-        return (leftOffset + CGFloat(col) * bubbleDiameter, CGFloat(row) * rowHeight)
     }
 
     // Snap the bubble so the origin become `newPos`.
@@ -148,7 +151,7 @@ class Renderer: NSObject {
 //        }
     }
     @objc func removeBubble(_ timer: Timer) {
-        self.removeViewFromScreen?(timer.userInfo as! UIView)
+        self.removeViewFromScreen(timer.userInfo as! UIView)
     }
 }
 
@@ -158,6 +161,6 @@ extension Renderer: UIDynamicAnimatorDelegate {
         // Remove all animated bubbles.
         let bubbleViews = animator.items(in: CGRect(origin: CGPoint(x: 0, y: 0),
                                                     size: CGSize(width: screenWidth, height: screenHeight)))
-        bubbleViews.forEach { removeViewFromScreen?($0 as! UIView) }
+        bubbleViews.forEach { removeViewFromScreen($0 as! UIView) }
     }
 }

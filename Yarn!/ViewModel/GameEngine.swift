@@ -8,12 +8,13 @@ import PhysicsEngine
  */
 class GameEngine {
     let allColors: [BubbleColor] = [.red, .orange, .green, .blue]
-    var projectile: ProjectileBubble!
+    var currentProjectile: ProjectileBubble!
+    var nextProjectile: ProjectileBubble?
     let renderer: Renderer
     let physicsEngine: PhysicsEngine
-    var numOfProjectileLeft = 100
+    var numOfProjectileLeft = 5
     var snapping = true
-    var pauseGameLoop: (() -> Void)?
+    weak var gamePlayDelegate: GamePlayDelegate?
 
     var screenWidth: CGFloat {
         return renderer.screenWidth
@@ -31,16 +32,27 @@ class GameEngine {
         return renderer.rowHeight
     }
 
-    init(radius: CGFloat, width: CGFloat, height: CGFloat) {
-        renderer = Renderer(bubbleRadius: radius, screenWidth: width, screenHeight: height)
+    init(radius: CGFloat, width: CGFloat, height: CGFloat, delegate: GamePlayDelegate) {
+        gamePlayDelegate = delegate
+        renderer = Renderer(bubbleRadius: radius, screenWidth: width, screenHeight: height, delegate: delegate)
         physicsEngine = PhysicsEngine(screenHeight: height, bubbleDiameter: radius * 2)
     }
 
     // Clear the game state when player exits.
     func clear() {
         physicsEngine.clear()
-        projectile = nil
+        currentProjectile = nil
+        nextProjectile = nil
         numOfProjectileLeft = 100
+    }
+
+    func startGame(_ bubbles: [GameBubble]) {
+        buildGraph(bubbles)
+        addNewProjectile()
+        guard moveUpProjectile() else {
+            loseGame()
+            return
+        }
     }
     
     // Backtrack the projectile if it has moved excessively,
@@ -49,22 +61,22 @@ class GameEngine {
     func moveProjectile(_ duration: CGFloat) {
         backtrackProjectileToInScreen()
        // Collided.
-        if let collidedBubbleAndDistance = physicsEngine.closestCollidedBubbleAndDistance(projectile) {
+        if let collidedBubbleAndDistance = physicsEngine.closestCollidedBubbleAndDistance(currentProjectile) {
             handleCollision(collidedBubbleAndDistance)
             return
         }
 
         // Hitting ceiling.
-        if abs(projectile.topY) <= Config.calculationErrorMargin {
+        if abs(currentProjectile.topY) <= Config.calculationErrorMargin {
             stopProjectileAndRemoveBubbles()
             return
         }
         // Hitting side wall.
-       if abs(projectile.leftX) <= Config.calculationErrorMargin || abs(projectile.rightX - screenWidth) <= Config.calculationErrorMargin {
-            projectile.reverse()
+       if abs(currentProjectile.leftX) <= Config.calculationErrorMargin || abs(currentProjectile.rightX - screenWidth) <= Config.calculationErrorMargin {
+            currentProjectile.reverse()
         }
         checkMagnets(attract: true)
-        projectile.moveForTime(duration)
+        currentProjectile.moveForTime(duration)
     }
 
     func winGame() {
@@ -78,48 +90,48 @@ class GameEngine {
         let magnets = physicsEngine.adjList.keys.filter { $0.power == .magnetic }
         magnets.forEach { renderer.showInactiveMagnet($0) }
         magnets
-            .filter { physicsEngine.clearPath(projectile, to: $0) }
+            .filter { physicsEngine.clearPath(currentProjectile, to: $0) }
             .forEach {
                 renderer.showActiveMagnet($0)
                 if attract {
-                    projectile.attractsTowards(x: $0.centerX, y: $0.centerY)
+                    currentProjectile.attractsTowards(x: $0.centerX, y: $0.centerY)
                 }
             }
     }
 
     private func backtrackProjectileToInScreen() {
-        if projectile.topY < 0 {
-            projectile.moveForY(-projectile.topY)
+        if currentProjectile.topY < 0 {
+            currentProjectile.moveForY(-currentProjectile.topY)
         }
-        if projectile.leftX < 0 {
-            projectile.moveForX(-projectile.leftX)
+        if currentProjectile.leftX < 0 {
+            currentProjectile.moveForX(-currentProjectile.leftX)
         }
-        if projectile.rightX > screenWidth {
-            projectile.moveForX(screenWidth - projectile.rightX)
+        if currentProjectile.rightX > screenWidth {
+            currentProjectile.moveForX(screenWidth - currentProjectile.rightX)
         }
     }
     private func handleCollision(_ collided: (GameBubble, CGFloat)) {
         var collidedBubbleAndDistance: (GameBubble, CGFloat)? = collided
         while let collidedBubble = collidedBubbleAndDistance?.0, let distance = collidedBubbleAndDistance?.1, distance < -Config.calculationErrorMargin {
-            physicsEngine.backtrackToTouching(projectile, with: collidedBubble)
+            physicsEngine.backtrackToTouching(currentProjectile, with: collidedBubble)
             if !collidedBubble.snapping {
-                projectile.setNonSnapping()
+                currentProjectile.setNonSnapping()
             }
-            collidedBubbleAndDistance = physicsEngine.closestCollidedBubbleAndDistance(projectile)
+            collidedBubbleAndDistance = physicsEngine.closestCollidedBubbleAndDistance(currentProjectile)
         }
         stopProjectileAndRemoveBubbles()
     }
 
     private func stopProjectileAndRemoveBubbles() {
-        projectile.stop()
-        pauseGameLoop?()
+        currentProjectile.stop()
+        gamePlayDelegate?.pauseGameLoop()
         maybeSnapProjectile()
         // Ensure no overlap with other bubbles
         //print ("after snap", physicsEngine.closestCollidedBubbleAndDistance(projectile))
         //print ("dist", physicsEngine.closestDistanceFromExistingBubble(projectile))
 
-        assert(physicsEngine.closestDistanceFromExistingBubble(projectile) >= -Config.calculationErrorMargin)
-        physicsEngine.addToGraph(projectile)
+        assert(physicsEngine.closestDistanceFromExistingBubble(currentProjectile) >= -Config.calculationErrorMargin)
+        physicsEngine.addToGraph(currentProjectile)
         //print ("before removal", physicsEngine.adjList)
         clearRemovedBubbles()
         guard targetBubbleExists() else {
@@ -127,11 +139,10 @@ class GameEngine {
             return
         }
         //print ("after removal", physicsEngine.adjList)
-        guard numOfProjectileLeft > 0 else {
+        guard moveUpProjectile() else {
             loseGame()
             return
         }
-        addNewProjectile()
         checkMagnets(attract: false)
     }
 
@@ -147,22 +158,22 @@ class GameEngine {
         return colors.isEmpty ? nil : Array(colors)
     }
     private func maybeSnapProjectile() {
-        if !projectile.snapping {
+        if !currentProjectile.snapping {
             return
         }
-        let originalPos = CGPoint(x: projectile.leftX, y: projectile.topY)
-        let gridPos = renderer.snappedPos(projectile.leftX, projectile.topY)
-        renderer.snapBubble(projectile, to: gridPos)
-        if let collidedBubble = physicsEngine.closestCollidedBubbleAndDistance(projectile)?.0, !collidedBubble.snapping {
-            projectile.setNonSnapping()
-            renderer.snapBubble(projectile, to: originalPos)
+        let originalPos = CGPoint(x: currentProjectile.leftX, y: currentProjectile.topY)
+        let gridPos = renderer.snappedPos(currentProjectile.leftX, currentProjectile.topY)
+        renderer.snapBubble(currentProjectile, to: gridPos)
+        if let collidedBubble = physicsEngine.closestCollidedBubbleAndDistance(currentProjectile)?.0, !collidedBubble.snapping {
+            currentProjectile.setNonSnapping()
+            renderer.snapBubble(currentProjectile, to: originalPos)
         }
     }
 
     // Clear bursted and fallen bubbles.
     private func clearRemovedBubbles() {
-        let powerBursted = physicsEngine.bubblesBurstedByPower(projectile)
-        let colorBursted = physicsEngine.getBurstedBubbles(projectile)
+        let powerBursted = physicsEngine.bubblesBurstedByPower(currentProjectile)
+        let colorBursted = physicsEngine.getBurstedBubbles(currentProjectile)
         let bursted = powerBursted.union(colorBursted)
         let fell = physicsEngine.getFellBubbles(bursted)
         removeBurstedBubbles(Array(bursted))
@@ -174,25 +185,41 @@ class GameEngine {
     // If all target bubbles have no color, randomly choose from all colors.
     // Non-snapping will be set with a probability that respects snappingToNonSnappingRatio.
     func addNewProjectile() {
+        guard numOfProjectileLeft > 0 else {
+            nextProjectile = nil
+            return
+        }
         let colors = targetColors() ?? allColors
         let colorIndex = Int(arc4random_uniform(UInt32(colors.count)))
-        projectile = ProjectileBubble(color: colors[colorIndex], startCenterX: screenWidth / 2 + 100,
-                                      startCenterY: screenHeight - bubbleRadius,
-                                      radius: bubbleRadius)
+        let newProjectile = ProjectileBubble(color: colors[colorIndex], centerX: screenWidth - Config.nextBubbleTrailing,
+                                      centerY: screenHeight - Config.waitingBubbleBottomHeight - bubbleRadius,
+                                      radius: bubbleRadius, label: String(numOfProjectileLeft))
         let nonSnappingDraw = Int(arc4random_uniform(UInt32(Config.snappingToNonSnappingRatio + 1)))
         let lotteryNumber = 0
         if nonSnappingDraw == lotteryNumber {
-            projectile.setNonSnapping()
+            newProjectile.setNonSnapping()
         }
         print ("projectile", numOfProjectileLeft)
-        renderer.addViewToScreen?(projectile.view)
+        renderer.addViewToScreen(newProjectile.view)
+        nextProjectile = newProjectile
         numOfProjectileLeft -= 1
     }
 
+    // Return false if there is no more bubble left to play.
+    func moveUpProjectile() -> Bool {
+        guard let next = nextProjectile else {
+            return false
+        }
+        let newOrigin = CGPoint(x: screenWidth - Config.currentBubbleTrailing - bubbleRadius, y: screenHeight - Config.waitingBubbleBottomHeight - bubbleDiameter)
+        next.setOrigin(newOrigin)
+        currentProjectile = next
+        addNewProjectile()
+        return true
+    }
     // Build up existing bubble graph.
     func buildGraph(_ bubbles: [GameBubble]) {
         for bubble in bubbles {
-            renderer.addViewToScreen?(bubble.view)
+            renderer.addViewToScreen(bubble.view)
         }
         physicsEngine.buildGraph(bubbles)
     }

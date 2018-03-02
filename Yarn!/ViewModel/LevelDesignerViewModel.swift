@@ -197,4 +197,14 @@ class LevelDesignerViewModel {
     func getTableCellViewModel(at indexPath: IndexPath) -> HistoryLevelsTableCellViewModel {
         return HistoryLevelsTableCellViewModel(storedLevels?[indexPath.row])
     }
+
+    // Calculate the origin point of the bubble view if it is closely packed with no margin.
+    func upperLeftCoord(for path: IndexPath, bubbleRadius: CGFloat) -> (CGFloat, CGFloat) {
+        let row = path[0]
+        let col = path[1]
+        let leftOffset = row % 2 == 0 ? 0 : bubbleRadius
+        let bubbleDiameter = bubbleRadius * 2
+        let rowHeight = sqrt(3) * bubbleRadius
+        return (leftOffset + CGFloat(col) * bubbleDiameter, CGFloat(row) * rowHeight)
+    }
 }

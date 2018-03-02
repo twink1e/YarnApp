@@ -9,4 +9,7 @@ extension Config {
     static let canonAnimationSpriteRow = 2
     static let canonAnimationSpriteCol = 5
     static let bubbleBurstAnimationDuration = 0.3
+    static let waitingBubbleBottomHeight: CGFloat = 53
+    static let nextBubbleTrailing: CGFloat = 50
+    static let currentBubbleTrailing: CGFloat = 150
 }
