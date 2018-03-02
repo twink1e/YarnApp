@@ -16,6 +16,7 @@ class GamePlayViewController: UIViewController {
     var prevFrameTime: CFTimeInterval = 0
     var displaylink: CADisplayLink!
 
+    @IBOutlet var pointsView: UILabel!
     @IBOutlet var canonView: UIImageView!
     @IBOutlet var currentBubbleLabel: UILabel!
     @IBOutlet var nextBubbleLabel: UILabel!
@@ -105,6 +106,10 @@ class GamePlayViewController: UIViewController {
 }
 
 extension GamePlayViewController: GamePlayDelegate {
+    func updatePoints(_ points: String) {
+        pointsView.text = points
+    }
+    
     func winGame(_ points: String) {
         let storyboard = UIStoryboard(name: storyboardName, bundle: nil)
         let controller = storyboard.instantiateViewController(withIdentifier: winIdentifier) as! GameResultViewController

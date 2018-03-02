@@ -5,6 +5,7 @@ protocol GamePlayDelegate: class {
     func pauseGameLoop()
     func updateCurrentBubbleLabel(_: String)
     func updateNextBubbleLabel(_: String)
+    func updatePoints(_: String)
     func winGame(_: String)
     func loseGame()
     var itemsAnimator: UIDynamicAnimator{ get }

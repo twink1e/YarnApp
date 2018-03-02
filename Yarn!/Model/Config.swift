@@ -14,4 +14,7 @@ extension Config {
     static let waitingBubbleBottomHeight: CGFloat = 53
     static let nextBubbleTrailing: CGFloat = 50
     static let currentBubbleTrailing: CGFloat = 150
+    static let burstPoints = 10
+    static let unusedPoints = 20
+    static let fellPoints = 30
 }

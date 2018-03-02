@@ -7,7 +7,7 @@ import PhysicsEngine
  and a PhysicsEngine for path computation and collision detection.
  */
 class GameEngine {
-    let noBubbleLeftLabel = "0"
+    let noBubbleLeftLabel = 0
     let allColors: [BubbleColor] = [.red, .orange, .green, .blue]
     var currentProjectile: ProjectileBubble!
     var nextProjectile: ProjectileBubble?
@@ -15,6 +15,11 @@ class GameEngine {
     let physicsEngine: PhysicsEngine
     var numOfProjectileLeft = 5
     weak var gamePlayDelegate: GamePlayDelegate?
+    var points = 0
+    let numberFormatter = NumberFormatter()
+    var pointString: String {
+        return numberFormatter.string(from: NSNumber(value:points))!
+    }
 
     let screenWidth: CGFloat
     let screenHeight: CGFloat
@@ -33,6 +38,7 @@ class GameEngine {
         gamePlayDelegate = delegate
         renderer = Renderer(bubbleRadius: radius, screenWidth: width, screenHeight: height, delegate: delegate)
         physicsEngine = PhysicsEngine(screenHeight: height, bubbleDiameter: radius * 2)
+        numberFormatter.numberStyle = NumberFormatter.Style.decimal
     }
 
     // Clear the game state when player exits.
@@ -41,6 +47,8 @@ class GameEngine {
         nextProjectile = nil
         renderer.clearBubbleViews(Array(physicsEngine.adjList.keys))
         physicsEngine.clear()
+        points = 0
+        gamePlayDelegate?.updatePoints("0")
         numOfProjectileLeft = 100
     }
 
@@ -121,13 +129,17 @@ class GameEngine {
         // Ensure no overlap with other bubbles
         //print ("after snap", physicsEngine.closestCollidedBubbleAndDistance(projectile))
         //print ("dist", physicsEngine.closestDistanceFromExistingBubble(projectile))
-
         assert(physicsEngine.closestDistanceFromExistingBubble(currentProjectile) >= -Config.calculationErrorMargin)
         physicsEngine.addToGraph(currentProjectile)
+        guard !projectileTouchingCuttingLine() else {
+            gamePlayDelegate?.loseGame()
+            return
+        }
         //print ("before removal", physicsEngine.adjList)
         clearRemovedBubbles()
         guard targetBubbleExists() else {
-            gamePlayDelegate?.winGame("1")
+            points += (nextProjectile?.label ?? 0) * Config.unusedPoints
+            gamePlayDelegate?.winGame(pointString)
             return
         }
         //print ("after removal", physicsEngine.adjList)
@@ -136,6 +148,10 @@ class GameEngine {
             return
         }
         checkMagnets(attract: false)
+    }
+
+    private func projectileTouchingCuttingLine() -> Bool {
+        return currentProjectile.centerY + bubbleRadius >= screenWidth
     }
 
     private func targetBubbleExists() -> Bool {
@@ -170,6 +186,10 @@ class GameEngine {
         let fell = physicsEngine.getFellBubbles(bursted)
         removeBurstedBubbles(Array(bursted))
         removeFellBubbles(Array(fell))
+        print (bursted.count, bursted)
+        print (fell.count, fell)
+        points += Config.burstPoints * bursted.count + Config.fellPoints * fell.count
+        gamePlayDelegate?.updatePoints(pointString)
     }
 
     // Add a new projectile waiting to be launched.
@@ -179,14 +199,14 @@ class GameEngine {
     func addNewProjectile() {
         guard numOfProjectileLeft > 0 else {
             nextProjectile = nil
-            gamePlayDelegate?.updateNextBubbleLabel(noBubbleLeftLabel)
+            gamePlayDelegate?.updateNextBubbleLabel(String(noBubbleLeftLabel))
             return
         }
         let colors = targetColors() ?? allColors
         let colorIndex = Int(arc4random_uniform(UInt32(colors.count)))
         let newProjectile = ProjectileBubble(color: colors[colorIndex], centerX: screenWidth - Config.nextBubbleTrailing,
                                       centerY: screenHeight - Config.waitingBubbleBottomHeight - bubbleRadius,
-                                      radius: bubbleRadius, label: String(numOfProjectileLeft))
+                                      radius: bubbleRadius, label: numOfProjectileLeft)
         let nonSnappingDraw = Int(arc4random_uniform(UInt32(Config.snappingToNonSnappingRatio + 1)))
         let lotteryNumber = 0
         if nonSnappingDraw == lotteryNumber {
@@ -194,20 +214,20 @@ class GameEngine {
         }
         renderer.addViewToScreen(newProjectile.view)
         nextProjectile = newProjectile
-        gamePlayDelegate?.updateNextBubbleLabel(newProjectile.label)
+        gamePlayDelegate?.updateNextBubbleLabel(String(newProjectile.label))
         numOfProjectileLeft -= 1
     }
 
     // Return false if there is no more bubble left to play.
     func moveUpProjectile() -> Bool {
         guard let next = nextProjectile else {
-            gamePlayDelegate?.updateCurrentBubbleLabel(noBubbleLeftLabel)
+            gamePlayDelegate?.updateCurrentBubbleLabel(String(noBubbleLeftLabel))
             return false
         }
         let newOrigin = CGPoint(x: screenWidth - Config.currentBubbleTrailing - bubbleRadius, y: screenHeight - Config.waitingBubbleBottomHeight - bubbleDiameter)
         next.setOrigin(newOrigin)
         currentProjectile = next
-        gamePlayDelegate?.updateCurrentBubbleLabel(currentProjectile.label)
+        gamePlayDelegate?.updateCurrentBubbleLabel(String(currentProjectile.label))
         addNewProjectile()
         return true
     }

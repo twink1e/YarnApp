@@ -10,7 +10,7 @@ class ProjectileBubble: GameBubble {
     private(set) var launched = false
     private(set) var vectorX: CGFloat = 0
     private(set) var vectorY: CGFloat = 0
-    let label: String
+    let label: Int
     private let colorToImage = [
         BubbleColor.blue: #imageLiteral(resourceName: "bubble-blue"),
         BubbleColor.red: #imageLiteral(resourceName: "bubble-red"),
@@ -19,7 +19,7 @@ class ProjectileBubble: GameBubble {
     ]
 
     // Construct a new UIImageView based on the color and dimension given.
-    init(color: BubbleColor, centerX: CGFloat, centerY: CGFloat, radius: CGFloat, label: String) {
+    init(color: BubbleColor, centerX: CGFloat, centerY: CGFloat, radius: CGFloat, label: Int) {
         let view = UIImageView(image: colorToImage[color])
         view.frame = CGRect(x: centerX - radius, y: centerY - radius, width: radius * 2, height: radius * 2)
         view.layer.cornerRadius = radius
