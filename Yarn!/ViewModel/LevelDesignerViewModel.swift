@@ -30,11 +30,9 @@ class LevelDesignerViewModel {
         7: .lightning,
         8: .star
     ]
+    let entityName = "Level"
     var storage: Storage?
-    var storedLevels: [NSManagedObject]? {
-        return storage?.storedLevels
-    }
-    var currentLevelName: String?
+    var currentLevel: NSManagedObject?
     let storageLoadErrorMsg = "Can't load saved levels."
     let storageSaveErrorMsg = "Can't save level."
 
@@ -43,17 +41,21 @@ class LevelDesignerViewModel {
     var currentPower: BubblePower?
     weak var levelDesignerDelegate: LevelDesignerDelegate?
 
-    init(_ delegate: LevelDesignerDelegate) {
+    init(_ delegate: LevelDesignerDelegate, context: NSManagedObjectContext, levelId: Int?) {
         guard let grid = HexGrid(row: gridRow, col: gridColEvenRow) else {
             fatalError("Invalid grid size.")
         }
         self.grid = grid
         levelDesignerDelegate = delegate
+        setStorage(context)
+        if let id = levelId {
+            setLevel(id)
+        }
     }
 
     // Init core data storage with the given context.
-    func setStorage(_ managedContext: NSManagedObjectContext) {
-        guard let entity = NSEntityDescription.entity(forEntityName: "Level", in: managedContext) else {
+    private func setStorage(_ managedContext: NSManagedObjectContext) {
+        guard let entity = NSEntityDescription.entity(forEntityName: entityName, in: managedContext) else {
             levelDesignerDelegate?.alertStorageError(storageLoadErrorMsg)
             return
         }
@@ -65,10 +67,13 @@ class LevelDesignerViewModel {
     }
 
     /// Save the current level, and execute the success and error callbacks accordingly.
-    func saveLevel(_ name: String, screenshot: UIImage?) {
+    func saveLevel(_ name: String, yarnLimit: Int, screenshot: UIImage?) {
         do {
-            try storage?.saveLevel(name, grid: grid, screenshot: screenshot)
-            currentLevelName = name
+            if let level = currentLevel {
+                try storage?.overwriteLevel(level, name: name, yarnLimit: yarnLimit, grid: grid, screenshot: screenshot)
+            } else {
+                try storage?.saveNewLevel(name, yarnLimit: yarnLimit, grid: grid, screenshot: screenshot)
+            }
             levelDesignerDelegate?.showSaveSuccess()
         } catch {
             levelDesignerDelegate?.alertStorageError(storageSaveErrorMsg)
@@ -77,12 +82,20 @@ class LevelDesignerViewModel {
 
     /// Load the selected stored level into the current grid, and execute the error callback if any error.
     /// Reload grid view if success.
-    func setLevel(_ index: Int) {
-        guard let gridString = storedLevels?[index].value(forKeyPath: "grid") as? String,
-            let gridName = storedLevels?[index].value(forKeyPath: "name") as? String else {
+    private func setLevel(_ id: Int) {
+        do {
+            try currentLevel = storage?.levelWithId(id)
+        } catch {
+            levelDesignerDelegate?.alertStorageError(storageSaveErrorMsg)
+        }
+        guard let gridString = currentLevel?.value(forKeyPath: Storage.gridKey) as? String,
+            let name = currentLevel?.value(forKeyPath: Storage.nameKey) as? String,
+            let yarnLimit = currentLevel?.value(forKeyPath: Storage.yarnKey) as? Int else {
             levelDesignerDelegate?.alertStorageError("Level not found!")
             return
         }
+        levelDesignerDelegate?.setName(name)
+        levelDesignerDelegate?.setYarnLimit(yarnLimit)
         guard let gridData = gridString.data(using: .utf8) else {
             levelDesignerDelegate?.alertStorageError("Fail to load level!")
             return
@@ -91,18 +104,9 @@ class LevelDesignerViewModel {
         do {
             let grid = try jsonDecoder.decode(HexGrid.self, from: gridData)
             self.grid = grid
-            currentLevelName = gridName
             levelDesignerDelegate?.reloadGridView()
         } catch {
             levelDesignerDelegate?.alertStorageError("Level data is corrupted!")
-        }
-    }
-
-    func deleteLevel(_ index: Int) {
-        do {
-            try storage?.deleteLevel(index)
-        } catch {
-            levelDesignerDelegate?.alertStorageError("Can't delete level!")
         }
     }
 
@@ -189,11 +193,6 @@ class LevelDesignerViewModel {
     /// - return `HexGridCellViewModel` constructed from the bubble at the given location for UICollectionView.
     func getCollectionCellViewModel(at indexPath: IndexPath) -> HexGridCellViewModel {
         return HexGridCellViewModel(grid.bubbles[indexPath.section][indexPath.row])
-    }
-
-    /// - return `HistoryLevelsTableCellViewModel` constructed from the level at the given location for UITableView.
-    func getTableCellViewModel(at indexPath: IndexPath) -> HistoryLevelsTableCellViewModel {
-        return HistoryLevelsTableCellViewModel(storedLevels?[indexPath.row])
     }
 
     // Calculate the origin point of the bubble view if it is closely packed with no margin.

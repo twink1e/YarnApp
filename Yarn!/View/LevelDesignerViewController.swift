@@ -11,6 +11,9 @@ class LevelDesignerViewController: UIViewController {
     @IBOutlet private var resetButton: UIButton!
     @IBOutlet private var controlArea: UIView!
     @IBOutlet private var saveButton: UIButton!
+    @IBOutlet var nameTextField: UITextField!
+    @IBOutlet var startButton: UIButton!
+    @IBOutlet var yarnTextField: UITextField!
     @IBOutlet private var bubbleModifierButtons: [UIButton]!
     var viewModel: LevelDesignerViewModel!
     let reuseIdentifier = "hexGridCell"
@@ -18,24 +21,29 @@ class LevelDesignerViewController: UIViewController {
     var levelDesignCellWidth: CGFloat = 0
     var screenWidth: CGFloat = 0
     var screenHeight: CGFloat = 0
-
-    let saveLevelAlertTitle = "Save Level"
-    let saveLevelAlertMsg = "Enter name (max 15 characters).\nOld level will be overwritten if the name is the same."
+    var currentLevelId: Int?
     let saveSuccessMsg = "Level saved!"
-    let saveButtonText = "Save"
-    let cancelButtonText = "Cancel"
-    let maxNameLength = 15
+    let saveFailMsg = "Fail to save level..."
+    let maxNameLength = 20
+    let maxYarnLength = 3
+    let nameTextFieldTag = 0
+    let yarnTextFieldTag = 1
     override var prefersStatusBarHidden: Bool {
         return true
     }
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        viewModel = LevelDesignerViewModel(self)
-        loadStorageWithContext()
+        setViewModel()
 
         gridView.delegate = self
         gridView.dataSource = self
+
+        saveButton.isEnabled = false
+        NotificationCenter.default.addObserver(forName: .UITextFieldTextDidChange,
+                                               object:nameTextField, queue: OperationQueue.main) { _ in self.updateSaveAndStartEnabled() }
+        NotificationCenter.default.addObserver(forName: .UITextFieldTextDidChange,
+                                               object:yarnTextField, queue: OperationQueue.main) { _ in self.updateSaveAndStartEnabled() }
 
         // Customise grid according to screensize.
         screenWidth = min(UIScreen.main.bounds.width, UIScreen.main.bounds.height)
@@ -96,13 +104,28 @@ class LevelDesignerViewController: UIViewController {
         return bubbles
     }
 
-    func loadStorageWithContext() {
+    func updateSaveAndStartEnabled() {
+        guard let nameText = nameTextField.text, let yarnText = yarnTextField.text, !yarnText.isEmpty else {
+            saveButton.isEnabled = false
+            startButton.isEnabled = false
+            return
+        }
+        startButton.isEnabled = true
+        let trimmedText = nameText.trimmingCharacters(in: .whitespacesAndNewlines)
+        nameTextField.text = trimmedText
+        if !trimmedText.isEmpty {
+            saveButton.isEnabled = true
+        }
+    }
+
+    func setViewModel() {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             return
         }
         let managedContext = appDelegate.persistentContainer.viewContext
-        viewModel.setStorage(managedContext)
+        viewModel = LevelDesignerViewModel(self, context: managedContext, levelId: currentLevelId)
     }
+
     /// - return UIImage of the grid view with bubbles.
     var gridScreenshot: UIImage? {
         UIGraphicsBeginImageContextWithOptions(gridView.bounds.size, gridView.isOpaque, 0.0)
@@ -187,32 +210,11 @@ class LevelDesignerViewController: UIViewController {
     /// Prompt user to enter a valid name for the level to be saved.
     /// The name cannot be empty, nor more than 15 characters long.
     @IBAction func saveButtonPressed(_ button: UIButton) {
-        let alert = UIAlertController(title: saveLevelAlertTitle, message: saveLevelAlertMsg, preferredStyle: .alert)
-        let saveAction = UIAlertAction(title: saveButtonText, style: .default) { [unowned self] _ in
-            guard let textField = alert.textFields?[0], let name = textField.text else {
-                return
-            }
-            self.viewModel.saveLevel(name, screenshot: self.gridScreenshot)
-
+        guard let name = nameTextField.text, let yarn = yarnTextField.text, let yarnLimit = Int(yarn) else {
+            showToast(saveFailMsg)
+            return
         }
-        let cancelAction = UIAlertAction(title: cancelButtonText, style: .default)
-
-        alert.addTextField { [unowned self] textField in
-            if let name = self.viewModel.currentLevelName {
-                textField.text = name
-            } else {
-                saveAction.isEnabled = false
-            }
-        }
-        alert.textFields?.first?.delegate = self
-        NotificationCenter.default.addObserver(forName: .UITextFieldTextDidChange,
-                                               object:alert.textFields?[0], queue: OperationQueue.main) { _ -> Void in
-            let name = alert.textFields?[0]
-            saveAction.isEnabled = !(name?.text?.isEmpty ?? true)
-        }
-        alert.addAction(saveAction)
-        alert.addAction(cancelAction)
-        present(alert, animated: true)
+        self.viewModel.saveLevel(name, yarnLimit: yarnLimit, screenshot: self.gridScreenshot)
     }
 
     /// Clear the grid of bubbles.
@@ -220,14 +222,26 @@ class LevelDesignerViewController: UIViewController {
         viewModel.reset()
     }
 }
+
 extension LevelDesignerViewController: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange,
                    replacementString string: String) -> Bool {
         guard let text = textField.text else {
             return true
         }
-        let newLength = text.count + string.count - range.length
-        return newLength <= maxNameLength
+        let newText = (text as NSString).replacingCharacters(in: range, with: string)
+        return textField.tag == nameTextFieldTag ? shouldNameChange(newText) : shouldYarnChange(newText)
+    }
+
+    private func shouldNameChange(_ newText: String) -> Bool {
+        return newText.count <= maxNameLength
+    }
+
+    private func shouldYarnChange(_ newText: String) -> Bool {
+        guard newText.count <= maxNameLength, let intVal = Int(newText) else {
+            return false
+        }
+        return intVal <= 999 && intVal >= 1
     }
 }
 
@@ -281,6 +295,14 @@ UICollectionViewDelegate, UICollectionViewDataSource {
 }
 
 extension LevelDesignerViewController: LevelDesignerDelegate {
+    func setName(_ name: String) {
+        nameTextField.text = name
+    }
+
+    func setYarnLimit(_ limit : Int) {
+        yarnTextField.text = String(limit)
+    }
+
     func reloadGridCells(_ paths: [IndexPath]) {
         DispatchQueue.main.async {
             self.gridView.reloadItems(at: paths)

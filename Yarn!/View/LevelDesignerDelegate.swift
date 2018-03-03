@@ -5,4 +5,6 @@ protocol LevelDesignerDelegate: class {
     func reloadGridView()
     func alertStorageError(_: String)
     func showSaveSuccess()
+    func setName(_: String)
+    func setYarnLimit(_: Int)
 }

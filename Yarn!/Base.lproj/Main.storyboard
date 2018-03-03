@@ -35,7 +35,10 @@
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                         <state key="normal" title="Save">
-                                            <color key="titleColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <color key="titleColor" red="0.85538858179999999" green="0.35750532149999997" blue="0.31959751250000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <state key="disabled">
+                                            <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
                                         <connections>
                                             <action selector="saveButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Ujr-80-PNG"/>
@@ -45,7 +48,7 @@
                                         <rect key="frame" x="60" y="210" width="44" height="60"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                         <state key="normal" title="Load">
-                                            <color key="titleColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <color key="titleColor" red="0.85538858179999999" green="0.35750532149999997" blue="0.31959751250000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <connections>
                                             <segue destination="Ihy-4E-bfe" kind="popoverPresentation" popoverAnchorView="MCU-tX-FKW" id="I9n-cW-gdk">
@@ -57,7 +60,10 @@
                                         <rect key="frame" x="363" y="210" width="42" height="60"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                         <state key="normal" title="Start">
-                                            <color key="titleColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <color key="titleColor" red="0.8553885817527771" green="0.35750532150268555" blue="0.3195975124835968" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <state key="disabled">
+                                            <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
                                         <connections>
                                             <segue destination="yBG-Lq-Qxv" kind="show" animates="NO" id="oNu-gh-lDL"/>
@@ -115,7 +121,10 @@
                                         <rect key="frame" x="658" y="210" width="50" height="60"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                         <state key="normal" title="Reset">
-                                            <color key="titleColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <color key="titleColor" red="0.85538858179999999" green="0.35750532149999997" blue="0.31959751250000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <state key="disabled">
+                                            <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
                                         <connections>
                                             <action selector="resetButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ZSf-FW-Xkp"/>
@@ -261,20 +270,63 @@
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
+                            <textField opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="555555" borderStyle="roundedRect" minimumFontSize="20" translatesAutoresizingMaskIntoConstraints="NO" id="i19-Nn-1ly" userLabel="yarn">
+                                <rect key="frame" x="247" y="647" width="89" height="30"/>
+                                <color key="textColor" red="0.94684940576553345" green="0.34438735246658325" blue="0.29858610033988953" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="numberPad" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no"/>
+                                <connections>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="qya-Ta-Mfh"/>
+                                </connections>
+                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name (&lt;21 letter):" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hTh-gh-fUf">
+                                <rect key="frame" x="60" y="601" width="154.5" height="23"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Yarn limit (1 ~ 999):" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eoh-ba-nQv">
+                                <rect key="frame" x="60" y="651" width="167" height="23"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="😋😋😋😋😋😋😋😋😋😋😋😋😋😋😋😋😋😋😋😋" borderStyle="roundedRect" adjustsFontForContentSizeCategory="YES" minimumFontSize="20" translatesAutoresizingMaskIntoConstraints="NO" id="Tp5-7U-6k0" userLabel="name">
+                                <rect key="frame" x="246" y="597" width="500" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="500" id="uwL-XL-Yf3"/>
+                                </constraints>
+                                <color key="textColor" red="0.94684940576553345" green="0.34438735246658325" blue="0.29858610033988953" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no"/>
+                                <connections>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="fcG-Wa-25j"/>
+                                </connections>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="i19-Nn-1ly" firstAttribute="leading" secondItem="eoh-ba-nQv" secondAttribute="trailing" constant="20" id="BKh-Qx-A2p"/>
                             <constraint firstItem="45t-nO-28i" firstAttribute="top" secondItem="Waq-hS-2YR" secondAttribute="top" id="C7c-Fp-7Sl"/>
                             <constraint firstItem="boa-eZ-ke3" firstAttribute="top" secondItem="45t-nO-28i" secondAttribute="bottom" id="Dtt-cV-3F9"/>
                             <constraint firstItem="Waq-hS-2YR" firstAttribute="width" secondItem="6Tk-OE-BBY" secondAttribute="width" id="F2t-VP-jx7"/>
+                            <constraint firstItem="boa-eZ-ke3" firstAttribute="top" secondItem="eoh-ba-nQv" secondAttribute="bottom" constant="50" id="Iyl-us-NMz"/>
+                            <constraint firstItem="hTh-gh-fUf" firstAttribute="leading" secondItem="45t-nO-28i" secondAttribute="leading" constant="60" id="JqZ-gX-Aqu"/>
+                            <constraint firstItem="45t-nO-28i" firstAttribute="leading" relation="lessThanOrEqual" secondItem="hTh-gh-fUf" secondAttribute="trailing" constant="-162" id="MYf-6p-pBB"/>
                             <constraint firstItem="boa-eZ-ke3" firstAttribute="leading" secondItem="Waq-hS-2YR" secondAttribute="leading" id="QbL-3j-ug2"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="top" secondItem="Waq-hS-2YR" secondAttribute="top" id="Stv-Ct-vbF"/>
+                            <constraint firstItem="45t-nO-28i" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="eoh-ba-nQv" secondAttribute="trailing" constant="-230.5" id="U34-KJ-Ac6"/>
                             <constraint firstItem="Waq-hS-2YR" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="U4U-54-GrR"/>
+                            <constraint firstItem="boa-eZ-ke3" firstAttribute="top" secondItem="Tp5-7U-6k0" secondAttribute="bottom" constant="97" id="Urp-HO-3QK"/>
+                            <constraint firstItem="boa-eZ-ke3" firstAttribute="top" secondItem="hTh-gh-fUf" secondAttribute="bottom" constant="100" id="XsQ-aJ-hpj"/>
+                            <constraint firstItem="eoh-ba-nQv" firstAttribute="leading" secondItem="45t-nO-28i" secondAttribute="leading" constant="60" id="ZEB-nF-GBx"/>
                             <constraint firstItem="Waq-hS-2YR" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="dlr-Yh-8nG"/>
                             <constraint firstItem="boa-eZ-ke3" firstAttribute="bottom" secondItem="Waq-hS-2YR" secondAttribute="bottom" id="eUw-dp-JiU"/>
                             <constraint firstItem="boa-eZ-ke3" firstAttribute="width" secondItem="Waq-hS-2YR" secondAttribute="width" id="f4l-cC-MWy"/>
                             <constraint firstItem="45t-nO-28i" firstAttribute="width" secondItem="Waq-hS-2YR" secondAttribute="width" id="mC6-iz-W9Q"/>
                             <constraint firstItem="Waq-hS-2YR" firstAttribute="height" secondItem="6Tk-OE-BBY" secondAttribute="height" id="mOV-U7-nM9"/>
+                            <constraint firstItem="Tp5-7U-6k0" firstAttribute="leading" secondItem="hTh-gh-fUf" secondAttribute="trailing" constant="31.5" id="pac-LK-ZJC"/>
+                            <constraint firstItem="boa-eZ-ke3" firstAttribute="top" secondItem="i19-Nn-1ly" secondAttribute="bottom" constant="47" id="r2O-hH-jXK"/>
                             <constraint firstItem="45t-nO-28i" firstAttribute="leading" secondItem="Waq-hS-2YR" secondAttribute="leading" id="uQU-X5-rmj"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -282,8 +334,11 @@
                     <connections>
                         <outlet property="controlArea" destination="boa-eZ-ke3" id="9Ud-8W-hBC"/>
                         <outlet property="gridView" destination="45t-nO-28i" id="KBR-Nh-c10"/>
+                        <outlet property="nameTextField" destination="Tp5-7U-6k0" id="R3w-Oq-hD4"/>
                         <outlet property="resetButton" destination="J5K-vy-DEo" id="T9Q-mx-OV1"/>
                         <outlet property="saveButton" destination="ba2-Ph-Kcj" id="lOl-Yg-XbA"/>
+                        <outlet property="startButton" destination="btI-Oc-pEy" id="Mvd-A2-5TM"/>
+                        <outlet property="yarnTextField" destination="i19-Nn-1ly" id="eZG-cI-zF9"/>
                         <outletCollection property="bubbleModifierButtons" destination="CaS-hY-l2q" collectionClass="NSMutableArray" id="A2M-3e-QZn"/>
                         <outletCollection property="bubbleModifierButtons" destination="luQ-tr-Wel" collectionClass="NSMutableArray" id="9YD-lL-qha"/>
                         <outletCollection property="bubbleModifierButtons" destination="2zN-aK-o2H" collectionClass="NSMutableArray" id="dGn-sB-Mrr"/>
@@ -671,8 +726,8 @@
                                                 <constraint firstAttribute="width" secondItem="wyS-D9-age" secondAttribute="height" multiplier="1:1" id="wft-MT-C7e"/>
                                             </constraints>
                                         </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="😋😋😋😋😋😋😋😋😋😋😋😋😋😋😋😋😋😋😋😋" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NFh-u4-eP2">
-                                            <rect key="frame" x="30.5" y="20" width="300" height="62.5"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This is a long long long text 😋😋😋😋😋😋😋😋😋😋😋😋😋😋😋😋😋😋😋😋😋😋😋😋😋😋😋😋😋😋😋😋😋😋😋😋😋😋😋😋" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NFh-u4-eP2">
+                                            <rect key="frame" x="36.5" y="20" width="288" height="62.5"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" relation="lessThanOrEqual" constant="300" id="c5s-LT-l5J"/>
                                                 <constraint firstAttribute="height" relation="lessThanOrEqual" constant="70" id="zfX-CY-rZ5"/>

@@ -15,6 +15,7 @@
 		C07B290E204973DA00806774 /* GameResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C07B290D204973DA00806774 /* GameResultViewController.swift */; };
 		C07B2910204A5AAB00806774 /* LevelSelectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C07B290F204A5AAB00806774 /* LevelSelectorViewController.swift */; };
 		C07B2912204A5C4500806774 /* LevelSelectorDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C07B2911204A5C4500806774 /* LevelSelectorDelegate.swift */; };
+		C07B2914204AB42100806774 /* LevelSelectorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C07B2913204AB42100806774 /* LevelSelectorViewModel.swift */; };
 		C0917DAC2041C31200F7B093 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0917DAB2041C31200F7B093 /* AppDelegate.swift */; };
 		C0917DB12041C31200F7B093 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C0917DAF2041C31200F7B093 /* Main.storyboard */; };
 		C0917DB92041C31200F7B093 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C0917DB72041C31200F7B093 /* LaunchScreen.storyboard */; };
@@ -51,6 +52,7 @@
 		C07B290D204973DA00806774 /* GameResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameResultViewController.swift; sourceTree = "<group>"; };
 		C07B290F204A5AAB00806774 /* LevelSelectorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelSelectorViewController.swift; sourceTree = "<group>"; };
 		C07B2911204A5C4500806774 /* LevelSelectorDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelSelectorDelegate.swift; sourceTree = "<group>"; };
+		C07B2913204AB42100806774 /* LevelSelectorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelSelectorViewModel.swift; sourceTree = "<group>"; };
 		C0917DA82041C31200F7B093 /* Yarn!.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Yarn!.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0917DAB2041C31200F7B093 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C0917DB02041C31200F7B093 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -180,6 +182,7 @@
 				C0917DE82041D2DF00F7B093 /* LevelDesignerViewModel.swift */,
 				C0917DEA2041D2DF00F7B093 /* Renderer.swift */,
 				C06A477420425F6A004DBA07 /* PhysicsEngine.swift */,
+				C07B2913204AB42100806774 /* LevelSelectorViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -316,6 +319,7 @@
 				C0917DEE2041D2E000F7B093 /* LevelDesignerViewModel.swift in Sources */,
 				C0917DED2041D2E000F7B093 /* HistoryLevelsTableCellViewModel.swift in Sources */,
 				C0917DE22041D2CA00F7B093 /* Bubble.swift in Sources */,
+				C07B2914204AB42100806774 /* LevelSelectorViewModel.swift in Sources */,
 				C0917DCB2041C9A200F7B093 /* Yarn_.xcdatamodeld in Sources */,
 				C0917DF52041D3DA00F7B093 /* Config.swift in Sources */,
 				C0917DD72041D27E00F7B093 /* LevelDesignerViewController.swift in Sources */,
