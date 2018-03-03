@@ -12,10 +12,10 @@ class ProjectileBubble: GameBubble {
     private(set) var vectorY: CGFloat = 0
     let label: Int
     private let colorToImage = [
-        BubbleColor.blue: #imageLiteral(resourceName: "bubble-blue"),
-        BubbleColor.red: #imageLiteral(resourceName: "bubble-red"),
-        BubbleColor.orange: #imageLiteral(resourceName: "bubble-orange"),
-        BubbleColor.green: #imageLiteral(resourceName: "bubble-green")
+        BubbleColor.blue: #imageLiteral(resourceName: "bubble-blue-pin"),
+        BubbleColor.red: #imageLiteral(resourceName: "bubble-red-pin"),
+        BubbleColor.orange: #imageLiteral(resourceName: "bubble-orange-pin"),
+        BubbleColor.green: #imageLiteral(resourceName: "bubble-green-pin")
     ]
 
     // Construct a new UIImageView based on the color and dimension given.

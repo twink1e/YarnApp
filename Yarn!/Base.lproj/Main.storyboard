@@ -22,7 +22,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background" translatesAutoresizingMaskIntoConstraints="NO" id="Waq-hS-2YR">
+                            <imageView opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="designer-background" translatesAutoresizingMaskIntoConstraints="NO" id="Waq-hS-2YR">
                                 <rect key="frame" x="0.0" y="20" width="768" height="1004"/>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="boa-eZ-ke3" userLabel="Control Area">
@@ -859,6 +859,7 @@
         <image name="button" width="100" height="50"/>
         <image name="canon" width="500" height="1500"/>
         <image name="delete" width="85" height="85"/>
+        <image name="designer-background" width="768" height="1024"/>
         <image name="level" width="600" height="800"/>
         <image name="lose" width="960" height="640"/>
         <image name="menu-background" width="768" height="1024"/>
