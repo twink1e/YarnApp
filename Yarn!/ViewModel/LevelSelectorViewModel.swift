@@ -44,6 +44,7 @@ class LevelSelectorViewModel {
                 return
             }
             try storage?.deleteLevel(levels[index])
+            levels.remove(at: index)
         } catch {
             levelSelectorDelegate?.alertStorageError(storageDeleteErrorMsg)
         }
