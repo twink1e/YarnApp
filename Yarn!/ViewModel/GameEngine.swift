@@ -67,7 +67,8 @@ class GameEngine {
     // Then stop or move the projectile accordingly.
     func moveProjectile(_ duration: CGFloat) {
         backtrackProjectileToInScreen()
-       // Collided.
+
+        // Collided.
         if let collidedBubbleAndDistance = physicsEngine.closestCollidedBubbleAndDistance(currentProjectile) {
             handleCollision(collidedBubbleAndDistance)
             return
@@ -82,21 +83,19 @@ class GameEngine {
        if abs(currentProjectile.leftX) <= Config.calculationErrorMargin || abs(currentProjectile.rightX - screenWidth) <= Config.calculationErrorMargin {
             currentProjectile.reverse()
         }
-        checkMagnets(attract: true)
+        checkMagnets()
         currentProjectile.moveForTime(duration)
     }
 
     // Attract projectile to magnets that are not obstructed.
-    func checkMagnets(attract: Bool) {
+    func checkMagnets() {
         let magnets = physicsEngine.adjList.keys.filter { $0.power == .magnetic }
         magnets.forEach { renderer.showInactiveMagnet($0) }
         magnets
             .filter { physicsEngine.clearPath(currentProjectile, to: $0) }
             .forEach {
                 renderer.showActiveMagnet($0)
-                if attract {
-                    currentProjectile.attractsTowards(x: $0.centerX, y: $0.centerY)
-                }
+                currentProjectile.attractsTowards(x: $0.centerX, y: $0.centerY)
             }
     }
 
@@ -148,7 +147,6 @@ class GameEngine {
             gamePlayDelegate?.loseGame()
             return
         }
-        checkMagnets(attract: false)
     }
 
     private func projectileTouchingCuttingLine() -> Bool {
@@ -185,12 +183,23 @@ class GameEngine {
         let colorBursted = physicsEngine.getBurstedBubbles(currentProjectile)
         let bursted = powerBursted.union(colorBursted)
         let fell = physicsEngine.getFellBubbles(bursted)
-        removeBurstedBubbles(Array(bursted))
-        removeFellBubbles(Array(fell))
-        points += Config.burstPoints * bursted.count + Config.fellPoints * fell.count
-        gamePlayDelegate?.updatePoints(pointString)
+        let burstedArray = Array(bursted)
+        let fellArray = Array(fell)
+        removeBurstedBubbles(burstedArray)
+        removeFellBubbles(fellArray)
+        addPoints(bursted: burstedArray, fell: fellArray)
     }
 
+    private func addPoints(bursted: [GameBubble], fell: [GameBubble]) {
+        let burstedTargetCount = bursted
+            .filter { $0.target }
+            .count
+        let fellTargetCount = fell
+            .filter { $0.target }
+            .count
+        points += Config.burstPoints * burstedTargetCount + Config.fellPoints * fellTargetCount
+        gamePlayDelegate?.updatePoints(pointString)
+    }
     // Add a new projectile waiting to be launched.
     // Color is a random color of the target bubbles.
     // If all target bubbles have no color, randomly choose from all colors.
