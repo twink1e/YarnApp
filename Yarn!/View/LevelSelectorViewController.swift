@@ -15,6 +15,8 @@ class LevelSelectorViewController: UIViewController {
         }
         let managedContext = appDelegate.persistentContainer.viewContext
         viewModel = LevelSelectorViewModel(self, context: managedContext)
+        levelsView.delegate = self
+        levelsView.dataSource = self
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -39,7 +41,10 @@ class LevelSelectorViewController: UIViewController {
     }
 }
 
-extension LevelSelectorViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+extension LevelSelectorViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDelegate, UICollectionViewDataSource {
+
+    
+
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
