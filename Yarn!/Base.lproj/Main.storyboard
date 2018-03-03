@@ -6,8 +6,10 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -400,14 +402,13 @@
                             <imageView opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background" translatesAutoresizingMaskIntoConstraints="NO" id="rle-Bu-GQ8">
                                 <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VLz-I4-D2u">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VLz-I4-D2u">
                                 <rect key="frame" x="20" y="959" width="100" height="50"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="100" id="FWV-sA-Gqa"/>
+                                    <constraint firstAttribute="width" secondItem="VLz-I4-D2u" secondAttribute="height" multiplier="2:1" id="Pn9-MY-jwe"/>
                                     <constraint firstAttribute="height" constant="50" id="Utv-Vu-U4F"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <state key="normal">
+                                <state key="normal" title="Back" backgroundImage="button">
                                     <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
@@ -456,7 +457,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I2y-D1-KbJ">
-                                <rect key="frame" x="100" y="793" width="94.5" height="27"/>
+                                <rect key="frame" x="85" y="793" width="94.5" height="27"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="lessThanOrEqual" constant="164" id="2X9-r8-eiU"/>
                                     <constraint firstAttribute="height" constant="27" id="BR9-tY-0IV"/>
@@ -465,19 +466,31 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Points:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ihg-0t-ZfM">
+                                <rect key="frame" x="20" y="795" width="61" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="Ihg-0t-ZfM" secondAttribute="height" multiplier="61:21" id="6Q3-3j-2b1"/>
+                                    <constraint firstAttribute="height" constant="21" id="Hwn-LT-gGw"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="rle-Bu-GQ8" firstAttribute="leading" secondItem="Ihg-0t-ZfM" secondAttribute="trailing" constant="-81" id="3uC-Ei-ym7"/>
                             <constraint firstItem="e3u-EV-9uz" firstAttribute="trailing" secondItem="t5N-DR-HCU" secondAttribute="trailing" constant="29" id="564-uF-5uC"/>
                             <constraint firstItem="VLz-I4-D2u" firstAttribute="leading" secondItem="e3u-EV-9uz" secondAttribute="leading" constant="20" id="5xp-Gv-uSx"/>
                             <constraint firstItem="rle-Bu-GQ8" firstAttribute="trailing" secondItem="e3u-EV-9uz" secondAttribute="trailing" id="7IV-yd-tY7"/>
-                            <constraint firstItem="VLz-I4-D2u" firstAttribute="leading" secondItem="e3u-EV-9uz" secondAttribute="leading" constant="20" id="8dA-G3-TKq"/>
+                            <constraint firstItem="VLz-I4-D2u" firstAttribute="leading" secondItem="e3u-EV-9uz" secondAttribute="leading" multiplier="0.9" constant="20" id="8dA-G3-TKq"/>
+                            <constraint firstItem="rle-Bu-GQ8" firstAttribute="leading" secondItem="VLz-I4-D2u" secondAttribute="trailing" constant="-120" id="C4U-1P-cHl"/>
                             <constraint firstItem="t5N-DR-HCU" firstAttribute="leading" secondItem="vFL-cJ-08F" secondAttribute="trailing" constant="29" id="G67-LR-CvK"/>
                             <constraint firstItem="vFL-cJ-08F" firstAttribute="top" secondItem="rle-Bu-GQ8" secondAttribute="bottom" constant="-65" id="I4L-vg-F2A"/>
                             <constraint firstItem="Y75-Qr-R8i" firstAttribute="centerX" secondItem="xJs-p0-BDZ" secondAttribute="centerX" id="N0V-GG-zFs"/>
                             <constraint firstItem="e3u-EV-9uz" firstAttribute="bottom" secondItem="t5N-DR-HCU" secondAttribute="bottom" constant="3" id="Od8-OK-EEc"/>
-                            <constraint firstItem="e3u-EV-9uz" firstAttribute="bottom" secondItem="VLz-I4-D2u" secondAttribute="bottom" constant="15" id="TGT-6h-TY1"/>
-                            <constraint firstItem="I2y-D1-KbJ" firstAttribute="leading" secondItem="e3u-EV-9uz" secondAttribute="leading" constant="100" id="TzR-Oc-ViA"/>
+                            <constraint firstItem="e3u-EV-9uz" firstAttribute="bottom" secondItem="VLz-I4-D2u" secondAttribute="bottomMargin" constant="23" id="TGT-6h-TY1"/>
+                            <constraint firstItem="I2y-D1-KbJ" firstAttribute="leading" secondItem="e3u-EV-9uz" secondAttribute="leading" constant="85" id="TzR-Oc-ViA"/>
                             <constraint firstItem="Y75-Qr-R8i" firstAttribute="top" secondItem="rle-Bu-GQ8" secondAttribute="bottom" constant="-210" id="WLq-26-TEu"/>
                             <constraint firstItem="5wL-jN-uGy" firstAttribute="leading" secondItem="rle-Bu-GQ8" secondAttribute="trailing" constant="-100" id="Wc5-8E-GoU"/>
                             <constraint firstItem="VLz-I4-D2u" firstAttribute="top" secondItem="I2y-D1-KbJ" secondAttribute="bottom" constant="139" id="Wtl-zD-TMw"/>
@@ -485,11 +498,13 @@
                             <constraint firstItem="rle-Bu-GQ8" firstAttribute="top" secondItem="xJs-p0-BDZ" secondAttribute="top" id="XRF-Xb-M9H"/>
                             <constraint firstItem="Lo8-eG-aHX" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Y75-Qr-R8i" secondAttribute="trailing" constant="138" id="ZxR-JW-kTn"/>
                             <constraint firstItem="rle-Bu-GQ8" firstAttribute="leading" secondItem="e3u-EV-9uz" secondAttribute="leading" id="cCI-CX-eQ6"/>
+                            <constraint firstItem="Ihg-0t-ZfM" firstAttribute="leading" secondItem="rle-Bu-GQ8" secondAttribute="leading" constant="20" id="iO6-oQ-9Gm"/>
                             <constraint firstItem="5wL-jN-uGy" firstAttribute="leading" secondItem="Lo8-eG-aHX" secondAttribute="trailing" constant="29" id="lRb-Sq-URI"/>
                             <constraint firstItem="e3u-EV-9uz" firstAttribute="bottom" secondItem="Lo8-eG-aHX" secondAttribute="bottom" constant="3" id="tv9-L7-1ym"/>
+                            <constraint firstItem="VLz-I4-D2u" firstAttribute="top" secondItem="Ihg-0t-ZfM" secondAttribute="bottom" constant="143" id="vlI-ge-Xv4"/>
                             <constraint firstItem="5wL-jN-uGy" firstAttribute="leading" secondItem="vFL-cJ-08F" secondAttribute="trailing" id="x6w-YB-UII"/>
                             <constraint firstItem="5wL-jN-uGy" firstAttribute="top" secondItem="rle-Bu-GQ8" secondAttribute="bottom" constant="-65" id="ypO-fC-yKY"/>
-                            <constraint firstItem="rle-Bu-GQ8" firstAttribute="leading" relation="lessThanOrEqual" secondItem="I2y-D1-KbJ" secondAttribute="trailing" constant="-194.5" id="z0w-pp-Tuc"/>
+                            <constraint firstItem="rle-Bu-GQ8" firstAttribute="leading" relation="lessThanOrEqual" secondItem="I2y-D1-KbJ" secondAttribute="trailing" constant="-179.5" id="z0w-pp-Tuc"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="e3u-EV-9uz"/>
                     </view>
@@ -638,6 +653,7 @@
         <image name="bubble-orange" width="103" height="103"/>
         <image name="bubble-red" width="103" height="103"/>
         <image name="bubble-star" width="168" height="168"/>
+        <image name="button" width="100" height="50"/>
         <image name="canon" width="500" height="1500"/>
         <image name="erase" width="168" height="168"/>
         <image name="imageView:ZFp-4e-qPS:image" width="512" height="683">
