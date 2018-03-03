@@ -13,7 +13,7 @@ class GameEngine {
     var nextProjectile: ProjectileBubble?
     let renderer: Renderer
     let physicsEngine: PhysicsEngine
-    var numOfProjectileLeft = 5
+    var numOfProjectileLeft = 0
     weak var gamePlayDelegate: GamePlayDelegate?
     var points = 0
     let numberFormatter = NumberFormatter()
@@ -49,10 +49,11 @@ class GameEngine {
         physicsEngine.clear()
         points = 0
         gamePlayDelegate?.updatePoints("0")
-        numOfProjectileLeft = 100
+        numOfProjectileLeft = 0
     }
 
-    func startGame(_ initialBubbles: [GameBubble]) {
+    func startGame(_ initialBubbles: [GameBubble], yarnLimit: Int) {
+        numOfProjectileLeft = yarnLimit
         let bubbles = initialBubbles.map { GameBubble($0) }
         buildGraph(bubbles)
         addNewProjectile()

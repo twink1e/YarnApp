@@ -24,6 +24,8 @@ class LevelDesignerViewController: UIViewController {
     var currentLevelId: Int?
     let saveSuccessMsg = "Level saved!"
     let saveFailMsg = "Fail to save level..."
+    let createLabel = "Create"
+    let updateLabel = "Update"
     let maxNameLength = 20
     let maxYarnLength = 3
     let nameTextFieldTag = 0
@@ -33,26 +35,50 @@ class LevelDesignerViewController: UIViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-
         setViewModel()
-
         gridView.delegate = self
         gridView.dataSource = self
+        setSaveAndStartControl()
+        setLevelLockedControl()
+        adjustGridSize()
+        addGestures()
+    }
 
-        saveButton.isEnabled = false
+    private func setSaveAndStartControl() {
         NotificationCenter.default.addObserver(forName: .UITextFieldTextDidChange,
                                                object:nameTextField, queue: OperationQueue.main) { _ in self.updateSaveAndStartEnabled() }
         NotificationCenter.default.addObserver(forName: .UITextFieldTextDidChange,
                                                object:yarnTextField, queue: OperationQueue.main) { _ in self.updateSaveAndStartEnabled() }
+        if currentLevelId != nil {
+            saveButton.isEnabled = true
+            startButton.isEnabled = true
+            saveButton.setTitle(updateLabel, for: .normal)
+            saveButton.setTitle(updateLabel, for: .disabled)
+        } else {
+            saveButton.isEnabled = false
+            startButton.isEnabled = false
+            saveButton.setTitle(createLabel, for: .normal)
+            saveButton.setTitle(createLabel, for: .disabled)        }
+    }
 
-        // Customise grid according to screensize.
+    private func setLevelLockedControl() {
+        if !viewModel.isLevelLocked {
+            return
+        }
+        saveButton.isHidden = true
+        nameTextField.isEnabled = false
+        yarnTextField.isEnabled = false
+    }
+
+    private func adjustGridSize() {
         screenWidth = min(UIScreen.main.bounds.width, UIScreen.main.bounds.height)
         screenHeight = max(UIScreen.main.bounds.width, UIScreen.main.bounds.height)
         gridView.frame = CGRect(x: 0, y: 0, width: screenWidth, height: screenWidth)
         cellWidth = screenWidth / CGFloat(viewModel.gridColEvenRow)
         levelDesignCellWidth = cellWidth - Config.levelDesignCellWidthReduction
+    }
 
-        // Gesture recognisers.
+    private func addGestures() {
         let gridViewPanGesture = UIPanGestureRecognizer(target: self, action: #selector(gridViewPanned(_:)))
         gridViewPanGesture.minimumNumberOfTouches = 1
         gridViewPanGesture.maximumNumberOfTouches = 1
@@ -78,13 +104,12 @@ class LevelDesignerViewController: UIViewController {
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let historyLevels = segue.destination as? HistoryLevelsViewController {
-            historyLevels.viewModel = viewModel
-        } else if let gamePlay = segue.destination as? GamePlayViewController {
+        if let gamePlay = segue.destination as? GamePlayViewController {
             gamePlay.initialBubbles = gameBubbles
             gamePlay.bubbleRadius = cellWidth / 2.0
             gamePlay.screenWidth = screenWidth
             gamePlay.screenHeight = screenHeight
+            gamePlay.yarnLimit = Int(yarnTextField.text!)!
         }
     }
 
@@ -241,6 +266,9 @@ extension LevelDesignerViewController: UITextFieldDelegate {
     }
 
     private func shouldYarnChange(_ newText: String) -> Bool {
+        if newText.isEmpty {
+            return true
+        }
         guard newText.count <= maxNameLength, let intVal = Int(newText) else {
             return false
         }

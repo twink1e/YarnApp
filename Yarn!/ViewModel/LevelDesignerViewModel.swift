@@ -33,6 +33,12 @@ class LevelDesignerViewModel {
     let entityName = "Level"
     var storage: Storage?
     var currentLevel: NSManagedObject?
+    var isLevelLocked: Bool {
+        guard let level = currentLevel else {
+            return false
+        }
+        return level.value(forKey: Storage.lockedKey) as? Bool ?? false
+    }
     let storageLoadErrorMsg = "Can't load saved levels."
     let storageSaveErrorMsg = "Can't save level."
 

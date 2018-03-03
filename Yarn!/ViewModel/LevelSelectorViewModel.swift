@@ -31,6 +31,13 @@ class LevelSelectorViewModel {
         }
     }
 
+    func levelIdAtIndex(_ index: Int) -> Int? {
+        guard index < levels.count else {
+            return nil
+        }
+        let level = levels[index]
+        return level.value(forKey: Storage.idKey) as? Int
+    }
     func deleteLevel(_ index: Int) {
         do {
             guard index < levels.count else {

@@ -22,7 +22,6 @@
 		C0917DCB2041C9A200F7B093 /* Yarn_.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C0917DC92041C9A200F7B093 /* Yarn_.xcdatamodeld */; };
 		C0917DD42041D27E00F7B093 /* HexGridViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0917DD02041D27D00F7B093 /* HexGridViewCell.swift */; };
 		C0917DD52041D27E00F7B093 /* LevelSelectorViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0917DD12041D27D00F7B093 /* LevelSelectorViewCell.swift */; };
-		C0917DD62041D27E00F7B093 /* HistoryLevelsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0917DD22041D27E00F7B093 /* HistoryLevelsViewController.swift */; };
 		C0917DD72041D27E00F7B093 /* LevelDesignerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0917DD32041D27E00F7B093 /* LevelDesignerViewController.swift */; };
 		C0917DE12041D2CA00F7B093 /* HexGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0917DDB2041D2C900F7B093 /* HexGrid.swift */; };
 		C0917DE22041D2CA00F7B093 /* Bubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0917DDC2041D2C900F7B093 /* Bubble.swift */; };
@@ -30,7 +29,6 @@
 		C0917DE42041D2CA00F7B093 /* CodableBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0917DDE2041D2C900F7B093 /* CodableBubble.swift */; };
 		C0917DE52041D2CA00F7B093 /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0917DDF2041D2CA00F7B093 /* Storage.swift */; };
 		C0917DE62041D2CA00F7B093 /* ProjectileBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0917DE02041D2CA00F7B093 /* ProjectileBubble.swift */; };
-		C0917DED2041D2E000F7B093 /* HistoryLevelsTableCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0917DE72041D2DE00F7B093 /* HistoryLevelsTableCellViewModel.swift */; };
 		C0917DEE2041D2E000F7B093 /* LevelDesignerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0917DE82041D2DF00F7B093 /* LevelDesignerViewModel.swift */; };
 		C0917DEF2041D2E000F7B093 /* GameEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0917DE92041D2DF00F7B093 /* GameEngine.swift */; };
 		C0917DF02041D2E000F7B093 /* Renderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0917DEA2041D2DF00F7B093 /* Renderer.swift */; };
@@ -61,7 +59,6 @@
 		C0917DCA2041C9A200F7B093 /* Yarn_.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Yarn_.xcdatamodel; sourceTree = "<group>"; };
 		C0917DD02041D27D00F7B093 /* HexGridViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HexGridViewCell.swift; sourceTree = "<group>"; };
 		C0917DD12041D27D00F7B093 /* LevelSelectorViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelSelectorViewCell.swift; sourceTree = "<group>"; };
-		C0917DD22041D27E00F7B093 /* HistoryLevelsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryLevelsViewController.swift; sourceTree = "<group>"; };
 		C0917DD32041D27E00F7B093 /* LevelDesignerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelDesignerViewController.swift; sourceTree = "<group>"; };
 		C0917DDB2041D2C900F7B093 /* HexGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HexGrid.swift; sourceTree = "<group>"; };
 		C0917DDC2041D2C900F7B093 /* Bubble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bubble.swift; sourceTree = "<group>"; };
@@ -69,7 +66,6 @@
 		C0917DDE2041D2C900F7B093 /* CodableBubble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodableBubble.swift; sourceTree = "<group>"; };
 		C0917DDF2041D2CA00F7B093 /* Storage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
 		C0917DE02041D2CA00F7B093 /* ProjectileBubble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectileBubble.swift; sourceTree = "<group>"; };
-		C0917DE72041D2DE00F7B093 /* HistoryLevelsTableCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryLevelsTableCellViewModel.swift; sourceTree = "<group>"; };
 		C0917DE82041D2DF00F7B093 /* LevelDesignerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelDesignerViewModel.swift; sourceTree = "<group>"; };
 		C0917DE92041D2DF00F7B093 /* GameEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameEngine.swift; sourceTree = "<group>"; };
 		C0917DEA2041D2DF00F7B093 /* Renderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Renderer.swift; sourceTree = "<group>"; };
@@ -147,7 +143,6 @@
 				C0917DD02041D27D00F7B093 /* HexGridViewCell.swift */,
 				C0917DEB2041D2DF00F7B093 /* GamePlayViewController.swift */,
 				C0917DD12041D27D00F7B093 /* LevelSelectorViewCell.swift */,
-				C0917DD22041D27E00F7B093 /* HistoryLevelsViewController.swift */,
 				C0917DD32041D27E00F7B093 /* LevelDesignerViewController.swift */,
 				C07B29092049307C00806774 /* GamePlayDelegate.swift */,
 				C07B290B204944ED00806774 /* LevelDesignerDelegate.swift */,
@@ -178,7 +173,6 @@
 			children = (
 				C0917DE92041D2DF00F7B093 /* GameEngine.swift */,
 				C0917DEC2041D2E000F7B093 /* HexGridCellViewModel.swift */,
-				C0917DE72041D2DE00F7B093 /* HistoryLevelsTableCellViewModel.swift */,
 				C0917DE82041D2DF00F7B093 /* LevelDesignerViewModel.swift */,
 				C0917DEA2041D2DF00F7B093 /* Renderer.swift */,
 				C06A477420425F6A004DBA07 /* PhysicsEngine.swift */,
@@ -317,7 +311,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				C0917DEE2041D2E000F7B093 /* LevelDesignerViewModel.swift in Sources */,
-				C0917DED2041D2E000F7B093 /* HistoryLevelsTableCellViewModel.swift in Sources */,
 				C0917DE22041D2CA00F7B093 /* Bubble.swift in Sources */,
 				C07B2914204AB42100806774 /* LevelSelectorViewModel.swift in Sources */,
 				C0917DCB2041C9A200F7B093 /* Yarn_.xcdatamodeld in Sources */,
@@ -330,7 +323,6 @@
 				C0917DE62041D2CA00F7B093 /* ProjectileBubble.swift in Sources */,
 				C0917DE12041D2CA00F7B093 /* HexGrid.swift in Sources */,
 				C07B2912204A5C4500806774 /* LevelSelectorDelegate.swift in Sources */,
-				C0917DD62041D27E00F7B093 /* HistoryLevelsViewController.swift in Sources */,
 				C07B290E204973DA00806774 /* GameResultViewController.swift in Sources */,
 				C0917DEF2041D2E000F7B093 /* GameEngine.swift in Sources */,
 				C0917DD42041D27E00F7B093 /* HexGridViewCell.swift in Sources */,

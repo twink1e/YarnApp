@@ -26,6 +26,7 @@ class Storage {
     let jsonEncoder = JSONEncoder()
     let userDefaults = UserDefaults()
     let entityName = "Level"
+    let idFormat = "id == %d"
     var managedContext: NSManagedObjectContext
     var entity: NSEntityDescription
 
@@ -51,7 +52,7 @@ class Storage {
 
     func levelWithId(_ id: Int) throws -> NSManagedObject? {
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: entityName)
-        fetchRequest.predicate = NSPredicate(format: "%@ == %d", Storage.idKey, id)
+        fetchRequest.predicate = NSPredicate(format: idFormat, id)
         return try managedContext.fetch(fetchRequest).first
     }
 
@@ -75,6 +76,7 @@ class Storage {
     private func setCommonProperties(_ level: NSManagedObject, name: String, yarnLimit: Int, grid: HexGrid, screenshot: UIImage?) throws {
         level.setValue(name, forKeyPath: Storage.nameKey)
         level.setValue(yarnLimit, forKey: Storage.yarnKey)
+        level.setValue(false, forKey: Storage.lockedKey)
         try level.setValue(getGridString(grid), forKey: Storage.gridKey)
         try level.setValue(getImageData(screenshot), forKey: Storage.screenshotKey)
         let date = Date()
