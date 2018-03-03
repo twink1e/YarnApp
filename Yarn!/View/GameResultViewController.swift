@@ -15,7 +15,9 @@ class GameResultViewController: UIViewController {
             presenter.goBack()
         }
     }
-
+    override var prefersStatusBarHidden: Bool {
+        return true
+    }
     override func viewDidLoad() {
         pointsView?.text = pointString
     }
