@@ -66,6 +66,9 @@ class LevelDesignerViewController: UIViewController {
         gridView.addGestureRecognizer(gridViewLongPressGesture)
     }
 
+    @IBAction func goBack(_ sender: Any) {
+        dismiss(animated: false, completion: nil)
+    }
     override func viewDidAppear(_ animated: Bool) {
         gridView.reloadData()
     }
