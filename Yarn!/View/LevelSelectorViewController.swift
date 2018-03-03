@@ -10,6 +10,7 @@ class LevelSelectorViewController: UIViewController {
         return true
     }
     override func viewDidLoad() {
+        levelsView.backgroundColor = UIColor.clear
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             return
         }
@@ -41,10 +42,7 @@ class LevelSelectorViewController: UIViewController {
     }
 }
 
-extension LevelSelectorViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDelegate, UICollectionViewDataSource {
-
-    
-
+extension LevelSelectorViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }

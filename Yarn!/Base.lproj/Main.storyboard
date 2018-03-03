@@ -693,9 +693,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="IrZ-To-Fff">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="selector-background" translatesAutoresizingMaskIntoConstraints="NO" id="kGw-1f-Q4s">
+                                <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                            </imageView>
+                            <collectionView opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="IrZ-To-Fff">
                                 <rect key="frame" x="0.0" y="0.0" width="768" height="964"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="0.0" id="B5Y-QP-YOK">
                                     <size key="itemSize" width="240" height="320"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -829,9 +831,13 @@
                             <constraint firstItem="IrZ-To-Fff" firstAttribute="trailing" secondItem="IcQ-Rv-MuD" secondAttribute="trailing" id="1t0-Us-Ono"/>
                             <constraint firstItem="IrZ-To-Fff" firstAttribute="bottom" secondItem="CFp-22-sZS" secondAttribute="top" id="2hU-Qa-WBh"/>
                             <constraint firstItem="CFp-22-sZS" firstAttribute="centerX" secondItem="8cM-1P-CR6" secondAttribute="centerX" id="82j-ii-z4I"/>
+                            <constraint firstItem="kGw-1f-Q4s" firstAttribute="leading" secondItem="IcQ-Rv-MuD" secondAttribute="leading" id="9Ax-BZ-ypJ"/>
                             <constraint firstItem="IrZ-To-Fff" firstAttribute="top" secondItem="IcQ-Rv-MuD" secondAttribute="top" id="AZ4-Ch-FY7"/>
+                            <constraint firstItem="kGw-1f-Q4s" firstAttribute="width" secondItem="8cM-1P-CR6" secondAttribute="width" id="FCN-VM-9wY"/>
                             <constraint firstItem="8cM-1P-CR6" firstAttribute="bottom" secondItem="CFp-22-sZS" secondAttribute="bottom" constant="10" id="lRF-pZ-lav"/>
+                            <constraint firstItem="kGw-1f-Q4s" firstAttribute="top" secondItem="IcQ-Rv-MuD" secondAttribute="top" id="mKY-mo-6Ye"/>
                             <constraint firstItem="IrZ-To-Fff" firstAttribute="leading" secondItem="IcQ-Rv-MuD" secondAttribute="leading" id="xuI-lV-1AT"/>
+                            <constraint firstItem="kGw-1f-Q4s" firstAttribute="height" secondItem="IcQ-Rv-MuD" secondAttribute="height" id="zBF-FY-WEc"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="8cM-1P-CR6"/>
                     </view>
@@ -847,15 +853,15 @@
     <resources>
         <image name="background" width="768" height="1024"/>
         <image name="box" width="200" height="130"/>
-        <image name="bubble-blue" width="102" height="103"/>
-        <image name="bubble-bomb" width="168" height="168"/>
-        <image name="bubble-green" width="103" height="103"/>
-        <image name="bubble-indestructible" width="168" height="168"/>
-        <image name="bubble-lightning" width="168" height="168"/>
-        <image name="bubble-magnetic" width="168" height="168"/>
-        <image name="bubble-orange" width="103" height="103"/>
-        <image name="bubble-red" width="103" height="103"/>
-        <image name="bubble-star" width="168" height="168"/>
+        <image name="bubble-blue" width="102" height="102"/>
+        <image name="bubble-bomb" width="102" height="102"/>
+        <image name="bubble-green" width="102" height="102"/>
+        <image name="bubble-indestructible" width="102" height="102"/>
+        <image name="bubble-lightning" width="102" height="102"/>
+        <image name="bubble-magnetic" width="102" height="102"/>
+        <image name="bubble-orange" width="102" height="102"/>
+        <image name="bubble-red" width="102" height="102"/>
+        <image name="bubble-star" width="102" height="102"/>
         <image name="button" width="100" height="50"/>
         <image name="canon" width="500" height="1500"/>
         <image name="delete" width="85" height="85"/>
@@ -865,6 +871,7 @@
         <image name="menu-background" width="768" height="1024"/>
         <image name="menu-button" width="300" height="100"/>
         <image name="paw" width="70" height="70"/>
+        <image name="selector-background" width="768" height="1024"/>
         <image name="win" width="960" height="640"/>
     </resources>
 </document>
