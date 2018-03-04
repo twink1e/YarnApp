@@ -67,3 +67,4 @@ extension GameBubble: CustomStringConvertible {
         return "(\(centerX), \(centerY), \(color), \(power), \(touchingCeiling))"
     }
 }
+

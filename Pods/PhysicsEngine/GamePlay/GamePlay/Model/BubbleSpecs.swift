@@ -10,3 +10,4 @@ public enum BubbleColor: String, Codable {
 public enum BubblePower: String, Codable {
     case indestructible, magnetic, lightning, star, bomb, noPower
 }
+

@@ -137,7 +137,7 @@ public class PhysicsEngine {
 
     // Return true if the 2 bubbles are overlapping, or touching (leeway given to account for calculation error)
     private func connected(_ bubble1: GameBubble, with bubble2: GameBubble) -> Bool {
-        return distanceBetween(bubble1, with: bubble2) <= Config.bubbleConnectErrorMargin
+        return distanceBetween(bubble1, with: bubble2) <= Config.calculationErrorMargin
     }
 
     // Return the minimum distance between 2 bubbles.
@@ -173,3 +173,4 @@ public class PhysicsEngine {
         adjList[bubble2] = temp
     }
 }
+

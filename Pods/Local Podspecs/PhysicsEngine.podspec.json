@@ -1,6 +1,6 @@
 {
   "name": "PhysicsEngine",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "summary": "PhysicsEngine for bubble blast game.",
   "description": "PhysicsEngine for bubble blast game.",
   "homepage": "https://github.com/cs3217/2018-ps4-twink1e",
@@ -17,7 +17,7 @@
   "source_files": [
     "GamePlay/GamePlay/New Files/PhysicsEngine.swift",
     "GamePlay/GamePlay/New Files/GameBubble.swift",
-    "GamePlay/GamePlay/Model/BubbleColor.swift",
+    "GamePlay/GamePlay/Model/BubbleSpecs.swift",
     "GamePlay/GamePlay/Model/Queue.swift",
     "GamePlay/GamePlay/Config.swift"
   ]
