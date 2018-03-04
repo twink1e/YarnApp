@@ -103,9 +103,17 @@ class LevelDesignerViewController: UIViewController {
             showToast(takeScreenshotFailMsg)
             return
         }
-        UIImageWriteToSavedPhotosAlbum(screenshot, nil, nil, nil)
+        UIImageWriteToSavedPhotosAlbum(screenshot, self, #selector(takeScreenshotResult(_:error:contextInfo:)), nil)
     }
 
+    @objc
+    func takeScreenshotResult(_ image: UIImage, error: Error?, contextInfo: UnsafeRawPointer) {
+        if error != nil {
+            showToast(takeScreenshotFailMsg)
+        } else {
+            showToast(takeScreenshotSuccessMsg)
+        }
+    }
 
     override func viewDidAppear(_ animated: Bool) {
         gridView.reloadData()

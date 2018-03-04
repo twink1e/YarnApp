@@ -79,10 +79,6 @@ class GamePlayViewController: UIViewController {
         gameEngine.startGame(initialBubbles, yarnLimit: yarnLimit)
     }
 
-    func restartGame() {
-
-        //gameEngine.startGame(initialBubbles, yarnLimit: yarnLimit)
-    }
     func setCanonControl() {
         let pan = UIPanGestureRecognizer(target: self, action: #selector(self.panCanon(_:)))
         pan.minimumNumberOfTouches = 1

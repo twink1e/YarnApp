@@ -14,6 +14,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     let preloadKey = "preloaded"
+    let levelCount = 6
+    let entityName = "Level"
 
     func application(_ application: UIApplication,
                      supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
@@ -23,15 +25,36 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         let userDefaults = UserDefaults()
         if !userDefaults.bool(forKey: preloadKey) {
-            preloadData()
+            do {
+                try preloadData()
+            } catch {
+            }
             userDefaults.set(true, forKey: preloadKey)
         }
         return true
     }
 
-    private func preloadData() {
-
+    private func preloadData() throws {
+        let context = persistentContainer.viewContext
+        guard let entity = NSEntityDescription.entity(forEntityName: entityName, in: context) else {
+            return
+        }
+        let storage = try Storage(context, entity: entity)
+        for levelNum in 1 ..< (levelCount + 1) {
+            let levelName = String(levelNum)
+            try preloadLevel(levelName, storage: storage)
+        }
     }
+
+    private func preloadLevel(_ levelName: String, storage: Storage) throws {
+        guard let textPath = Bundle.main.path(forResource: levelName, ofType: "txt"), let imagePath = Bundle.main.path(forResource: levelName, ofType: "JPG") else {
+            return
+        }
+        let text = try NSString(contentsOfFile: textPath, encoding: String.Encoding.utf8.rawValue)
+        let image = NSData(contentsOfFile: imagePath)
+        try storage.savePreloadedLevel(text as String, screenshotData: image! as Data)
+    }
+
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
