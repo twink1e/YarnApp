@@ -59,20 +59,29 @@ The down side is that I cannot bypass the level designer and just start the game
 ### Problem 4.4
 
 Set indestructible to have no color.
+
 Loop through every bubble to find the bubbles in the same row or the target color with lightning and star.
+
 Loop the neighbors only for bomb.
+
 Put the special bubble in the queue if they are bursted for the chain effect.
 
+The alternatives are to save the bubbles in the grid, or to save bubbles that are in the same row together, so I don't need to traverse all for lightning, but with non-snapping bubble this becomes complicated since they rows are not just grid rows anymore. Non-snapping bubbles can be part of 2 rows at the same time. This adds overhead when adding bubbles, not much better than my solution. And my solution is less bug-prone.
 
 ### Problem 7: Class Diagram
 ![digarm](https://github.com/cs3217/2018-ps5-twink1e/blob/master/class-diagram.png)
-I added the delegates instead of closure passing. All variables are sored in Config for easy reference.
+I added the delegates instead of closure passing. All variables are sored in Config for easy reference. There are 3 main parts: level selector, level designer and game play. They all have their main view controller, which conforms to the respective delegate. They own the view models directly, while view models have a weak reference to them via delegates.
+
+For Game Play, the view model is `Game Enigne`, which has a `Physics Engine` to handle path computation and collision detection, and `Renderer` to handle animation and display.
+
+The difference between `GameBubble` and `Bubble` is that `GameBubble` is for game play. It stores the position and movement behavior of the bubble. `Bubble` is just for identification in the hexGrid with its row and col index and bubble color and power.
 
 ### Problem 8: Testing
-#### Test normal colored bubbles
+#### Black-box testing
+##### Test normal colored bubbles
 - When there is no path made up of bubbles connected to each other from certain bubbles to the ceiling (definition of unsupported bubbles), these bubbles fall off. Unsupported will only not fall off if they are made in the level designer. However, if any bubbles that are connected to them is removed, the falling will be triggered.
 
-#### Test special bubbles
+##### Test special bubbles
 1. Indestructable
   - It cannot be removed by shooting any number of any normal colored bubbles around it.
   - It falls off when becoming unsupported like normal bubbles.
@@ -93,31 +102,60 @@ I added the delegates instead of closure passing. All variables are sored in Con
   - Magnets make projectile move towards them. The closer their distance, the faster the projectile move towards magnets.
   - Like indestructable, magnets can be removed by lightning, bomb and falling. They can't be removed by color-matching or star.
 
-#### Test normal & special bubbles together
+##### Test normal & special bubbles together
 When normal and special bubbles are both present in the game, their behavior as mentioned above should not change.
 This means that when a projectile lands connected to both special bubbles and normal bubbles, both special and normal bubbles will react accordingly.
 
-#### Test canon
+##### Test canon
 1. Can't fire any where below the cutting line.
 2. touch legal areas to fire
 3. Pan and release. If the final position is legal, fire.
+
+##### Game play
+1. I should see the exact same bubbles in the same locations as in the level designer when I enter game play, except that now they don't have any margin.
+2. Anytime I tap on the back button I can go back to level designer.
+3. I can see the current bubble and the next bubble at the right bottom corner. They are updated as I play. The bubbles I fire are the same color and type as those being indicated.
+##### Test gameflow
+1. In the menu screen, when I tap on 'Select Level' I should enter level selector and see a collection of all the preloaded levels and the levels I created.
+2. Tapping on the back button in level selector will lead back to menu.
+3. In the menu screen, tapping on 'Design Level' will lead to level designer.
+##### Test level designer
+1. After selecting a bubble from the palette, when I tap or pan the cells in the grid, the cells I touched should become that type of bubble, regardless of what the cell used to be.
+2. After selecting the eraser, when I tap or pan the cells in the grid, the cells I touched should become empty, regardless of what the cell used to be.
+3. Regardless of what I have selected or not selected, when I long press a cell, it should become empty regardless of what the cell used to be.
+4. When I haven't selected any bubble nor eraser, when I tap on an existing bubble in the grid, it should change to the next bubble in the palette and the changing loops.
+5. When I tap on reset, the grid becomes empty.
+6. After I have entered valid yarn limit, I can start the game and enter game play.
+7. After I have entered valid yarn limit and name, I can save the level.
+8. After I tap on back button I go back to menu.
+
+#### Glass-box testing
+1. Add assert to check that there is no 2 bubbles overlapping after every projectile is fired. A calculation error margin of 0.1 is allowed since floating point is involved.
+2. Add printing calls to see that the projectile is going towards the point user has touched.
+3. Add printing calls to see that levels are saved with the right data.
 
 ### Problem 9: The Bells & Whistles
 
 Graphics: Made by myself except backgrounds and cats silouette from vecteezy.
 
-Music: From sound bible
+Music and sound effects: Files from sound bible. Background music, sound effects for bubble buttons in level designer, when canon fires and at end game screens.
 
-Screenshot feature
+Screenshot feature in level designer
 
-Level selector in card views with details
+Level selector in card views with details like overview image, created and updated time
+
+Able to update and delete levels
 
 Points system
 
-Animation
+Animation of canon firing and bubble bursting
 
 Limited bubble
+
+Win and lose game logic and corresponding screens.
 
 
 ### Problem 10: Final Reflection
 I think MVVM is great especially now I use delegates. It makes the code easier to write and read with clean separation and great extendability.
+I might consider storing the bubble's exact coordinated on the screen when I persist the level. This way, I can quickly build up the game for game engine.
+Right now I use `GameEngine` for the execution of the game logic and keeps track of the projectile, which drives the game. `PhysicsEngine` does the path computation and collision detection and `Renderer` handles animation and display. This seems clear for now. However, when I add more special bubbles, I will need to add more code to `GameEngine` to handle the special behaviors, which makes it hard to maintain. It may be better if I make each special bubble a subclass and handle its own behavior. Then it becomes more extensible. However, this kind of design also means that each bubble needs to know all the bubbles. In my current design there's no such issue.
