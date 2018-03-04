@@ -23,7 +23,7 @@ class LevelDesignerViewController: UIViewController {
     var screenHeight: CGFloat = 0
     var currentLevelId: Int?
     let saveSuccessMsg = "Level saved!"
-    let saveFailMsg = "Fail to save level..."
+    let saveFailMsg = "Fail to save level."
     let createLabel = "Create"
     let updateLabel = "Update"
     let maxNameLength = 20
@@ -140,7 +140,6 @@ class LevelDesignerViewController: UIViewController {
         }
         startButton.isEnabled = true
         let trimmedText = nameText.trimmingCharacters(in: .whitespacesAndNewlines)
-        nameTextField.text = trimmedText
         if !trimmedText.isEmpty {
             saveButton.isEnabled = true
         }

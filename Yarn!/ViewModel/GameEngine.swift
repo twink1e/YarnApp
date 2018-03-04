@@ -53,6 +53,11 @@ class GameEngine {
     }
 
     func startGame(_ initialBubbles: [GameBubble], yarnLimit: Int) {
+        guard targetBubbleExists() else {
+            points += yarnLimit * Config.unusedPoints
+            gamePlayDelegate?.winGame(pointString)
+            return
+        }
         numOfProjectileLeft = yarnLimit
         let bubbles = initialBubbles.map { GameBubble($0) }
         buildGraph(bubbles)
@@ -207,7 +212,6 @@ class GameEngine {
     // Non-snapping will be set with a probability that respects snappingToNonSnappingRatio.
     func addNewProjectile() {
         guard numOfProjectileLeft > 0 else {
-            nextProjectile = nil
             gamePlayDelegate?.updateNextBubbleLabel(String(noBubbleLeftLabel))
             return
         }
@@ -236,6 +240,8 @@ class GameEngine {
         let newOrigin = CGPoint(x: screenWidth - Config.currentBubbleTrailing - bubbleRadius, y: screenHeight - Config.waitingBubbleBottomHeight - bubbleDiameter)
         next.setOrigin(newOrigin)
         currentProjectile = next
+        nextProjectile = nil
+
         gamePlayDelegate?.updateCurrentBubbleLabel(String(currentProjectile.label))
         addNewProjectile()
         return true
