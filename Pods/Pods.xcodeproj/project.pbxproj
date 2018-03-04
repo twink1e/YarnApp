@@ -1,0 +1,576 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 48;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		5EF0E9A67B10C1AD63A41A9D198ED4C8 /* Pods-Yarn!-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 7DD903EEA2ECFC654B2688891441C9DC /* Pods-Yarn!-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		69FF47D10A3187FE978D7D62F3D0F311 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3AC6ED19F0CC2E96EDBD6D04E0EFD1 /* Config.swift */; };
+		6C89EFCF3096125540084C2FB7B03DBE /* Queue.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB365571080411CC33553543E1994A40 /* Queue.swift */; };
+		7A2D40A1EBEEA4193EC4CEAF57158CEF /* PhysicsEngine-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 6437EF039A942AB8A5317F9231B819FB /* PhysicsEngine-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		83B3880B52CADDFE5C390A82232179F6 /* GameBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9C293FE7FD2D7D9AC19CF7C092C3EDB /* GameBubble.swift */; };
+		98060CBD48A27827707BEE8618CF7CAF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */; };
+		B3E000FF3C3471D9D15BD6AC569FFC0A /* Pods-Yarn!-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 807B296D8A2609B42EEA4800CD9ABDDF /* Pods-Yarn!-dummy.m */; };
+		BC08EA635578BE4E3CCAEDD48D737076 /* PhysicsEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E4408CAD4EE96C789926996BC8DC4A4 /* PhysicsEngine.swift */; };
+		CAF7EB8947B59479310FD43412162C8F /* BubbleSpecs.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE45F82FEDFE940AE8FE49A5C7EB3540 /* BubbleSpecs.swift */; };
+		D3A2A87AE8601E966F0CDACD898481F1 /* PhysicsEngine-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E45AAA825BFE5822C97F596195FBB84 /* PhysicsEngine-dummy.m */; };
+		F6DA66D23020A26CA02FC19D87EB0666 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		AFA4BCEE96C481699B017CAAAD618BAA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D23D86D24D4235A68584D73D04DE035A;
+			remoteInfo = PhysicsEngine;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		1DA6B251B2F676ACD598A6B5814E06CA /* Pods-Yarn!-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Yarn!-resources.sh"; sourceTree = "<group>"; };
+		574EDADD60E651CB35DD3222C80CB17B /* Pods-Yarn!-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Yarn!-acknowledgements.plist"; sourceTree = "<group>"; };
+		5EC148D1BC9400C02EEBBCA08BB7912E /* PhysicsEngine.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = PhysicsEngine.modulemap; sourceTree = "<group>"; };
+		6437EF039A942AB8A5317F9231B819FB /* PhysicsEngine-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "PhysicsEngine-umbrella.h"; sourceTree = "<group>"; };
+		6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		6AADD0FC3F9B0F974348B8719CA4CF6E /* Pods-Yarn!.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Yarn!.release.xcconfig"; sourceTree = "<group>"; };
+		74EEB95261CAAF54EA6DCCF4ADE49D8F /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		76BD8947D5348E15BEBF98AD267C9255 /* PhysicsEngine-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "PhysicsEngine-prefix.pch"; sourceTree = "<group>"; };
+		7DD903EEA2ECFC654B2688891441C9DC /* Pods-Yarn!-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-Yarn!-umbrella.h"; sourceTree = "<group>"; };
+		7E4408CAD4EE96C789926996BC8DC4A4 /* PhysicsEngine.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PhysicsEngine.swift; path = "GamePlay/GamePlay/New Files/PhysicsEngine.swift"; sourceTree = "<group>"; };
+		7E45AAA825BFE5822C97F596195FBB84 /* PhysicsEngine-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "PhysicsEngine-dummy.m"; sourceTree = "<group>"; };
+		7F980783553195D28CFD6363B1A32084 /* Pods-Yarn!.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-Yarn!.modulemap"; sourceTree = "<group>"; };
+		807B296D8A2609B42EEA4800CD9ABDDF /* Pods-Yarn!-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Yarn!-dummy.m"; sourceTree = "<group>"; };
+		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		9F3AC6ED19F0CC2E96EDBD6D04E0EFD1 /* Config.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Config.swift; path = GamePlay/GamePlay/Config.swift; sourceTree = "<group>"; };
+		AB365571080411CC33553543E1994A40 /* Queue.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Queue.swift; path = GamePlay/GamePlay/Model/Queue.swift; sourceTree = "<group>"; };
+		B6E94E5AEFEFF72939BB533A2C676D9C /* PhysicsEngine.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = PhysicsEngine.framework; path = PhysicsEngine.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BC12BF312C594CC5C807B6071789B7EF /* Pods-Yarn!-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Yarn!-acknowledgements.markdown"; sourceTree = "<group>"; };
+		BE45F82FEDFE940AE8FE49A5C7EB3540 /* BubbleSpecs.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = BubbleSpecs.swift; path = GamePlay/GamePlay/Model/BubbleSpecs.swift; sourceTree = "<group>"; };
+		CA732AA3C4FDE641F117864919B09D7E /* Pods-Yarn!-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Yarn!-frameworks.sh"; sourceTree = "<group>"; };
+		D1981751A6FE7BF8F4468E34AB45465B /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D62141880E6667D972E87FDD687305F1 /* Pods_Yarn_.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_Yarn_.framework; path = "Pods-Yarn!.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D9B96A5F8D069E4059E32B00BFCBC440 /* PhysicsEngine.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = PhysicsEngine.xcconfig; sourceTree = "<group>"; };
+		D9C293FE7FD2D7D9AC19CF7C092C3EDB /* GameBubble.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = GameBubble.swift; path = "GamePlay/GamePlay/New Files/GameBubble.swift"; sourceTree = "<group>"; };
+		F43DE135EBB2BFA03A3F804666035CD6 /* Pods-Yarn!.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Yarn!.debug.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		02416CFCC704FEA7CDCD9597FDB873D3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F6DA66D23020A26CA02FC19D87EB0666 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5F357C102547A472446BC0147CA3443F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				98060CBD48A27827707BEE8618CF7CAF /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		07E44D311B7A5C70AAF722870BF6FD70 /* PhysicsEngine */ = {
+			isa = PBXGroup;
+			children = (
+				BE45F82FEDFE940AE8FE49A5C7EB3540 /* BubbleSpecs.swift */,
+				9F3AC6ED19F0CC2E96EDBD6D04E0EFD1 /* Config.swift */,
+				D9C293FE7FD2D7D9AC19CF7C092C3EDB /* GameBubble.swift */,
+				7E4408CAD4EE96C789926996BC8DC4A4 /* PhysicsEngine.swift */,
+				AB365571080411CC33553543E1994A40 /* Queue.swift */,
+				6750477817D86710FD75410C512B4E39 /* Support Files */,
+			);
+			name = PhysicsEngine;
+			path = PhysicsEngine;
+			sourceTree = "<group>";
+		};
+		6750477817D86710FD75410C512B4E39 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				D1981751A6FE7BF8F4468E34AB45465B /* Info.plist */,
+				5EC148D1BC9400C02EEBBCA08BB7912E /* PhysicsEngine.modulemap */,
+				D9B96A5F8D069E4059E32B00BFCBC440 /* PhysicsEngine.xcconfig */,
+				7E45AAA825BFE5822C97F596195FBB84 /* PhysicsEngine-dummy.m */,
+				76BD8947D5348E15BEBF98AD267C9255 /* PhysicsEngine-prefix.pch */,
+				6437EF039A942AB8A5317F9231B819FB /* PhysicsEngine-umbrella.h */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/PhysicsEngine";
+			sourceTree = "<group>";
+		};
+		67A2542EDE4D2CC6C22271C6F77B767B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B6E94E5AEFEFF72939BB533A2C676D9C /* PhysicsEngine.framework */,
+				D62141880E6667D972E87FDD687305F1 /* Pods_Yarn_.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		709B542509B6C63D6258F1D02344257B /* Pods-Yarn! */ = {
+			isa = PBXGroup;
+			children = (
+				74EEB95261CAAF54EA6DCCF4ADE49D8F /* Info.plist */,
+				7F980783553195D28CFD6363B1A32084 /* Pods-Yarn!.modulemap */,
+				BC12BF312C594CC5C807B6071789B7EF /* Pods-Yarn!-acknowledgements.markdown */,
+				574EDADD60E651CB35DD3222C80CB17B /* Pods-Yarn!-acknowledgements.plist */,
+				807B296D8A2609B42EEA4800CD9ABDDF /* Pods-Yarn!-dummy.m */,
+				CA732AA3C4FDE641F117864919B09D7E /* Pods-Yarn!-frameworks.sh */,
+				1DA6B251B2F676ACD598A6B5814E06CA /* Pods-Yarn!-resources.sh */,
+				7DD903EEA2ECFC654B2688891441C9DC /* Pods-Yarn!-umbrella.h */,
+				F43DE135EBB2BFA03A3F804666035CD6 /* Pods-Yarn!.debug.xcconfig */,
+				6AADD0FC3F9B0F974348B8719CA4CF6E /* Pods-Yarn!.release.xcconfig */,
+			);
+			name = "Pods-Yarn!";
+			path = "Target Support Files/Pods-Yarn!";
+			sourceTree = "<group>";
+		};
+		7DB346D0F39D3F0E887471402A8071AB = {
+			isa = PBXGroup;
+			children = (
+				93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */,
+				BC3CA7F9E30CC8F7E2DD044DD34432FC /* Frameworks */,
+				F73B53F83ABD64364F638E48D04A2274 /* Pods */,
+				67A2542EDE4D2CC6C22271C6F77B767B /* Products */,
+				CA0B202BFC838317225C43A0C6AF246D /* Targets Support Files */,
+			);
+			sourceTree = "<group>";
+		};
+		BC3CA7F9E30CC8F7E2DD044DD34432FC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D35AF013A5F0BAD4F32504907A52519E /* iOS */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		CA0B202BFC838317225C43A0C6AF246D /* Targets Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				709B542509B6C63D6258F1D02344257B /* Pods-Yarn! */,
+			);
+			name = "Targets Support Files";
+			sourceTree = "<group>";
+		};
+		D35AF013A5F0BAD4F32504907A52519E /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */,
+			);
+			name = iOS;
+			sourceTree = "<group>";
+		};
+		F73B53F83ABD64364F638E48D04A2274 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				07E44D311B7A5C70AAF722870BF6FD70 /* PhysicsEngine */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		35EA43F0B977D057AD4D4E8AA352439E /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7A2D40A1EBEEA4193EC4CEAF57158CEF /* PhysicsEngine-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F8B441BEEB74BA220876AF02D59A4D13 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5EF0E9A67B10C1AD63A41A9D198ED4C8 /* Pods-Yarn!-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		CCD37E206B2E1DDBE31374F88A4CCD18 /* Pods-Yarn! */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 39D41F69EC44345417E6BA5589DB642A /* Build configuration list for PBXNativeTarget "Pods-Yarn!" */;
+			buildPhases = (
+				34FE6035373FF2915F07699268D394E2 /* Sources */,
+				5F357C102547A472446BC0147CA3443F /* Frameworks */,
+				F8B441BEEB74BA220876AF02D59A4D13 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				2E86ECB5B69017AB0ED84B76A3F771FE /* PBXTargetDependency */,
+			);
+			name = "Pods-Yarn!";
+			productName = "Pods-Yarn!";
+			productReference = D62141880E6667D972E87FDD687305F1 /* Pods_Yarn_.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		D23D86D24D4235A68584D73D04DE035A /* PhysicsEngine */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 62C4AE6DF54DE9A68DF4176BE0C236DF /* Build configuration list for PBXNativeTarget "PhysicsEngine" */;
+			buildPhases = (
+				639CB073BCEDFC48C0433D59A1230452 /* Sources */,
+				02416CFCC704FEA7CDCD9597FDB873D3 /* Frameworks */,
+				35EA43F0B977D057AD4D4E8AA352439E /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = PhysicsEngine;
+			productName = PhysicsEngine;
+			productReference = B6E94E5AEFEFF72939BB533A2C676D9C /* PhysicsEngine.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D41D8CD98F00B204E9800998ECF8427E /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0830;
+				LastUpgradeCheck = 0700;
+			};
+			buildConfigurationList = 2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 7DB346D0F39D3F0E887471402A8071AB;
+			productRefGroup = 67A2542EDE4D2CC6C22271C6F77B767B /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D23D86D24D4235A68584D73D04DE035A /* PhysicsEngine */,
+				CCD37E206B2E1DDBE31374F88A4CCD18 /* Pods-Yarn! */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		34FE6035373FF2915F07699268D394E2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B3E000FF3C3471D9D15BD6AC569FFC0A /* Pods-Yarn!-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		639CB073BCEDFC48C0433D59A1230452 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CAF7EB8947B59479310FD43412162C8F /* BubbleSpecs.swift in Sources */,
+				69FF47D10A3187FE978D7D62F3D0F311 /* Config.swift in Sources */,
+				83B3880B52CADDFE5C390A82232179F6 /* GameBubble.swift in Sources */,
+				D3A2A87AE8601E966F0CDACD898481F1 /* PhysicsEngine-dummy.m in Sources */,
+				BC08EA635578BE4E3CCAEDD48D737076 /* PhysicsEngine.swift in Sources */,
+				6C89EFCF3096125540084C2FB7B03DBE /* Queue.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		2E86ECB5B69017AB0ED84B76A3F771FE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = PhysicsEngine;
+			target = D23D86D24D4235A68584D73D04DE035A /* PhysicsEngine */;
+			targetProxy = AFA4BCEE96C481699B017CAAAD618BAA /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		0823DAF602D21EA8E4592AEDD58A8930 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = F43DE135EBB2BFA03A3F804666035CD6 /* Pods-Yarn!.debug.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-Yarn!/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-Yarn!/Pods-Yarn!.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = Pods_Yarn_;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		529E22395FBC1129C2B71677E6AA6D7B /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D9B96A5F8D069E4059E32B00BFCBC440 /* PhysicsEngine.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/PhysicsEngine/PhysicsEngine-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/PhysicsEngine/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/PhysicsEngine/PhysicsEngine.modulemap";
+				PRODUCT_NAME = PhysicsEngine;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		5A2115044CE77BA4ADF28FCDCFD79019 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6AADD0FC3F9B0F974348B8719CA4CF6E /* Pods-Yarn!.release.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-Yarn!/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-Yarn!/Pods-Yarn!.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = Pods_Yarn_;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		6F9224530522DD3C735EC96CF142642E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGNING_REQUIRED = NO;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"POD_CONFIGURATION_RELEASE=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = NO_SIGNING/;
+				STRIP_INSTALLED_PRODUCT = NO;
+				SYMROOT = "${SRCROOT}/../build";
+			};
+			name = Release;
+		};
+		B57951D085A1B98A97F8A1062A5E5C5B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGNING_REQUIRED = NO;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"POD_CONFIGURATION_DEBUG=1",
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = NO_SIGNING/;
+				STRIP_INSTALLED_PRODUCT = NO;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SYMROOT = "${SRCROOT}/../build";
+			};
+			name = Debug;
+		};
+		C07CA5A3172E95B8F5EFD1D92156828C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D9B96A5F8D069E4059E32B00BFCBC440 /* PhysicsEngine.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/PhysicsEngine/PhysicsEngine-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/PhysicsEngine/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "Target Support Files/PhysicsEngine/PhysicsEngine.modulemap";
+				PRODUCT_NAME = PhysicsEngine;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B57951D085A1B98A97F8A1062A5E5C5B /* Debug */,
+				6F9224530522DD3C735EC96CF142642E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		39D41F69EC44345417E6BA5589DB642A /* Build configuration list for PBXNativeTarget "Pods-Yarn!" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0823DAF602D21EA8E4592AEDD58A8930 /* Debug */,
+				5A2115044CE77BA4ADF28FCDCFD79019 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		62C4AE6DF54DE9A68DF4176BE0C236DF /* Build configuration list for PBXNativeTarget "PhysicsEngine" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C07CA5A3172E95B8F5EFD1D92156828C /* Debug */,
+				529E22395FBC1129C2B71677E6AA6D7B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+}
