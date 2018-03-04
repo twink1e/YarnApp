@@ -30,6 +30,9 @@
 		C07B2930204BEEB600806774 /* 1.txt in Resources */ = {isa = PBXBuildFile; fileRef = C07B292A204BEEB500806774 /* 1.txt */; };
 		C07B2931204BEEB600806774 /* 6.txt in Resources */ = {isa = PBXBuildFile; fileRef = C07B292B204BEEB500806774 /* 6.txt */; };
 		C07B2934204C011700806774 /* pop.wav in Resources */ = {isa = PBXBuildFile; fileRef = C07B2933204C011700806774 /* pop.wav */; };
+		C07B293A204C08CF00806774 /* hit.wav in Resources */ = {isa = PBXBuildFile; fileRef = C07B2937204C08CD00806774 /* hit.wav */; };
+		C07B293B204C08CF00806774 /* background.wav in Resources */ = {isa = PBXBuildFile; fileRef = C07B2938204C08CE00806774 /* background.wav */; };
+		C07B293C204C08CF00806774 /* meow.wav in Resources */ = {isa = PBXBuildFile; fileRef = C07B2939204C08CE00806774 /* meow.wav */; };
 		C0917DAC2041C31200F7B093 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0917DAB2041C31200F7B093 /* AppDelegate.swift */; };
 		C0917DB12041C31200F7B093 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C0917DAF2041C31200F7B093 /* Main.storyboard */; };
 		C0917DB92041C31200F7B093 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C0917DB72041C31200F7B093 /* LaunchScreen.storyboard */; };
@@ -79,6 +82,9 @@
 		C07B292A204BEEB500806774 /* 1.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 1.txt; sourceTree = "<group>"; };
 		C07B292B204BEEB500806774 /* 6.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 6.txt; sourceTree = "<group>"; };
 		C07B2933204C011700806774 /* pop.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = pop.wav; sourceTree = "<group>"; };
+		C07B2937204C08CD00806774 /* hit.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = hit.wav; sourceTree = "<group>"; };
+		C07B2938204C08CE00806774 /* background.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = background.wav; sourceTree = "<group>"; };
+		C07B2939204C08CE00806774 /* meow.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = meow.wav; sourceTree = "<group>"; };
 		C0917DA82041C31200F7B093 /* Yarn!.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Yarn!.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0917DAB2041C31200F7B093 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C0917DB02041C31200F7B093 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -153,6 +159,9 @@
 		C07B2932204C00FF00806774 /* Sounds */ = {
 			isa = PBXGroup;
 			children = (
+				C07B2938204C08CE00806774 /* background.wav */,
+				C07B2937204C08CD00806774 /* hit.wav */,
+				C07B2939204C08CE00806774 /* meow.wav */,
 				C07B2933204C011700806774 /* pop.wav */,
 			);
 			path = Sounds;
@@ -252,6 +261,7 @@
 				C0917DA62041C31200F7B093 /* Resources */,
 				83D00F86C5386E48C0B93496 /* [CP] Embed Pods Frameworks */,
 				AC11F107A50CD2074298ADDF /* [CP] Copy Pods Resources */,
+				C048F525204C2A2000FFB75C /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -303,6 +313,7 @@
 			files = (
 				C07B292D204BEEB600806774 /* 4.txt in Resources */,
 				C07B292F204BEEB600806774 /* 5.txt in Resources */,
+				C07B293B204C08CF00806774 /* background.wav in Resources */,
 				C07B2934204C011700806774 /* pop.wav in Resources */,
 				C07B2930204BEEB600806774 /* 1.txt in Resources */,
 				C07B2925204BEC7D00806774 /* 2.JPG in Resources */,
@@ -310,8 +321,10 @@
 				C07B2924204BEC7D00806774 /* 5.JPG in Resources */,
 				C07B2931204BEEB600806774 /* 6.txt in Resources */,
 				C0917DB92041C31200F7B093 /* LaunchScreen.storyboard in Resources */,
+				C07B293C204C08CF00806774 /* meow.wav in Resources */,
 				C07B2923204BEC7D00806774 /* 1.JPG in Resources */,
 				C07B292E204BEEB600806774 /* 3.txt in Resources */,
+				C07B293A204C08CF00806774 /* hit.wav in Resources */,
 				C07B2921204BEC7D00806774 /* 6.JPG in Resources */,
 				C07B2922204BEC7D00806774 /* 3.JPG in Resources */,
 				C07B29082048716900806774 /* Assets.xcassets in Resources */,
@@ -373,6 +386,19 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Yarn!/Pods-Yarn!-resources.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		C048F525204C2A2000FFB75C /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\nswiftlint\nelse\necho \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi";
 		};
 /* End PBXShellScriptBuildPhase section */
 

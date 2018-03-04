@@ -2,6 +2,7 @@
 //  Copyright © 2018 nus.cs3217. All rights reserved.
 
 import UIKit
+import AVFoundation
 import PhysicsEngine
 /**
  View Controller for the level designer scene.
@@ -32,9 +33,12 @@ class LevelDesignerViewController: UIViewController {
     let maxYarnLength = 3
     let nameTextFieldTag = 0
     let yarnTextFieldTag = 1
+    var popPlayer: AVAudioPlayer?
+
     override var prefersStatusBarHidden: Bool {
         return true
     }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setViewModel()
@@ -45,6 +49,17 @@ class LevelDesignerViewController: UIViewController {
         adjustGridSize()
         if !viewModel.isLevelLocked {
             addGestures()
+        }
+        setSoundPlayer()
+    }
+
+    private func setSoundPlayer() {
+        guard let url = Bundle.main.url(forResource: "pop", withExtension: "wav") else {
+            return
+        }
+        do {
+            popPlayer = try AVAudioPlayer(contentsOf: url, fileTypeHint: AVFileType.wav.rawValue)
+        } catch {
         }
     }
 
@@ -221,6 +236,7 @@ class LevelDesignerViewController: UIViewController {
     /// Set the current selected bubble type to none.
     @objc
     func controlAreaTapped(_ sender: UITapGestureRecognizer) {
+        playPopSound()
         for button in bubbleModifierButtons {
             button.transform = CGAffineTransform.identity
         }
@@ -250,6 +266,7 @@ class LevelDesignerViewController: UIViewController {
 
     /// Show which bubble type is currently selected with animation.
     @IBAction func bubbleModifierSelected(_ sender: UIButton) {
+        playPopSound()
         for button in bubbleModifierButtons {
             button.transform = CGAffineTransform.identity
             if button.isHighlighted {
@@ -271,6 +288,11 @@ class LevelDesignerViewController: UIViewController {
     /// Clear the grid of bubbles.
     @IBAction func resetButtonPressed(_ button: UIButton) {
         viewModel.reset()
+    }
+
+    private func playPopSound() {
+        popPlayer?.prepareToPlay()
+        popPlayer?.play()
     }
 }
 

@@ -7,13 +7,16 @@
 //
 
 import UIKit
+import AVFoundation
 import CoreData
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    var backgroundMusicPlayer: AVAudioPlayer?
     let preloadKey = "preloaded"
+    let levelCountKey = "levelCount"
     let levelCount = 6
     let entityName = "Level"
 
@@ -23,6 +26,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        setMusicPlayer()
+        playMusic()
         let userDefaults = UserDefaults()
         if !userDefaults.bool(forKey: preloadKey) {
             do {
@@ -30,8 +35,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             } catch {
             }
             userDefaults.set(true, forKey: preloadKey)
+            userDefaults.set(levelCount, forKey: levelCountKey)
         }
         return true
+    }
+
+    private func setMusicPlayer() {
+        guard let url = Bundle.main.url(forResource: "background", withExtension: "wav") else {
+            return
+        }
+        do {
+            try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
+            try AVAudioSession.sharedInstance().setActive(true)
+
+            backgroundMusicPlayer = try AVAudioPlayer(contentsOf: url, fileTypeHint: AVFileType.wav.rawValue)
+            backgroundMusicPlayer?.numberOfLoops = -1
+            backgroundMusicPlayer?.volume = 0.5
+        } catch {
+        }
+    }
+
+    func playMusic() {
+        backgroundMusicPlayer?.prepareToPlay()
+        backgroundMusicPlayer?.play()
     }
 
     private func preloadData() throws {
@@ -41,23 +67,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         let storage = try Storage(context, entity: entity)
         for levelNum in 1 ..< (levelCount + 1) {
-            let levelName = String(levelNum)
-            try preloadLevel(levelName, storage: storage)
+            try preloadLevel(levelNum, storage: storage)
         }
     }
 
-    private func preloadLevel(_ levelName: String, storage: Storage) throws {
+    private func preloadLevel(_ levelNum: Int, storage: Storage) throws {
+        let levelName = String(levelNum)
         guard let textPath = Bundle.main.path(forResource: levelName, ofType: "txt"), let imagePath = Bundle.main.path(forResource: levelName, ofType: "JPG") else {
             return
         }
         let text = try NSString(contentsOfFile: textPath, encoding: String.Encoding.utf8.rawValue)
         let image = NSData(contentsOfFile: imagePath)
-        try storage.savePreloadedLevel(text as String, screenshotData: image! as Data)
+        try storage.savePreloadedLevel(text as String, id: levelNum, screenshotData: image! as Data)
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
+        backgroundMusicPlayer?.pause()
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {
@@ -71,6 +98,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+        playMusic()
     }
 
     func applicationWillTerminate(_ application: UIApplication) {

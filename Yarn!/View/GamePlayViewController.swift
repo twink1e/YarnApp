@@ -1,4 +1,5 @@
 import UIKit
+import AVFoundation
 import PhysicsEngine
 
 /**
@@ -16,6 +17,7 @@ class GamePlayViewController: UIViewController {
     var prevFrameTime: CFTimeInterval = 0
     var displaylink: CADisplayLink!
     var yarnLimit: Int = 0
+    var hitPlayer: AVAudioPlayer?
 
     @IBOutlet var pointsView: UILabel!
     @IBOutlet var canonView: UIImageView!
@@ -64,6 +66,7 @@ class GamePlayViewController: UIViewController {
         gameEngine.currentProjectile.setLaunchDirection(start: canonView.center, target: targetPoint)
         gameEngine.renderer.releaseCanon(canonView)
         addDisplaylink()
+        playHitSound()
     }
 
     override func viewDidLoad() {
@@ -71,6 +74,22 @@ class GamePlayViewController: UIViewController {
         gameEngine = GameEngine(radius: bubbleRadius, width: screenWidth, height: screenHeight, delegate: self)
         setCanonControl()
         canonView.layer.zPosition = 1
+        setSoundPlayer()
+    }
+
+    private func setSoundPlayer() {
+        guard let url = Bundle.main.url(forResource: "hit", withExtension: "wav") else {
+            return
+        }
+        do {
+            hitPlayer = try AVAudioPlayer(contentsOf: url, fileTypeHint: AVFileType.wav.rawValue)
+        } catch {
+        }
+    }
+
+    private func playHitSound() {
+        hitPlayer?.prepareToPlay()
+        hitPlayer?.play()
     }
 
     override func viewDidAppear(_: Bool) {

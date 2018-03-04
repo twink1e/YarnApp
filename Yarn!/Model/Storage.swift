@@ -27,7 +27,6 @@ class Storage {
     let jsonEncoder = JSONEncoder()
     let userDefaults = UserDefaults()
     let entityName = "Level"
-    let preloadedLevelId = 0
     let preloadStringDelimiter = "|"
     let preloadStringFieldNum = 3
     let preloadFormatErrorMsg = "Wrong format for preloaded level."
@@ -61,14 +60,14 @@ class Storage {
         return try managedContext.fetch(fetchRequest).first
     }
 
-    func savePreloadedLevel(_ dataString: String, screenshotData: Data) throws {
+    func savePreloadedLevel(_ dataString: String, id: Int, screenshotData: Data) throws {
         let data = dataString.components(separatedBy: preloadStringDelimiter)
         guard data.count == preloadStringFieldNum, let yarnLimit = Int(data[1]) else {
             throw StorageError.preloadError(preloadFormatErrorMsg)
         }
         let level = NSManagedObject(entity: entity,
                                     insertInto: managedContext)
-        level.setValue(preloadedLevelId, forKey: Storage.idKey)
+        level.setValue(id, forKey: Storage.idKey)
         let date = Date()
         level.setValue(date, forKey: Storage.createdAtKey)
         try setCommonProperties(level, name: data[0], yarnLimit: yarnLimit, gridString: data[2], screenshot: screenshotData, locked: true)
