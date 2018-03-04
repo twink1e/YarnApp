@@ -48,7 +48,9 @@ class LevelSelectorViewCell: UICollectionViewCell {
         updatedTime.isHidden = locked
         deleteButton.isHidden = locked
     }
-    @objc func deleteLevel(_ sender: UIButton) {
+
+    @objc
+    func deleteLevel(_ sender: UIButton) {
         levelSelectorDelegate?.deleteLevel(sender.tag)
     }
 }

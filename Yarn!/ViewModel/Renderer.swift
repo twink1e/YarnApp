@@ -31,7 +31,8 @@ class Renderer: NSObject {
         super.init()
         itemsAnimator = gamePlayDelegate?.itemsAnimator
         setUpDynamicAnimator()
-        canonAnimationImages = cropSpriteSheet(#imageLiteral(resourceName: "canon-animation"), row: Config.canonAnimationSpriteRow, col: Config.canonAnimationSpriteCol)
+        canonAnimationImages = cropSpriteSheet(#imageLiteral(resourceName: "canon-animation"),
+                                               row: Config.canonAnimationSpriteRow, col: Config.canonAnimationSpriteCol)
         bubbleBurstAnimationImages = cropSpriteSheet(#imageLiteral(resourceName: "bubble-burst"), row: 1, col: 4)
     }
 
@@ -59,7 +60,7 @@ class Renderer: NSObject {
     func clearBubbleViews(_ bubbles: [GameBubble]) {
         bubbles.forEach { removeViewFromScreen($0.view) }
     }
-    
+
     private func cropSpriteSheet(_ sheet: UIImage, row: Int, col: Int) -> [UIImage] {
         var images: [UIImage] = []
         let width = sheet.size.width * UIScreen.main.scale / CGFloat(col)
@@ -99,8 +100,8 @@ class Renderer: NSObject {
     // No rotation if rotation angle is greater than the angle to reach the cutting line of the game.
     // Return true if the canon has been rotated.
     func rotateCanon(_ canonView: UIView, to targetPoint: CGPoint) -> Bool {
-        let maxAngle = rotationAngle(from: canonView.center, to: CGPoint(x: 0, y: screenWidth))
-        let angle = rotationAngle(from: canonView.center, to: targetPoint)
+        let maxAngle = rotationAngle(from: canonView.center, toPoint: CGPoint(x: 0, y: screenWidth))
+        let angle = rotationAngle(from: canonView.center, toPoint: targetPoint)
         guard abs(angle) <= abs(maxAngle) else {
             canonView.transform = CGAffineTransform.identity
             return false
@@ -113,9 +114,9 @@ class Renderer: NSObject {
     func resetCanon(_ canonView: UIView) {
         canonView.transform = CGAffineTransform.identity
     }
-    private func rotationAngle(from: CGPoint, to: CGPoint) -> CGFloat {
-        let xDiff = from.x - to.x
-        let yDiff = from.y - to.y
+    private func rotationAngle(from: CGPoint, toPoint: CGPoint) -> CGFloat {
+        let xDiff = from.x - toPoint.x
+        let yDiff = from.y - toPoint.y
         return atan(xDiff / -yDiff)
     }
 
@@ -126,10 +127,10 @@ class Renderer: NSObject {
     }
 
     func animateMagneticAttration(_ bubble: GameBubble) {
-        UIView.animate(withDuration: 0.5, animations: {
+        UIView.animate(withDuration: 0.5) {
             bubble.view.transform = CGAffineTransform(scaleX: 1.5, y: 1.5)
             bubble.view.alpha = 0
-        })
+        }
     }
 
     func showInactiveMagnet(_ magnet: GameBubble) {
@@ -162,10 +163,12 @@ class Renderer: NSObject {
                 $0.animationRepeatCount = 1
                 $0.animationDuration = Config.bubbleBurstAnimationDuration
                 $0.startAnimating()
-                Timer.scheduledTimer(timeInterval: Config.bubbleBurstAnimationDuration, target: self, selector: #selector(removeBubble(_:)), userInfo: $0, repeats: false)
+                Timer.scheduledTimer(timeInterval: Config.bubbleBurstAnimationDuration,
+                                     target: self, selector: #selector(removeBubble(_:)), userInfo: $0, repeats: false)
             }
     }
-    @objc func removeBubble(_ timer: Timer) {
+    @objc
+    func removeBubble(_ timer: Timer) {
         self.removeViewFromScreen(timer.userInfo as! UIView)
     }
 }

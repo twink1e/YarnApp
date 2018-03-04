@@ -8,5 +8,5 @@ protocol GamePlayDelegate: class {
     func updatePoints(_: String)
     func winGame(_: String)
     func loseGame()
-    var itemsAnimator: UIDynamicAnimator{ get }
+    var itemsAnimator: UIDynamicAnimator { get }
 }

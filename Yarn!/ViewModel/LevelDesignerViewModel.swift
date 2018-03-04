@@ -88,9 +88,9 @@ class LevelDesignerViewModel {
 
     /// Load the selected stored level into the current grid, and execute the error callback if any error.
     /// Reload grid view if success.
-    private func setLevel(_ id: Int) {
+    private func setLevel(_ levelId: Int) {
         do {
-            try currentLevel = storage?.levelWithId(id)
+            try currentLevel = storage?.levelWithId(levelId)
         } catch {
             levelDesignerDelegate?.alertStorageError(storageSaveErrorMsg)
         }

@@ -4,9 +4,9 @@ extension Config {
     static let gridRow = 9
     static let gridColEvenRow = 12
     static let levelDesignCellWidthReduction: CGFloat = 2
-    static let projectileSpeed: CGFloat = 1000
+    static let projectileSpeed: CGFloat = 1_000
     static let framePerSecond = 60
-    static let magneticAttraction: CGFloat = 1000
+    static let magneticAttraction: CGFloat = 1_000
     static let snappingToNonSnappingRatio = 5
     static let canonAnimationSpriteRow = 2
     static let canonAnimationSpriteCol = 5

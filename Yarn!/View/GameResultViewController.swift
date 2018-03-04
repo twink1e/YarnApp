@@ -14,15 +14,13 @@ class GameResultViewController: UIViewController {
             return
         }
         do {
-//            try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
-//            try AVAudioSession.sharedInstance().setActive(true)
             meowPlayer = try AVAudioPlayer(contentsOf: url, fileTypeHint: AVFileType.wav.rawValue)
             meowPlayer?.prepareToPlay()
             meowPlayer?.play()
         } catch {
         }
     }
-    @IBOutlet var pointsView: UILabel?
+    @IBOutlet private var pointsView: UILabel?
     @IBAction func retry(_ sender: Any) {
         dismiss(animated: true, completion: nil)
         if let presenter = presentingViewController as? GamePlayViewController {

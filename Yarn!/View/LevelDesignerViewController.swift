@@ -12,9 +12,9 @@ class LevelDesignerViewController: UIViewController {
     @IBOutlet private var resetButton: UIButton!
     @IBOutlet private var controlArea: UIView!
     @IBOutlet private var saveButton: UIButton!
-    @IBOutlet var nameTextField: UITextField!
-    @IBOutlet var startButton: UIButton!
-    @IBOutlet var yarnTextField: UITextField!
+    @IBOutlet private var nameTextField: UITextField!
+    @IBOutlet private var startButton: UIButton!
+    @IBOutlet private var yarnTextField: UITextField!
     @IBOutlet private var bubbleModifierButtons: [UIButton]!
     var viewModel: LevelDesignerViewModel!
     let reuseIdentifier = "hexGridCell"
@@ -64,10 +64,19 @@ class LevelDesignerViewController: UIViewController {
     }
 
     private func setSaveAndStartControl() {
-        NotificationCenter.default.addObserver(forName: .UITextFieldTextDidChange,
-                                               object:nameTextField, queue: OperationQueue.main) { _ in self.updateSaveAndStartEnabled() }
-        NotificationCenter.default.addObserver(forName: .UITextFieldTextDidChange,
-                                               object:yarnTextField, queue: OperationQueue.main) { _ in self.updateSaveAndStartEnabled() }
+//        NotificationCenter.default.addObserver(forName: .UITextFieldTextDidChange,
+//                                               object: nameTextField, queue: OperationQueue.main) {
+//                                                _ in self.updateSaveAndStartEnabled()
+//        }
+//        NotificationCenter.default.addObserver(forName: .UITextFieldTextDidChange,
+//                                               object: yarnTextField, queue: OperationQueue.main) {
+//                                                _ in self.updateSaveAndStartEnabled()
+//        }
+        NotificationCenter.default.addObserver(self, selector: #selector(updateSaveAndStartEnabled(_:)),
+                                               name: .UITextFieldTextDidChange, object: nameTextField)
+        NotificationCenter.default.addObserver(self, selector: #selector(updateSaveAndStartEnabled(_:)),
+                                               name: .UITextFieldTextDidChange, object: yarnTextField)
+
         if currentLevelId != nil {
             saveButton.isEnabled = true
             startButton.isEnabled = true
@@ -165,13 +174,15 @@ class LevelDesignerViewController: UIViewController {
                 let views = cell.contentView.subviews.filter { $0 is UIImageView }
                 let (actualX, actualY) = viewModel.upperLeftCoord(for: [i, j], bubbleRadius: cellWidth / 2.0)
                 views.first?.frame = CGRect(x: actualX, y: actualY, width: cellWidth, height: cellWidth)
-                bubbles.append(GameBubble(color: cellModel.color, power: cellModel.power, view: views.first as! UIImageView))
+                bubbles.append(GameBubble(color: cellModel.color, power: cellModel.power,
+                                          view: views.first as! UIImageView))
             }
         }
         return bubbles
     }
 
-    func updateSaveAndStartEnabled() {
+    @objc
+    func updateSaveAndStartEnabled(_: NSNotification) {
         guard let nameText = nameTextField.text, let yarnText = yarnTextField.text, !yarnText.isEmpty else {
             saveButton.isEnabled = false
             startButton.isEnabled = false
@@ -378,7 +389,7 @@ extension LevelDesignerViewController: LevelDesignerDelegate {
         nameTextField.text = name
     }
 
-    func setYarnLimit(_ limit : Int) {
+    func setYarnLimit(_ limit: Int) {
         yarnTextField.text = String(limit)
     }
 

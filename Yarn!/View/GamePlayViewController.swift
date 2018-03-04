@@ -19,10 +19,10 @@ class GamePlayViewController: UIViewController {
     var yarnLimit: Int = 0
     var hitPlayer: AVAudioPlayer?
 
-    @IBOutlet var pointsView: UILabel!
-    @IBOutlet var canonView: UIImageView!
-    @IBOutlet var currentBubbleLabel: UILabel!
-    @IBOutlet var nextBubbleLabel: UILabel!
+    @IBOutlet private var pointsView: UILabel!
+    @IBOutlet private var canonView: UIImageView!
+    @IBOutlet private var currentBubbleLabel: UILabel!
+    @IBOutlet private var nextBubbleLabel: UILabel!
     @IBAction func backToDesigner(_ sender: Any) {
         displaylink?.invalidate()
         gameEngine.clear()
@@ -38,7 +38,8 @@ class GamePlayViewController: UIViewController {
     }
     // If projectile is not launched,
     // rotate the canon to face the point user tapped and launch projectile.
-    @objc func tapCanon(_ sender : UITapGestureRecognizer) {
+    @objc
+    func tapCanon(_ sender: UITapGestureRecognizer) {
         let position = sender.location(in: view)
         guard !gameEngine.currentProjectile.launched && gameEngine.renderer.rotateCanon(canonView, to: position) else {
             return
@@ -48,13 +49,15 @@ class GamePlayViewController: UIViewController {
 
     // Rotate the canon to face the point user is panning if projectile is not launched.
     // Launch the projectile when pan ends.
-    @objc func panCanon(_ sender : UIPanGestureRecognizer) {
+    @objc
+    func panCanon(_ sender: UIPanGestureRecognizer) {
         let state = sender.state
         guard state != .cancelled else {
             return
         }
         let targetPoint = sender.location(in: view)
-        guard !gameEngine.currentProjectile.launched && gameEngine.renderer.rotateCanon(canonView, to: targetPoint) else {
+        guard !gameEngine.currentProjectile.launched
+            && gameEngine.renderer.rotateCanon(canonView, to: targetPoint) else {
             return
         }
         if sender.state == .ended {
@@ -130,10 +133,11 @@ extension GamePlayViewController: GamePlayDelegate {
     func updatePoints(_ points: String) {
         pointsView.text = points
     }
-    
+
     func winGame(_ points: String) {
         let storyboard = UIStoryboard(name: storyboardName, bundle: nil)
-        let controller = storyboard.instantiateViewController(withIdentifier: winIdentifier) as! GameResultViewController
+        let controller = storyboard.instantiateViewController(withIdentifier: winIdentifier)
+            as! GameResultViewController
         controller.pointString = points
         self.present(controller, animated: true, completion: nil)
     }

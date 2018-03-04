@@ -54,23 +54,24 @@ class Storage {
         return gridString
     }
 
-    func levelWithId(_ id: Int) throws -> NSManagedObject? {
+    func levelWithId(_ levelId: Int) throws -> NSManagedObject? {
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: entityName)
-        fetchRequest.predicate = NSPredicate(format: idFormat, id)
+        fetchRequest.predicate = NSPredicate(format: idFormat, levelId)
         return try managedContext.fetch(fetchRequest).first
     }
 
-    func savePreloadedLevel(_ dataString: String, id: Int, screenshotData: Data) throws {
+    func savePreloadedLevel(_ dataString: String, levelId: Int, screenshotData: Data) throws {
         let data = dataString.components(separatedBy: preloadStringDelimiter)
         guard data.count == preloadStringFieldNum, let yarnLimit = Int(data[1]) else {
             throw StorageError.preloadError(preloadFormatErrorMsg)
         }
         let level = NSManagedObject(entity: entity,
                                     insertInto: managedContext)
-        level.setValue(id, forKey: Storage.idKey)
+        level.setValue(levelId, forKey: Storage.idKey)
         let date = Date()
         level.setValue(date, forKey: Storage.createdAtKey)
-        try setCommonProperties(level, name: data[0], yarnLimit: yarnLimit, gridString: data[2], screenshot: screenshotData, locked: true)
+        try setCommonProperties(level, name: data[0], yarnLimit: yarnLimit,
+                                gridString: data[2], screenshot: screenshotData, locked: true)
         try managedContext.save()
     }
 
@@ -84,18 +85,22 @@ class Storage {
         level.setValue(date, forKey: Storage.createdAtKey)
         let gridString = try getGridString(grid)
         let screenshotData = try getImageData(screenshot)
-        try setCommonProperties(level, name: name, yarnLimit: yarnLimit, gridString: gridString, screenshot: screenshotData, locked: false)
+        try setCommonProperties(level, name: name, yarnLimit: yarnLimit,
+                                gridString: gridString, screenshot: screenshotData, locked: false)
         try managedContext.save()
     }
 
-    func overwriteLevel(_ level: NSManagedObject, name: String, yarnLimit: Int, grid: HexGrid, screenshot: UIImage?) throws {
+    func overwriteLevel(_ level: NSManagedObject, name: String, yarnLimit: Int,
+                        grid: HexGrid, screenshot: UIImage?) throws {
         let gridString = try getGridString(grid)
         let screenshotData = try getImageData(screenshot)
-        try setCommonProperties(level, name: name, yarnLimit: yarnLimit, gridString: gridString, screenshot: screenshotData, locked: false)
+        try setCommonProperties(level, name: name, yarnLimit: yarnLimit,
+                                gridString: gridString, screenshot: screenshotData, locked: false)
         try managedContext.save()
     }
 
-    private func setCommonProperties(_ level: NSManagedObject, name: String, yarnLimit: Int, gridString: String, screenshot: Data, locked: Bool) throws {
+    private func setCommonProperties(_ level: NSManagedObject, name: String,
+                                     yarnLimit: Int, gridString: String, screenshot: Data, locked: Bool) throws {
         level.setValue(name, forKeyPath: Storage.nameKey)
         level.setValue(yarnLimit, forKey: Storage.yarnKey)
         level.setValue(locked, forKey: Storage.lockedKey)

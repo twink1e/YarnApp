@@ -77,7 +77,6 @@ class HexGrid {
         assert(_checkRep())
     }
 
-
     private func _positionValid(rowIndex: Int, colIndex: Int) -> Bool {
         guard rowIndex >= 0 && rowIndex < row else {
             return false

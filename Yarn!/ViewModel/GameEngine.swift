@@ -18,7 +18,7 @@ class GameEngine {
     var points = 0
     let numberFormatter = NumberFormatter()
     var pointString: String {
-        return numberFormatter.string(from: NSNumber(value:points))!
+        return numberFormatter.string(from: NSNumber(value: points))!
     }
 
     let screenWidth: CGFloat
@@ -67,7 +67,7 @@ class GameEngine {
             return
         }
     }
-    
+
     // Backtrack the projectile if it has moved excessively,
     // e.g. overlapping with another bubble, out of screen.
     // Then stop or move the projectile accordingly.
@@ -86,7 +86,8 @@ class GameEngine {
             return
         }
         // Hitting side wall.
-       if abs(currentProjectile.leftX) <= Config.calculationErrorMargin || abs(currentProjectile.rightX - screenWidth) <= Config.calculationErrorMargin {
+       if abs(currentProjectile.leftX) <= Config.calculationErrorMargin
+        || abs(currentProjectile.rightX - screenWidth) <= Config.calculationErrorMargin {
             currentProjectile.reverse()
         }
         checkMagnets()
@@ -101,7 +102,7 @@ class GameEngine {
             .filter { physicsEngine.clearPath(currentProjectile, to: $0) }
             .forEach {
                 renderer.showActiveMagnet($0)
-                currentProjectile.attractsTowards(x: $0.centerX, y: $0.centerY)
+                currentProjectile.attractsTowards(CGPoint(x: $0.centerX, y: $0.centerY))
             }
     }
 
@@ -118,7 +119,8 @@ class GameEngine {
     }
     private func handleCollision(_ collided: (GameBubble, CGFloat)) {
         var collidedBubbleAndDistance: (GameBubble, CGFloat)? = collided
-        while let collidedBubble = collidedBubbleAndDistance?.0, let distance = collidedBubbleAndDistance?.1, distance < -Config.calculationErrorMargin {
+        while let collidedBubble = collidedBubbleAndDistance?.0,
+            let distance = collidedBubbleAndDistance?.1, distance < -Config.calculationErrorMargin {
             physicsEngine.backtrackToTouching(currentProjectile, with: collidedBubble)
             if !collidedBubble.snapping {
                 currentProjectile.setNonSnapping()
@@ -177,7 +179,8 @@ class GameEngine {
         let originalPos = CGPoint(x: currentProjectile.leftX, y: currentProjectile.topY)
         let gridPos = renderer.snappedPos(currentProjectile.leftX, currentProjectile.topY)
         renderer.snapBubble(currentProjectile, to: gridPos)
-        if let collidedBubble = physicsEngine.closestCollidedBubbleAndDistance(currentProjectile)?.0, !collidedBubble.snapping {
+        if let collidedBubble = physicsEngine.closestCollidedBubbleAndDistance(currentProjectile)?.0,
+            !collidedBubble.snapping {
             currentProjectile.setNonSnapping()
             renderer.snapBubble(currentProjectile, to: originalPos)
         }
@@ -217,7 +220,8 @@ class GameEngine {
         }
         let colors = targetColors() ?? allColors
         let colorIndex = Int(arc4random_uniform(UInt32(colors.count)))
-        let newProjectile = ProjectileBubble(color: colors[colorIndex], centerX: screenWidth - Config.nextBubbleTrailing,
+        let newProjectile = ProjectileBubble(color: colors[colorIndex],
+                                             centerX: screenWidth - Config.nextBubbleTrailing,
                                       centerY: screenHeight - Config.waitingBubbleBottomHeight - bubbleRadius,
                                       radius: bubbleRadius, label: numOfProjectileLeft)
         let nonSnappingDraw = Int(arc4random_uniform(UInt32(Config.snappingToNonSnappingRatio + 1)))
@@ -237,7 +241,8 @@ class GameEngine {
             gamePlayDelegate?.updateCurrentBubbleLabel(String(noBubbleLeftLabel))
             return false
         }
-        let newOrigin = CGPoint(x: screenWidth - Config.currentBubbleTrailing - bubbleRadius, y: screenHeight - Config.waitingBubbleBottomHeight - bubbleDiameter)
+        let newOrigin = CGPoint(x: screenWidth - Config.currentBubbleTrailing - bubbleRadius,
+                                y: screenHeight - Config.waitingBubbleBottomHeight - bubbleDiameter)
         next.setOrigin(newOrigin)
         currentProjectile = next
         nextProjectile = nil

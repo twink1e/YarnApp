@@ -1,8 +1,8 @@
 import UIKit
 
 class MenuViewController: UIViewController {
-    @IBOutlet var musicToggleButton: UIButton!
-    var appDelegate: AppDelegate?
+    @IBOutlet private var musicToggleButton: UIButton!
+    weak var appDelegate: AppDelegate?
     let onMusicLabel = "Music On"
     let offMusicLabel = "Music Off"
 

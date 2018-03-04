@@ -11,10 +11,12 @@ extension PhysicsEngine {
         let rangeMax = flexibleX ? max(bubble1.centerY, bubble2.centerY) : max(bubble1.centerX, bubble2.centerX)
 
         for bubble in adjList.keys {
-            guard (flexibleX && bubble.centerY < rangeMax && bubble.centerY > rangeMin) || (!flexibleX && bubble.centerX < rangeMax && bubble.centerX > rangeMin) else {
+            guard (flexibleX && bubble.centerY < rangeMax && bubble.centerY > rangeMin)
+                || (!flexibleX && bubble.centerX < rangeMax && bubble.centerX > rangeMin) else {
                 continue
             }
-            let diff = flexibleX ? abs((bubble.centerY - bubble1.centerY) / a + bubble1.centerX - bubble.centerX) : abs(a * (bubble.centerX - bubble1.centerX) + bubble1.centerY - bubble.centerY)
+            let diff = flexibleX ? abs((bubble.centerY - bubble1.centerY) / a + bubble1.centerX - bubble.centerX)
+                : abs(a * (bubble.centerX - bubble1.centerX) + bubble1.centerY - bubble.centerY)
             if diff < bubbleDiameter / 2 {
                 return false
             }
@@ -64,12 +66,11 @@ extension PhysicsEngine {
             let removed = bubblesBurstedByLightningOrBomb(bubble)
             allRemovedBubbles = allRemovedBubbles.union(removed)
             removed
-                .filter { ($0.power == .lightning || $0.power == .bomb) && !usedPowerBubbles.contains($0)}
+                .filter { ($0.power == .lightning || $0.power == .bomb) && !usedPowerBubbles.contains($0) }
                 .forEach { queue.enqueue($0) }
         }
         return allRemovedBubbles
     }
-    
     private func bubblesBurstedByStar(_ activatorBubble: GameBubble) -> Set<GameBubble> {
         guard let neighbors = adjList[activatorBubble] else {
             return []
@@ -97,10 +98,11 @@ extension PhysicsEngine {
     }
 
     private func bubblesOfColor(_ color: BubbleColor) -> Set<GameBubble> {
-        return Set(adjList.keys.filter { $0.color == color})
+        return Set(adjList.keys.filter { $0.color == color })
     }
 
-    // Bubbles are considered of same row as `startBubble` if their centerY is within the topY and bottomY of `startBubble`.
+    // Bubbles are considered of same row as `startBubble`
+    // if their centerY is within the topY and bottomY of `startBubble`.
     private func bubblesOfSameRow(_ startBubble: GameBubble) -> Set<GameBubble> {
         return Set(adjList.keys.filter {
             $0.centerY >= startBubble.topY && $0.centerY <= startBubble.topY + bubbleDiameter

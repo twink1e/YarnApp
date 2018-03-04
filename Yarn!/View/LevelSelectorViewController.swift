@@ -5,7 +5,7 @@ class LevelSelectorViewController: UIViewController {
     let storyBoardName = "Main"
     let designerIdentifier = "designer"
     var viewModel: LevelSelectorViewModel!
-    @IBOutlet var levelsView: UICollectionView!
+    @IBOutlet private var levelsView: UICollectionView!
     override var prefersStatusBarHidden: Bool {
         return true
     }
@@ -52,7 +52,7 @@ extension LevelSelectorViewController: UICollectionViewDelegate, UICollectionVie
     }
 
     func collectionView(_ collectionView: UICollectionView,
-                                 cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+                        cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier,
                                                       for: indexPath) as! LevelSelectorViewCell
         let index = indexPath.row
@@ -64,7 +64,8 @@ extension LevelSelectorViewController: UICollectionViewDelegate, UICollectionVie
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let designerController = UIStoryboard(name: storyBoardName, bundle: nil).instantiateViewController(withIdentifier: designerIdentifier) as! LevelDesignerViewController
+        let designerController = UIStoryboard(name: storyBoardName, bundle: nil)
+            .instantiateViewController(withIdentifier: designerIdentifier) as! LevelDesignerViewController
         designerController.currentLevelId = viewModel.levelIdAtIndex(indexPath.row)
         present(designerController, animated: false, completion: nil)
     }
