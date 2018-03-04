@@ -58,9 +58,7 @@ class Storage {
     func levelWithId(_ id: Int) throws -> NSManagedObject? {
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: entityName)
         fetchRequest.predicate = NSPredicate(format: idFormat, id)
-        let a = try managedContext.fetch(fetchRequest).first
-        print (a?.value(forKey: Storage.gridKey))
-        return a
+        return try managedContext.fetch(fetchRequest).first
     }
 
     func savePreloadedLevel(_ dataString: String, screenshot: UIImage?) throws {
@@ -91,7 +89,6 @@ class Storage {
     }
 
     func overwriteLevel(_ level: NSManagedObject, name: String, yarnLimit: Int, grid: HexGrid, screenshot: UIImage?) throws {
-        UIImageWriteToSavedPhotosAlbum(screenshot!, nil, nil, nil)
         let gridString = try getGridString(grid)
         try setCommonProperties(level, name: name, yarnLimit: yarnLimit, gridString: gridString, screenshot: screenshot, locked: false)
         try managedContext.save()

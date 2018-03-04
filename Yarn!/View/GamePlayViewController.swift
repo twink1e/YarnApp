@@ -71,13 +71,17 @@ class GamePlayViewController: UIViewController {
         gameEngine = GameEngine(radius: bubbleRadius, width: screenWidth, height: screenHeight, delegate: self)
         setCanonControl()
         canonView.layer.zPosition = 1
+    }
+
+    override func viewDidAppear(_: Bool) {
+        gameEngine.renderer.resetCanon(canonView)
+        gameEngine.clear()
         gameEngine.startGame(initialBubbles, yarnLimit: yarnLimit)
     }
 
     func restartGame() {
-        gameEngine.renderer.resetCanon(canonView)
-        gameEngine.clear()
-        gameEngine.startGame(initialBubbles, yarnLimit: yarnLimit)
+
+        //gameEngine.startGame(initialBubbles, yarnLimit: yarnLimit)
     }
     func setCanonControl() {
         let pan = UIPanGestureRecognizer(target: self, action: #selector(self.panCanon(_:)))

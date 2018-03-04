@@ -53,17 +53,17 @@ class GameEngine {
     }
 
     func startGame(_ initialBubbles: [GameBubble], yarnLimit: Int) {
-        guard targetBubbleExists() else {
-            points += yarnLimit * Config.unusedPoints
-            gamePlayDelegate?.winGame(pointString)
-            return
-        }
         numOfProjectileLeft = yarnLimit
         let bubbles = initialBubbles.map { GameBubble($0) }
         buildGraph(bubbles)
         addNewProjectile()
         guard moveUpProjectile() else {
             gamePlayDelegate?.loseGame()
+            return
+        }
+        guard targetBubbleExists() else {
+            points += yarnLimit * Config.unusedPoints
+            gamePlayDelegate?.winGame(pointString)
             return
         }
     }

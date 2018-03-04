@@ -24,6 +24,8 @@ class LevelDesignerViewController: UIViewController {
     var currentLevelId: Int?
     let saveSuccessMsg = "Level saved!"
     let saveFailMsg = "Fail to save level."
+    let takeScreenshotSuccessMsg = "Screenshot saved!"
+    let takeScreenshotFailMsg = "Fail to save screenshot."
     let createLabel = "Create"
     let updateLabel = "Update"
     let maxNameLength = 20
@@ -95,6 +97,16 @@ class LevelDesignerViewController: UIViewController {
     @IBAction func goBack(_ sender: Any) {
         dismiss(animated: false, completion: nil)
     }
+
+    @IBAction func takeScreenshot(_ sender: Any) {
+        guard let screenshot = gridScreenshot else {
+            showToast(takeScreenshotFailMsg)
+            return
+        }
+        UIImageWriteToSavedPhotosAlbum(screenshot, nil, nil, nil)
+    }
+
+
     override func viewDidAppear(_ animated: Bool) {
         gridView.reloadData()
     }
