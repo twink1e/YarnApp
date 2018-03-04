@@ -1,11 +1,11 @@
 CS3217 Problem Set 5
 ==
 
-**Name:** Your name
+**Name:** Ashley Si Junke
 
-**Matric No:** Your matric no
+**Matric No:** A0131496A
 
-**Tutor:** Your tutor's name
+**Tutor:** Irvin Lim
 
 ## Tips
 
@@ -16,32 +16,57 @@ CS3217 Problem Set 5
 
 ### Rules of Your Game
 
-Your answer here
+1. Game play
 
+Game target: Remove all the bubbles given (including special bubbles) at the start of the game (thereafter called target bubbles, and can be identified as yarn balls without pins). No need to remove bubbles shot by player (thereafter called play bubbles and identified as yarn balls with pins).
+Player has limited number of play bubbles.
+Win: Clear all target bubbles before no more play bubbles.
+Lose: Play bubbles exhausted but target still exists. Or anytime during the game that a bubble touches the cutting line (a dotted line with a scissors icon).
+10 points for every target bubble bursted. 30 points for every target bubble dropped. No point for play bubbles bursted or dropped. 20 points for every unused play bubble at the end of the game.
+
+2. Level design
+
+To play a level, yarn limit must be given.
+To save a level, yarn limit and level name must be given.
+Level will be overwritten if it is updated after being selected form level selector.
+Level designer entered through the "Design Level" button from menu will only create new levels.
+Preloaded levels cannot be changed or deleted.
+
+3. Magnetic bubble
+
+Magnetic bubbles lose their effect if the path between its center and the center of the projectile is blocked. While the projectile is moving, magnetic bubbles that are blocked will dim out.
 
 ### Problem 1: Cannon Direction
 
-Your answer here
+User can select direction by tapping, and canon will fire in the direction towards that point.
+User can also pan the screen. Canon will move to face the touching poing while user pans. Canon fires in the direction towards the point where pan ends.
+However, canon can't fire if the angle canon has to turn from vertical position to face the touching point is greater than the angle has to turn from vertical position to face the ends of the cutting line. This is to avoid shooting bubble downwards, excessive bouncing and also that bubbles shouldn't land below cutting line.
 
 
 ### Problem 2: Upcoming Bubbles
 
-Your answer here
+First check what colors are in the target bubbles, and choose a random one from that set. If target bubbles are all special bubbles, randomly choose a color. This ensures that the game is winnable.
+To determine non-snapping and snapping, the ratio is specified in Config, and every projectile is has a probability of being non-snapping while following the ratio.
 
 
 ### Problem 3: Integration
 
-Your answer here
+I need to calculate the real positions (closely packed without margin) in Level designer and pass them to game engine.
+This is good since I don't have to change the structure I used for my hexGrid, also the level data is not display dependent. I don't need to store the bubbles in the level with their coordinated on the screen.
+The down side is that I cannot bypass the level designer and just start the game.
 
 
 ### Problem 4.4
 
-Your answer here
+Set indestructible to have no color.
+Loop through every bubble to find the bubbles in the same row or the target color with lightning and star.
+Loop the neighbors only for bomb.
+Put the special bubble in the queue if they are bursted for the chain effect.
 
 
 ### Problem 7: Class Diagram
 
-Please save your diagram as `class-diagram.png` in the root directory of the repository.
+I added the delegates instead of closure passing. All variables are sored in Config for easy reference.
 
 ### Problem 8: Testing
 #### Test normal colored bubbles
@@ -64,7 +89,7 @@ Please save your diagram as `class-diagram.png` in the root directory of the rep
   - When removed by bomb, its power is triggered.
   - When removed by falling, its power is not triggered.
 5. Magnetic
-  - The magnetic force should not be too strong. Even when the entire design grid is filled with magnets, projectiles shouldn't move so fast that game logic breaks or bubbles become outside the screen. Hence it is acceptable that a single magnet exerts very little attraction force. It takes about 4 magnets together for the projectile to be moving in a visible curve.
+  - The magnetic force should not be too strong. Even when the entire design grid is filled with magnets, projectiles shouldn't move so fast that game logic breaks or bubbles become outside the screen. 
   - Magnets make projectile move towards them. The closer their distance, the faster the projectile move towards magnets.
   - Like indestructable, magnets can be removed by lightning, bomb and falling. They can't be removed by color-matching or star.
 
@@ -72,12 +97,21 @@ Please save your diagram as `class-diagram.png` in the root directory of the rep
 When normal and special bubbles are both present in the game, their behavior as mentioned above should not change.
 This means that when a projectile lands connected to both special bubbles and normal bubbles, both special and normal bubbles will react accordingly.
 
+#### Test canon
+1. Can't fire any where below the cutting line.
+2. touch legal areas to fire
+3. Pan and release. If the final position is legal, fire.
 
 ### Problem 9: The Bells & Whistles
 
-Your answer here
+Graphics: Made by myself except backgrounds and cats silouette from vecteezy.
+Music: From sound bible
+Screenshot feature
+Level selector in card views with details
+Points system
+Animation
+Limited bubble
 
 
 ### Problem 10: Final Reflection
-
-Your answer here
+I think MVVM is great especially now I use delegates. It makes the code easier to write and read with clean separation and great extendability.
