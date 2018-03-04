@@ -105,11 +105,17 @@ This means that when a projectile lands connected to both special bubbles and no
 ### Problem 9: The Bells & Whistles
 
 Graphics: Made by myself except backgrounds and cats silouette from vecteezy.
+
 Music: From sound bible
+
 Screenshot feature
+
 Level selector in card views with details
+
 Points system
+
 Animation
+
 Limited bubble
 
 
