@@ -65,7 +65,7 @@ Put the special bubble in the queue if they are bursted for the chain effect.
 
 
 ### Problem 7: Class Diagram
-
+![digarm](https://github.com/cs3217/2018-ps5-twink1e/blob/master/class-diagram.png)
 I added the delegates instead of closure passing. All variables are sored in Config for easy reference.
 
 ### Problem 8: Testing
