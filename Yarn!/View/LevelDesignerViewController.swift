@@ -43,7 +43,9 @@ class LevelDesignerViewController: UIViewController {
         setSaveAndStartControl()
         setLevelLockedControl()
         adjustGridSize()
-        addGestures()
+        if !viewModel.isLevelLocked {
+            addGestures()
+        }
     }
 
     private func setSaveAndStartControl() {
@@ -67,7 +69,9 @@ class LevelDesignerViewController: UIViewController {
         if !viewModel.isLevelLocked {
             return
         }
+        controlArea.isHidden = true
         saveButton.isHidden = true
+        resetButton.isHidden = true
         nameTextField.isEnabled = false
         yarnTextField.isEnabled = false
     }
@@ -322,6 +326,9 @@ UICollectionViewDelegate, UICollectionViewDataSource {
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard !viewModel.isLevelLocked else {
+            return
+        }
         viewModel.updateBubble(at: indexPath)
     }
 

@@ -29,6 +29,7 @@
 		C07B292F204BEEB600806774 /* 5.txt in Resources */ = {isa = PBXBuildFile; fileRef = C07B2929204BEEB500806774 /* 5.txt */; };
 		C07B2930204BEEB600806774 /* 1.txt in Resources */ = {isa = PBXBuildFile; fileRef = C07B292A204BEEB500806774 /* 1.txt */; };
 		C07B2931204BEEB600806774 /* 6.txt in Resources */ = {isa = PBXBuildFile; fileRef = C07B292B204BEEB500806774 /* 6.txt */; };
+		C07B2934204C011700806774 /* pop.wav in Resources */ = {isa = PBXBuildFile; fileRef = C07B2933204C011700806774 /* pop.wav */; };
 		C0917DAC2041C31200F7B093 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0917DAB2041C31200F7B093 /* AppDelegate.swift */; };
 		C0917DB12041C31200F7B093 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C0917DAF2041C31200F7B093 /* Main.storyboard */; };
 		C0917DB92041C31200F7B093 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C0917DB72041C31200F7B093 /* LaunchScreen.storyboard */; };
@@ -77,6 +78,7 @@
 		C07B2929204BEEB500806774 /* 5.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 5.txt; sourceTree = "<group>"; };
 		C07B292A204BEEB500806774 /* 1.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 1.txt; sourceTree = "<group>"; };
 		C07B292B204BEEB500806774 /* 6.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 6.txt; sourceTree = "<group>"; };
+		C07B2933204C011700806774 /* pop.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = pop.wav; sourceTree = "<group>"; };
 		C0917DA82041C31200F7B093 /* Yarn!.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Yarn!.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0917DAB2041C31200F7B093 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C0917DB02041C31200F7B093 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -148,6 +150,14 @@
 			path = Levels;
 			sourceTree = "<group>";
 		};
+		C07B2932204C00FF00806774 /* Sounds */ = {
+			isa = PBXGroup;
+			children = (
+				C07B2933204C011700806774 /* pop.wav */,
+			);
+			path = Sounds;
+			sourceTree = "<group>";
+		};
 		C0917D9F2041C31100F7B093 = {
 			isa = PBXGroup;
 			children = (
@@ -169,6 +179,7 @@
 		C0917DAA2041C31200F7B093 /* Yarn! */ = {
 			isa = PBXGroup;
 			children = (
+				C07B2932204C00FF00806774 /* Sounds */,
 				C07B2917204BEBA600806774 /* Levels */,
 				C07B29072048716800806774 /* Assets.xcassets */,
 				C0917DF32041D2EA00F7B093 /* ViewModel */,
@@ -292,6 +303,7 @@
 			files = (
 				C07B292D204BEEB600806774 /* 4.txt in Resources */,
 				C07B292F204BEEB600806774 /* 5.txt in Resources */,
+				C07B2934204C011700806774 /* pop.wav in Resources */,
 				C07B2930204BEEB600806774 /* 1.txt in Resources */,
 				C07B2925204BEC7D00806774 /* 2.JPG in Resources */,
 				C07B2920204BEC7D00806774 /* 4.JPG in Resources */,

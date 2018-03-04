@@ -28,12 +28,7 @@ class LevelSelectorViewCell: UICollectionViewCell {
             screenshot.image = UIImage(data: screenshotData, scale: 1.0)
         }
         let locked = level.value(forKeyPath: Storage.lockedKey) as? Bool ?? true
-        guard !locked else {
-            createdAtTag.isHidden = true
-            updatedAtTag.isHidden = true
-            deleteButton.isHidden = true
-            return
-        }
+        setVisibility(locked)
         formatter.dateFormat = timeFormat
         if let creation = level.value(forKeyPath: Storage.createdAtKey) as? Date {
             createdTime.text = formatter.string(from: creation)
@@ -46,6 +41,13 @@ class LevelSelectorViewCell: UICollectionViewCell {
 
     }
 
+    private func setVisibility(_ locked: Bool) {
+        createdAtTag.isHidden = locked
+        updatedAtTag.isHidden = locked
+        createdTime.isHidden = locked
+        updatedTime.isHidden = locked
+        deleteButton.isHidden = locked
+    }
     @objc func deleteLevel(_ sender: UIButton) {
         levelSelectorDelegate?.deleteLevel(sender.tag)
     }
