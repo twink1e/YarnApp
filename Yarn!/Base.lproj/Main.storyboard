@@ -310,7 +310,7 @@
                                     <constraint firstItem="btI-Oc-pEy" firstAttribute="centerX" secondItem="rjT-zZ-NjQ" secondAttribute="centerX" id="YeG-Tw-sFT"/>
                                     <constraint firstItem="J5K-vy-DEo" firstAttribute="leading" secondItem="D2f-M0-lrm" secondAttribute="trailing" constant="60" id="a1X-q1-msp"/>
                                     <constraint firstAttribute="height" constant="100" id="hj1-59-rV2"/>
-                                    <constraint firstItem="btI-Oc-pEy" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="ba2-Ph-Kcj" secondAttribute="trailing" constant="141" id="j8W-bn-ufr"/>
+                                    <constraint firstItem="btI-Oc-pEy" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="ba2-Ph-Kcj" secondAttribute="trailing" constant="100" id="j8W-bn-ufr"/>
                                     <constraint firstItem="MCU-tX-FKW" firstAttribute="leading" secondItem="rjT-zZ-NjQ" secondAttribute="leading" constant="60" id="qTf-TM-l1C"/>
                                 </constraints>
                             </view>

@@ -51,6 +51,7 @@ class LevelDesignerViewController: UIViewController {
             addGestures()
         }
         setSoundPlayer()
+        popPlayer?.prepareToPlay()
     }
 
     private func setSoundPlayer() {
@@ -64,14 +65,6 @@ class LevelDesignerViewController: UIViewController {
     }
 
     private func setSaveAndStartControl() {
-//        NotificationCenter.default.addObserver(forName: .UITextFieldTextDidChange,
-//                                               object: nameTextField, queue: OperationQueue.main) {
-//                                                _ in self.updateSaveAndStartEnabled()
-//        }
-//        NotificationCenter.default.addObserver(forName: .UITextFieldTextDidChange,
-//                                               object: yarnTextField, queue: OperationQueue.main) {
-//                                                _ in self.updateSaveAndStartEnabled()
-//        }
         NotificationCenter.default.addObserver(self, selector: #selector(updateSaveAndStartEnabled(_:)),
                                                name: .UITextFieldTextDidChange, object: nameTextField)
         NotificationCenter.default.addObserver(self, selector: #selector(updateSaveAndStartEnabled(_:)),
@@ -302,8 +295,13 @@ class LevelDesignerViewController: UIViewController {
     }
 
     private func playPopSound() {
-        popPlayer?.prepareToPlay()
-        popPlayer?.play()
+        DispatchQueue.global(qos: .background).async {
+            if self.popPlayer?.isPlaying ?? false {
+                self.popPlayer?.stop()
+                self.popPlayer?.currentTime = 0
+            }
+            self.popPlayer?.play()
+        }
     }
 }
 

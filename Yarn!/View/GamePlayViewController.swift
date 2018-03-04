@@ -18,7 +18,6 @@ class GamePlayViewController: UIViewController {
     var displaylink: CADisplayLink!
     var yarnLimit: Int = 0
     var hitPlayer: AVAudioPlayer?
-
     @IBOutlet private var pointsView: UILabel!
     @IBOutlet private var canonView: UIImageView!
     @IBOutlet private var currentBubbleLabel: UILabel!
@@ -78,6 +77,7 @@ class GamePlayViewController: UIViewController {
         setCanonControl()
         canonView.layer.zPosition = 1
         setSoundPlayer()
+        hitPlayer?.prepareToPlay()
     }
 
     private func setSoundPlayer() {
@@ -91,8 +91,13 @@ class GamePlayViewController: UIViewController {
     }
 
     private func playHitSound() {
-        hitPlayer?.prepareToPlay()
-        hitPlayer?.play()
+        DispatchQueue.global(qos: .background).async {
+            if self.hitPlayer?.isPlaying ?? false {
+                self.hitPlayer?.stop()
+                self.hitPlayer?.currentTime = 0
+            }
+            self.hitPlayer?.play()
+        }
     }
 
     override func viewDidAppear(_: Bool) {

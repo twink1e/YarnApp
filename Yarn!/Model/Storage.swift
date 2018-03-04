@@ -83,6 +83,7 @@ class Storage {
         level.setValue(id, forKey: Storage.idKey)
         let date = Date()
         level.setValue(date, forKey: Storage.createdAtKey)
+        level.setValue(date, forKey: Storage.updatedAtKey)
         let gridString = try getGridString(grid)
         let screenshotData = try getImageData(screenshot)
         try setCommonProperties(level, name: name, yarnLimit: yarnLimit,
@@ -94,6 +95,8 @@ class Storage {
                         grid: HexGrid, screenshot: UIImage?) throws {
         let gridString = try getGridString(grid)
         let screenshotData = try getImageData(screenshot)
+        let date = Date()
+        level.setValue(date, forKey: Storage.updatedAtKey)
         try setCommonProperties(level, name: name, yarnLimit: yarnLimit,
                                 gridString: gridString, screenshot: screenshotData, locked: false)
         try managedContext.save()
@@ -106,8 +109,6 @@ class Storage {
         level.setValue(locked, forKey: Storage.lockedKey)
         level.setValue(gridString, forKey: Storage.gridKey)
         level.setValue(screenshot, forKey: Storage.screenshotKey)
-        let date = Date()
-        level.setValue(date, forKey: Storage.updatedAtKey)
    }
 
     func deleteLevel(_ level: NSManagedObject) throws {
