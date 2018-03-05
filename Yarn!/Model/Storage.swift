@@ -1,5 +1,3 @@
-// Copyright © 2018 nus.cs3217.a0101010. All rights reserved.
-
 import CoreData
 import UIKit
 
@@ -15,6 +13,7 @@ enum StorageError: Error {
  Saves, deletes, and loads levels as `NSManagedData` from core data.
  */
 class Storage {
+    static let entityName = "Level"
     static let idKey = "id"
     static let nameKey = "name"
     static let gridKey = "grid"
@@ -23,43 +22,38 @@ class Storage {
     static let screenshotKey = "screenshot"
     static let createdAtKey = "createdAt"
     static let updatedAtKey = "updatedAt"
-    static let levelCountKey = "levelCount"
-    let jsonEncoder = JSONEncoder()
+
+    // User defaults.
     let userDefaults = UserDefaults()
-    let entityName = "Level"
+    static let levelCountKey = "levelCount"
+
+    // Preload level.
+    let jsonEncoder = JSONEncoder()
     let preloadStringDelimiter = "|"
     let preloadStringFieldNum = 3
     let preloadFormatErrorMsg = "Wrong format for preloaded level."
+
     let idFormat = "id == %d"
+    let encodeImageErrorMsg = "Cannot encode image!"
+    let encodeGridErrorMsg = "Cannot encode grid!"
+
     var managedContext: NSManagedObjectContext
-    var entity: NSEntityDescription
+    var entity: NSEntityDescription!
 
-    init(_ managedContext: NSManagedObjectContext, entity: NSEntityDescription) throws {
+    /// Init Storage with the given context.
+    init(_ managedContext: NSManagedObjectContext) {
         self.managedContext = managedContext
-        self.entity = entity
+        entity = NSEntityDescription.entity(forEntityName: Storage.entityName, in: managedContext)
     }
 
-    private func getImageData(_ screenshot: UIImage?) throws -> Data {
-        guard let image = screenshot, let data = UIImagePNGRepresentation(image) else {
-            throw StorageError.encodeError("Cannot encode image!")
-        }
-        return data
-    }
-
-    private func getGridString(_ grid: HexGrid) throws -> String {
-        let gridData = try jsonEncoder.encode(grid)
-        guard let gridString = String(data: gridData, encoding: .utf8) else {
-            throw StorageError.encodeError("Cannot encode grid!")
-        }
-        return gridString
-    }
-
+    /// Return the level with the given id.
     func levelWithId(_ levelId: Int) throws -> NSManagedObject? {
-        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: entityName)
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: Storage.entityName)
         fetchRequest.predicate = NSPredicate(format: idFormat, levelId)
         return try managedContext.fetch(fetchRequest).first
     }
 
+    /// Save a level with data that comes in the specified format in String.
     func savePreloadedLevel(_ dataString: String, levelId: Int, screenshotData: Data) throws {
         let data = dataString.components(separatedBy: preloadStringDelimiter)
         guard data.count == preloadStringFieldNum, let yarnLimit = Int(data[1]) else {
@@ -75,6 +69,7 @@ class Storage {
         try managedContext.save()
     }
 
+    /// Save a new level and assign an id that is persistently incremental.
     func saveNewLevel(_ name: String, yarnLimit: Int, grid: HexGrid, screenshot: UIImage?) throws {
         let id = userDefaults.integer(forKey: Storage.levelCountKey) + 1
         userDefaults.set(id, forKey: Storage.levelCountKey)
@@ -91,6 +86,7 @@ class Storage {
         try managedContext.save()
     }
 
+    /// Update the given level.
     func overwriteLevel(_ level: NSManagedObject, name: String, yarnLimit: Int,
                         grid: HexGrid, screenshot: UIImage?) throws {
         let gridString = try getGridString(grid)
@@ -102,6 +98,35 @@ class Storage {
         try managedContext.save()
     }
 
+    func deleteLevel(_ level: NSManagedObject) throws {
+        managedContext.delete(level)
+        try managedContext.save()
+    }
+
+    /// Load all saved levels as an array of `NSManagedObject` with the most recently updated level at the front.
+    func loadLevels() throws -> [NSManagedObject] {
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: Storage.entityName)
+        let sort = NSSortDescriptor(key: Storage.updatedAtKey, ascending: true)
+        fetchRequest.sortDescriptors = [sort]
+        return try managedContext.fetch(fetchRequest)
+    }
+
+    private func getImageData(_ screenshot: UIImage?) throws -> Data {
+        guard let image = screenshot, let data = UIImagePNGRepresentation(image) else {
+            throw StorageError.encodeError(encodeImageErrorMsg)
+        }
+        return data
+    }
+
+    private func getGridString(_ grid: HexGrid) throws -> String {
+        let gridData = try jsonEncoder.encode(grid)
+        guard let gridString = String(data: gridData, encoding: .utf8) else {
+            throw StorageError.encodeError(encodeGridErrorMsg)
+        }
+        return gridString
+    }
+
+    // Set all properties except id, created and updated time.
     private func setCommonProperties(_ level: NSManagedObject, name: String,
                                      yarnLimit: Int, gridString: String, screenshot: Data, locked: Bool) throws {
         level.setValue(name, forKeyPath: Storage.nameKey)
@@ -110,17 +135,4 @@ class Storage {
         level.setValue(gridString, forKey: Storage.gridKey)
         level.setValue(screenshot, forKey: Storage.screenshotKey)
    }
-
-    func deleteLevel(_ level: NSManagedObject) throws {
-        managedContext.delete(level)
-        try managedContext.save()
-    }
-
-    /// Load all saved levels as an array of `NSManagedObject` with the most recently updated level at the front.
-    func loadLevels() throws -> [NSManagedObject] {
-        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: entityName)
-        let sort = NSSortDescriptor(key: Storage.updatedAtKey, ascending: true)
-        fetchRequest.sortDescriptors = [sort]
-        return try managedContext.fetch(fetchRequest)
-    }
 }

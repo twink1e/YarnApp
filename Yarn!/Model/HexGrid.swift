@@ -134,6 +134,7 @@ class HexGrid {
     }
 }
 
+// MARK: - Codable
 extension HexGrid: Codable {
     private enum CodingKeys: CodingKey {
         case row, colEvenRow, bubbles

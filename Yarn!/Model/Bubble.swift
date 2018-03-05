@@ -25,7 +25,7 @@ protocol Bubble: Codable {
     func isEqualTo(_ other: Bubble) -> Bool
 }
 
-/// Equatable with type erasure.
+// MARK: - Equatable
 extension Bubble where Self: Equatable {
     func isEqualTo(_ other: Bubble) -> Bool {
         guard let otherBubble = other as? Self else {

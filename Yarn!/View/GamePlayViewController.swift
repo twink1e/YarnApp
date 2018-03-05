@@ -9,6 +9,7 @@ class GamePlayViewController: UIViewController {
     let storyboardName = "Main"
     let winIdentifier = "win"
     let loseIdentifier = "lose"
+
     var initialBubbles: [GameBubble] = []
     var bubbleRadius: CGFloat = 0
     var screenWidth: CGFloat = 0
@@ -17,7 +18,10 @@ class GamePlayViewController: UIViewController {
     var prevFrameTime: CFTimeInterval = 0
     var displaylink: CADisplayLink!
     var yarnLimit: Int = 0
+
     var hitPlayer: AVAudioPlayer?
+    let hitSoundFileName = ["hit", "wav"]
+
     @IBOutlet private var pointsView: UILabel!
     @IBOutlet private var canonView: UIImageView!
     @IBOutlet private var currentBubbleLabel: UILabel!
@@ -31,12 +35,29 @@ class GamePlayViewController: UIViewController {
         return true
     }
 
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        gameEngine = GameEngine(radius: bubbleRadius, width: screenWidth, height: screenHeight, delegate: self)
+        setCanonControl()
+        canonView.layer.zPosition = 1
+        setSoundPlayer()
+        hitPlayer?.prepareToPlay()
+    }
+
+    /// Start game.
+    override func viewDidAppear(_: Bool) {
+        gameEngine.renderer.resetCanon(canonView)
+        gameEngine.clear()
+        gameEngine.startGame(initialBubbles, yarnLimit: yarnLimit)
+    }
+
     func goBack() {
         gameEngine.clear()
         dismiss(animated: false, completion: nil)
     }
-    // If projectile is not launched,
-    // rotate the canon to face the point user tapped and launch projectile.
+
+    /// If projectile is not launched,
+    /// rotate the canon to face the point user tapped and launch projectile.
     @objc
     func tapCanon(_ sender: UITapGestureRecognizer) {
         let position = sender.location(in: view)
@@ -46,8 +67,8 @@ class GamePlayViewController: UIViewController {
         launchProjectile(position)
     }
 
-    // Rotate the canon to face the point user is panning if projectile is not launched.
-    // Launch the projectile when pan ends.
+    /// Rotate the canon to face the point user is panning if projectile is not launched.
+    /// Launch the projectile when pan ends.
     @objc
     func panCanon(_ sender: UIPanGestureRecognizer) {
         let state = sender.state
@@ -64,24 +85,15 @@ class GamePlayViewController: UIViewController {
         }
     }
 
-    private func launchProjectile(_ targetPoint: CGPoint) {
+    func launchProjectile(_ targetPoint: CGPoint) {
         gameEngine.currentProjectile.setLaunchDirection(start: canonView.center, target: targetPoint)
         gameEngine.renderer.releaseCanon(canonView)
         addDisplaylink()
         playHitSound()
     }
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        gameEngine = GameEngine(radius: bubbleRadius, width: screenWidth, height: screenHeight, delegate: self)
-        setCanonControl()
-        canonView.layer.zPosition = 1
-        setSoundPlayer()
-        hitPlayer?.prepareToPlay()
-    }
-
-    private func setSoundPlayer() {
-        guard let url = Bundle.main.url(forResource: "hit", withExtension: "wav") else {
+    func setSoundPlayer() {
+        guard let url = Bundle.main.url(forResource: hitSoundFileName[0], withExtension: hitSoundFileName[1]) else {
             return
         }
         do {
@@ -90,7 +102,7 @@ class GamePlayViewController: UIViewController {
         }
     }
 
-    private func playHitSound() {
+    func playHitSound() {
         DispatchQueue.global(qos: .background).async {
             if self.hitPlayer?.isPlaying ?? false {
                 self.hitPlayer?.stop()
@@ -98,12 +110,6 @@ class GamePlayViewController: UIViewController {
             }
             self.hitPlayer?.play()
         }
-    }
-
-    override func viewDidAppear(_: Bool) {
-        gameEngine.renderer.resetCanon(canonView)
-        gameEngine.clear()
-        gameEngine.startGame(initialBubbles, yarnLimit: yarnLimit)
     }
 
     func setCanonControl() {
@@ -116,7 +122,7 @@ class GamePlayViewController: UIViewController {
         view.isUserInteractionEnabled = true
     }
 
-    // Set display link and update the previous frame time.
+    /// Set display link and update the previous frame time.
     func addDisplaylink() {
         displaylink = CADisplayLink(target: self, selector: #selector(step))
         displaylink.preferredFramesPerSecond = Config.framePerSecond
@@ -125,8 +131,8 @@ class GamePlayViewController: UIViewController {
         prevFrameTime = CACurrentMediaTime()
     }
 
+    /// In each frame, update the projectile for the correspongding frame duration.
     @objc
-    // In each frame, update the projectile for the correspongding frame duration.
     func step(displaylink: CADisplayLink) {
         let currentTime = CACurrentMediaTime()
         gameEngine.moveProjectile(CGFloat(currentTime - prevFrameTime))
@@ -134,11 +140,13 @@ class GamePlayViewController: UIViewController {
     }
 }
 
+// MARK: - GamePlayDelegate
 extension GamePlayViewController: GamePlayDelegate {
     func updatePoints(_ points: String) {
         pointsView.text = points
     }
 
+    /// Present the winning scene.
     func winGame(_ points: String) {
         let storyboard = UIStoryboard(name: storyboardName, bundle: nil)
         let controller = storyboard.instantiateViewController(withIdentifier: winIdentifier)
@@ -147,6 +155,7 @@ extension GamePlayViewController: GamePlayDelegate {
         self.present(controller, animated: true, completion: nil)
     }
 
+    /// Present the losing scene.
     func loseGame() {
         let storyboard = UIStoryboard(name: storyboardName, bundle: nil)
         let controller = storyboard.instantiateViewController(withIdentifier: loseIdentifier)

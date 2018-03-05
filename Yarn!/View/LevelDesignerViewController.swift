@@ -16,12 +16,17 @@ class LevelDesignerViewController: UIViewController {
     @IBOutlet private var startButton: UIButton!
     @IBOutlet private var yarnTextField: UITextField!
     @IBOutlet private var bubbleModifierButtons: [UIButton]!
+
     var viewModel: LevelDesignerViewModel!
     let reuseIdentifier = "hexGridCell"
+
     var cellWidth: CGFloat = 0
     var levelDesignCellWidth: CGFloat = 0
     var screenWidth: CGFloat = 0
     var screenHeight: CGFloat = 0
+    let collectionViewVerticalOffset: CGFloat = 6.5
+    let emptyCellAlpha: CGFloat = 0.3
+
     var currentLevelId: Int?
     let saveSuccessMsg = "Level saved!"
     let saveFailMsg = "Fail to save level."
@@ -29,11 +34,11 @@ class LevelDesignerViewController: UIViewController {
     let takeScreenshotFailMsg = "Fail to save screenshot."
     let createLabel = "Create"
     let updateLabel = "Update"
-    let maxNameLength = 20
-    let maxYarnLength = 3
     let nameTextFieldTag = 0
     let yarnTextFieldTag = 1
+
     var popPlayer: AVAudioPlayer?
+    let popSoundFileName = ["pop", "wav"]
 
     override var prefersStatusBarHidden: Bool {
         return true
@@ -54,8 +59,22 @@ class LevelDesignerViewController: UIViewController {
         popPlayer?.prepareToPlay()
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        gridView.reloadData()
+    }
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let gamePlay = segue.destination as? GamePlayViewController {
+            gamePlay.initialBubbles = gameBubbles
+            gamePlay.bubbleRadius = cellWidth / 2.0
+            gamePlay.screenWidth = screenWidth
+            gamePlay.screenHeight = screenHeight
+            gamePlay.yarnLimit = Int(yarnTextField.text!)!
+        }
+    }
+
     private func setSoundPlayer() {
-        guard let url = Bundle.main.url(forResource: "pop", withExtension: "wav") else {
+        guard let url = Bundle.main.url(forResource: popSoundFileName[0], withExtension: popSoundFileName[1]) else {
             return
         }
         do {
@@ -133,24 +152,6 @@ class LevelDesignerViewController: UIViewController {
             showToast(takeScreenshotFailMsg)
         } else {
             showToast(takeScreenshotSuccessMsg)
-        }
-    }
-
-    override func viewDidAppear(_ animated: Bool) {
-        gridView.reloadData()
-    }
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let gamePlay = segue.destination as? GamePlayViewController {
-            gamePlay.initialBubbles = gameBubbles
-            gamePlay.bubbleRadius = cellWidth / 2.0
-            gamePlay.screenWidth = screenWidth
-            gamePlay.screenHeight = screenHeight
-            gamePlay.yarnLimit = Int(yarnTextField.text!)!
         }
     }
 
@@ -305,7 +306,10 @@ class LevelDesignerViewController: UIViewController {
     }
 }
 
+// MARK: - UITextFieldDelegate
 extension LevelDesignerViewController: UITextFieldDelegate {
+
+    /// Check if text length is too long or the yarn number is too large.
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange,
                    replacementString string: String) -> Bool {
         guard let text = textField.text else {
@@ -316,22 +320,45 @@ extension LevelDesignerViewController: UITextFieldDelegate {
     }
 
     private func shouldNameChange(_ newText: String) -> Bool {
-        return newText.count <= maxNameLength
+        return newText.count <= Config.maxNameLength
     }
 
     private func shouldYarnChange(_ newText: String) -> Bool {
         if newText.isEmpty {
             return true
         }
-        guard newText.count <= maxNameLength, let intVal = Int(newText) else {
+        guard newText.count <= Config.maxYarnLength, let intVal = Int(newText) else {
             return false
         }
-        return intVal <= 999 && intVal >= 1
+        return intVal <= Config.maxYarnLimit && intVal >= Config.minYarnLimit
     }
 }
 
-extension LevelDesignerViewController: UICollectionViewDelegateFlowLayout,
-UICollectionViewDelegate, UICollectionViewDataSource {
+// MARK: - UICollectionViewDelegateFlowLayout
+extension LevelDesignerViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        sizeForItemAt indexPath: IndexPath) -> CGSize {
+
+        return CGSize(width: levelDesignCellWidth, height: levelDesignCellWidth)
+    }
+
+    // Offset to make the grid looks nice.
+    // No need to make sure there's no margin since it does not affect game play.
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        insetForSectionAt section: Int) -> UIEdgeInsets {
+        // To make the rows of bubbles closer.
+        let verticalOffset = collectionViewVerticalOffset * CGFloat(section)
+        // Horizontal margin for odd rows (0-indexed).
+        return section % 2 == 0 ? UIEdgeInsets(top: -verticalOffset, left: 0, bottom: verticalOffset, right: 0) :
+            UIEdgeInsets(top: -verticalOffset, left: levelDesignCellWidth / 2.0,
+                         bottom: verticalOffset, right: levelDesignCellWidth / 2.0)
+    }
+}
+
+// MARK: - UICollectionViewDataSource
+extension LevelDesignerViewController: UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return viewModel.gridRow
     }
@@ -351,37 +378,23 @@ UICollectionViewDelegate, UICollectionViewDataSource {
             bubbleImage.frame = CGRect(x: 0, y: 0, width: levelDesignCellWidth, height: levelDesignCellWidth)
             cell.contentView.addSubview(bubbleImage)
         } else {
-            cell.backgroundColor = UIColor.white.withAlphaComponent(0.3)
+            cell.backgroundColor = UIColor.white.withAlphaComponent(emptyCellAlpha)
         }
         return cell
     }
+}
 
+// MARK: - UICollectionViewDelegate
+extension LevelDesignerViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard !viewModel.isLevelLocked else {
             return
         }
         viewModel.updateBubble(at: indexPath)
     }
-
-    func collectionView(_ collectionView: UICollectionView,
-                        layout collectionViewLayout: UICollectionViewLayout,
-                        sizeForItemAt indexPath: IndexPath) -> CGSize {
-
-        return CGSize(width: levelDesignCellWidth, height: levelDesignCellWidth)
-    }
-
-    func collectionView(_ collectionView: UICollectionView,
-                        layout collectionViewLayout: UICollectionViewLayout,
-                        insetForSectionAt section: Int) -> UIEdgeInsets {
-        // To make the rows of bubbles closer.
-        let verticalOffset = 6.5 * CGFloat(section)
-        // Horizontal margin for odd rows (0-indexed).
-        return section % 2 == 0 ? UIEdgeInsets(top: -verticalOffset, left: 0, bottom: verticalOffset, right: 0) :
-            UIEdgeInsets(top: -verticalOffset, left: levelDesignCellWidth / 2.0,
-                         bottom: verticalOffset, right: levelDesignCellWidth / 2.0)
-    }
 }
 
+// MARK: - LevelDesignerDelegate
 extension LevelDesignerViewController: LevelDesignerDelegate {
     func setName(_ name: String) {
         nameTextField.text = name

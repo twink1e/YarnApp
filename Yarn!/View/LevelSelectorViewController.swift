@@ -1,5 +1,8 @@
 import UIKit
 
+/**
+ View controller for the level selector scene.
+ */
 class LevelSelectorViewController: UIViewController {
     let reuseIdentifier = "level"
     let storyBoardName = "Main"
@@ -42,7 +45,18 @@ class LevelSelectorViewController: UIViewController {
     }
 }
 
-extension LevelSelectorViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+// MARK: - UICollectionViewDelegate
+extension LevelSelectorViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let designerController = UIStoryboard(name: storyBoardName, bundle: nil)
+            .instantiateViewController(withIdentifier: designerIdentifier) as! LevelDesignerViewController
+        designerController.currentLevelId = viewModel.levelIdAtIndex(indexPath.row)
+        present(designerController, animated: false, completion: nil)
+    }
+}
+
+// MARK: - UICollectionViewDataSource
+extension LevelSelectorViewController: UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
@@ -62,14 +76,9 @@ extension LevelSelectorViewController: UICollectionViewDelegate, UICollectionVie
         cell.setContent(viewModel.levels[index], tag: index, delegate: self)
         return cell
     }
-
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let designerController = UIStoryboard(name: storyBoardName, bundle: nil)
-            .instantiateViewController(withIdentifier: designerIdentifier) as! LevelDesignerViewController
-        designerController.currentLevelId = viewModel.levelIdAtIndex(indexPath.row)
-        present(designerController, animated: false, completion: nil)
-    }
 }
+
+// MARK: - LevelSelectorDelegate
 extension LevelSelectorViewController: LevelSelectorDelegate {
     func reloadGridView() {
         DispatchQueue.main.async {

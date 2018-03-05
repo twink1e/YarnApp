@@ -1,5 +1,8 @@
 import UIKit
 
+/**
+ View controller for the menu scene.
+ */
 class MenuViewController: UIViewController {
     @IBOutlet private var musicToggleButton: UIButton!
     weak var appDelegate: AppDelegate?
@@ -13,6 +16,7 @@ class MenuViewController: UIViewController {
     override func viewDidLoad() {
         appDelegate = UIApplication.shared.delegate as? AppDelegate
     }
+
     @IBAction func toggleMusic(_ sender: Any) {
         guard let musicPlayer = appDelegate?.backgroundMusicPlayer else {
             return

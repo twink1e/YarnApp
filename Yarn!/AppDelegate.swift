@@ -1,11 +1,3 @@
-//
-//  AppDelegate.swift
-//  Yarn!
-//
-//  Created by Jun Ke Si on 24/2/18.
-//  Copyright © 2018 Jun Ke Si. All rights reserved.
-//
-
 import UIKit
 import AVFoundation
 import CoreData
@@ -15,10 +7,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     var backgroundMusicPlayer: AVAudioPlayer?
+    let backgroundMusicFileName = ["background", "wav"]
+    let volume: Float = 0.5
     let preloadKey = "preloaded"
-    let levelCountKey = "levelCount"
     let levelCount = 6
-    let entityName = "Level"
 
     func application(_ application: UIApplication,
                      supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
@@ -36,13 +28,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             } catch {
             }
             userDefaults.set(true, forKey: preloadKey)
-            userDefaults.set(levelCount, forKey: levelCountKey)
+            userDefaults.set(levelCount, forKey: Storage.levelCountKey)
         }
         return true
     }
 
     private func setMusicPlayer() {
-        guard let url = Bundle.main.url(forResource: "background", withExtension: "wav") else {
+        guard let url = Bundle.main.url(forResource: backgroundMusicFileName[0],
+                                        withExtension: backgroundMusicFileName[1]) else {
             return
         }
         do {
@@ -51,7 +44,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
             backgroundMusicPlayer = try AVAudioPlayer(contentsOf: url, fileTypeHint: AVFileType.wav.rawValue)
             backgroundMusicPlayer?.numberOfLoops = -1
-            backgroundMusicPlayer?.volume = 0.5
+            backgroundMusicPlayer?.volume = volume
         } catch {
         }
     }
@@ -63,10 +56,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     private func preloadData() throws {
         let context = persistentContainer.viewContext
-        guard let entity = NSEntityDescription.entity(forEntityName: entityName, in: context) else {
-            return
-        }
-        let storage = try Storage(context, entity: entity)
+        let storage = Storage(context)
         for levelNum in 1 ..< (levelCount + 1) {
             try preloadLevel(levelNum, storage: storage)
         }

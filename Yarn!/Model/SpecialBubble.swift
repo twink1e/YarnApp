@@ -1,6 +1,6 @@
 import PhysicsEngine
 /**
- A basic type of bubble that has color.
+ A special type of bubble that has power.
  */
 struct SpecialBubble: Codable {
     static var type = BubbleType.special

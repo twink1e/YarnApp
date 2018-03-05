@@ -1,10 +1,8 @@
-//  Copyright © 2018 nus.cs3217. All rights reserved.
-
 import UIKit
 import PhysicsEngine
 
 /**
- View model that encapsulates the image of the bubble.
+ View model that encapsulates the image of the bubble for the cell in the hex grid.
  */
 struct HexGridCellViewModel {
     var background: UIImage?
@@ -25,6 +23,9 @@ struct HexGridCellViewModel {
         BubblePower.lightning: #imageLiteral(resourceName: "bubble-lightning"),
         BubblePower.star: #imageLiteral(resourceName: "bubble-star")
     ]
+
+    /// Construct a HexGridCellViewModel based on the given bubble.
+    /// Set the bubble type and the image according to the bubble given.
     init(_ bubble: Bubble?) {
         if let coloredBubble = bubble as? ColoredBubble {
             type = .colored

@@ -2,7 +2,7 @@ import PhysicsEngine
 
 extension PhysicsEngine {
 
-    // Return true if the path from bubble1's center to bubble2's center is not obstructed.
+    /// Return true if the path from bubble1's center to bubble2's center is not obstructed.
     func clearPath(_ bubble1: GameBubble, to bubble2: GameBubble) -> Bool {
         // line from bubble1 center (as origin) to bubble2 center, y = ax
         let a = (bubble2.centerY - bubble1.centerY) / (bubble2.centerX - bubble1.centerX)
@@ -23,8 +23,9 @@ extension PhysicsEngine {
         }
         return true
     }
-    // Return a tuple of the closest collided existing bubble to the projectile and the distance.
-    // Return a nil if such bubble does not exist.
+
+    /// Return a tuple of the closest collided existing bubble to the projectile and the distance.
+    /// Return a nil if such bubble does not exist.
     func closestCollidedBubbleAndDistance(_ projectile: GameBubble) -> (GameBubble, CGFloat)? {
         var bubbleAndDistance: (GameBubble, CGFloat)?
         for bubble in adjList.keys {
@@ -36,9 +37,8 @@ extension PhysicsEngine {
         return bubbleAndDistance
     }
 
-    // Move the projectile in its reverse direction so that it just touches the collided bubble.
+    /// Move the projectile in its reverse direction so that it just touches the collided bubble.
     func backtrackToTouching(_ projectile: ProjectileBubble, with collidedBubble: GameBubble) {
-        // print ("overlapping", collidedBubble)
         let xDiff = collidedBubble.centerX - projectile.centerX
         let yDiff = projectile.centerY - collidedBubble.centerY
         // Solve quadratic equation
@@ -51,7 +51,7 @@ extension PhysicsEngine {
         projectile.moveForDistance(-dist)
     }
 
-    // Return a set of bursted bubbles due to power bubbles and their chain reactions.
+    /// Return a set of bursted bubbles due to power bubbles and their chain reactions.
     func bubblesBurstedByPower(_ startBubble: GameBubble) -> Set<GameBubble> {
         // A queue of special bubbles.
         var queue = Queue<GameBubble>()
@@ -71,6 +71,7 @@ extension PhysicsEngine {
         }
         return allRemovedBubbles
     }
+
     private func bubblesBurstedByStar(_ activatorBubble: GameBubble) -> Set<GameBubble> {
         guard let neighbors = adjList[activatorBubble] else {
             return []

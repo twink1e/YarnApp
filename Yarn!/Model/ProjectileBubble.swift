@@ -18,7 +18,7 @@ class ProjectileBubble: GameBubble {
         BubbleColor.green: #imageLiteral(resourceName: "bubble-green-pin")
     ]
 
-    // Construct a new UIImageView based on the color and dimension given.
+    /// Construct a new UIImageView based on the color and dimension given.
     init(color: BubbleColor, centerX: CGFloat, centerY: CGFloat, radius: CGFloat, label: Int) {
         let view = UIImageView(image: colorToImage[color])
         view.frame = CGRect(x: centerX - radius, y: centerY - radius, width: radius * 2, height: radius * 2)
@@ -28,7 +28,7 @@ class ProjectileBubble: GameBubble {
         target = false
     }
 
-    // Launch the bubble in the direction that goes towards the given point, if it has not been launched yet.
+    /// Launch the bubble in the direction that goes towards the given point, if it has not been launched yet.
     func setLaunchDirection(start: CGPoint, target: CGPoint) {
         view.frame.origin = CGPoint(x: start.x - radius, y: start.y - radius)
         let xDist = target.x - start.x
@@ -42,7 +42,7 @@ class ProjectileBubble: GameBubble {
         launched = true
     }
 
-    // Set the bubble to be non snapping. Indicated with purple border.
+    /// Set the bubble to be non snapping. Indicated with purple border.
     func setNonSnapping() {
         snapping = false
         view.layer.borderColor = UIColor.purple.cgColor
@@ -50,8 +50,8 @@ class ProjectileBubble: GameBubble {
         view.layer.masksToBounds = true
     }
 
-    // Give projectile acceleration towards the given point.
-    // Magnitude of acceleration is inversely proportional to the distance.
+    /// Give projectile acceleration towards the given point.
+    /// Magnitude of acceleration is inversely proportional to the distance.
     func attractsTowards(_ point: CGPoint) {
         let xDiff = point.x - centerX
         let yDiff = point.y - centerY
@@ -75,30 +75,34 @@ class ProjectileBubble: GameBubble {
     func setOrigin(_ origin: CGPoint) {
         view.frame.origin = origin
     }
-    // Move projectile such that x distance moved is specified.
-    // Do nothing if it is impossible.
+
+    /// Move projectile such that x distance moved is specified.
+    /// Do nothing if it is impossible.
     func moveForX(_ distance: CGFloat) {
         guard cos != 0 else {
             return
         }
         view.frame.origin = CGPoint(x: leftX + distance, y: topY + distance * sin / cos)
     }
-    // Move projectile such that y distance moved is specified.
-    // Do nothing if it is impossible.
+
+    /// Move projectile such that y distance moved is specified.
+    /// Do nothing if it is impossible.
     func moveForY(_ distance: CGFloat) {
         guard sin != 0 else {
             return
         }
         view.frame.origin = CGPoint(x: leftX + distance * cos / sin, y: topY + distance)
     }
-    // Stop the bubble.
+
+    /// Stop the bubble.
     func stop() {
         cos = 0
         sin = 0
         vectorX = 0
         vectorY = 0
     }
-    // Reverse the direction the bubble is travelling.
+
+    /// Reverse the direction the bubble is travelling.
     func reverse() {
         cos *= -1
         vectorX *= -1

@@ -1,5 +1,8 @@
 import PhysicsEngine
 
+/**
+ Config to be shared.
+ */
 extension Config {
     static let gridRow = 9
     static let gridColEvenRow = 12
@@ -17,4 +20,8 @@ extension Config {
     static let burstPoints = 10
     static let unusedPoints = 20
     static let fellPoints = 30
+    static let maxNameLength = 20
+    static let maxYarnLength = 3
+    static let minYarnLimit = 1
+    static let maxYarnLimit = 999
 }

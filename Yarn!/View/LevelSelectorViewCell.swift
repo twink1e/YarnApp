@@ -20,6 +20,7 @@ class LevelSelectorViewCell: UICollectionViewCell {
 
     func setContent(_ level: NSManagedObject, tag: Int, delegate: LevelSelectorDelegate) {
         levelSelectorDelegate = delegate
+
         name.text = level.value(forKeyPath: Storage.nameKey) as? String
         if let yarnNum = level.value(forKeyPath: Storage.yarnKey) as? Int {
             yarnLimit.text = yarnPrefix + String(yarnNum)
@@ -27,8 +28,10 @@ class LevelSelectorViewCell: UICollectionViewCell {
         if let screenshotData = level.value(forKeyPath: Storage.screenshotKey) as? Data {
             screenshot.image = UIImage(data: screenshotData, scale: 1.0)
         }
+
         let locked = level.value(forKeyPath: Storage.lockedKey) as? Bool ?? true
         setVisibility(locked)
+
         formatter.dateFormat = timeFormat
         if let creation = level.value(forKeyPath: Storage.createdAtKey) as? Date {
             createdTime.text = formatter.string(from: creation)
@@ -36,9 +39,9 @@ class LevelSelectorViewCell: UICollectionViewCell {
         if let update = level.value(forKeyPath: Storage.updatedAtKey) as? Date {
             updatedTime.text = formatter.string(from: update)
         }
+
         deleteButton.tag = tag
         deleteButton.addTarget(self, action: #selector(deleteLevel(_:)), for: .touchUpInside)
-
     }
 
     private func setVisibility(_ locked: Bool) {

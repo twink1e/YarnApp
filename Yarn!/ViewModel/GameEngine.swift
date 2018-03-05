@@ -7,20 +7,27 @@ import PhysicsEngine
  and a PhysicsEngine for path computation and collision detection.
  */
 class GameEngine {
+    let renderer: Renderer
+    let physicsEngine: PhysicsEngine
+    weak var gamePlayDelegate: GamePlayDelegate?
+
+    // Projectile handling
+    var numOfProjectileLeft = 0
     let noBubbleLeftLabel = 0
+    let nonSnappingLotteryNumber = 0
     let allColors: [BubbleColor] = [.red, .orange, .green, .blue]
     var currentProjectile: ProjectileBubble!
     var nextProjectile: ProjectileBubble?
-    let renderer: Renderer
-    let physicsEngine: PhysicsEngine
-    var numOfProjectileLeft = 0
-    weak var gamePlayDelegate: GamePlayDelegate?
+
+    // Point system
     var points = 0
+    let initialPointString = "0"
     let numberFormatter = NumberFormatter()
     var pointString: String {
         return numberFormatter.string(from: NSNumber(value: points))!
     }
 
+    // Size specs
     let screenWidth: CGFloat
     let screenHeight: CGFloat
     let bubbleRadius: CGFloat
@@ -31,6 +38,8 @@ class GameEngine {
         return renderer.rowHeight
     }
 
+    /// Constructs a game engine with bubble radius, screen width, screen height
+    /// and a delegate that updates the view.
     init(radius: CGFloat, width: CGFloat, height: CGFloat, delegate: GamePlayDelegate) {
         bubbleRadius = radius
         screenWidth = width
@@ -41,17 +50,19 @@ class GameEngine {
         numberFormatter.numberStyle = NumberFormatter.Style.decimal
     }
 
-    // Clear the game state when player exits.
+    /// Clear the game state when player exits.
     func clear() {
         currentProjectile = nil
         nextProjectile = nil
         renderer.clearBubbleViews(Array(physicsEngine.adjList.keys))
         physicsEngine.clear()
         points = 0
-        gamePlayDelegate?.updatePoints("0")
+        gamePlayDelegate?.updatePoints(initialPointString)
         numOfProjectileLeft = 0
     }
 
+    /// Start the game by building the initial game bubble grid and supply the projectiles.
+    /// Check if target exists in case this is an empty grid.
     func startGame(_ initialBubbles: [GameBubble], yarnLimit: Int) {
         numOfProjectileLeft = yarnLimit
         let bubbles = initialBubbles.map { GameBubble($0) }
@@ -68,9 +79,10 @@ class GameEngine {
         }
     }
 
-    // Backtrack the projectile if it has moved excessively,
-    // e.g. overlapping with another bubble, out of screen.
-    // Then stop or move the projectile accordingly.
+    /// Update the projectile for the elapse of time `duration` in seconds.
+    /// Backtrack the projectile if it has moved excessively, e.g. overlapping with another bubble, out of screen.
+    /// Check if bubbles are attracted by magnets.
+    /// Then stop or move the projectile accordingly.
     func moveProjectile(_ duration: CGFloat) {
         backtrackProjectileToInScreen()
 
@@ -95,7 +107,7 @@ class GameEngine {
     }
 
     // Attract projectile to magnets that are not obstructed.
-    func checkMagnets() {
+    private func checkMagnets() {
         let magnets = physicsEngine.adjList.keys.filter { $0.power == .magnetic }
         magnets.forEach { renderer.showInactiveMagnet($0) }
         magnets
@@ -117,6 +129,7 @@ class GameEngine {
             currentProjectile.moveForX(screenWidth - currentProjectile.rightX)
         }
     }
+
     private func handleCollision(_ collided: (GameBubble, CGFloat)) {
         var collidedBubbleAndDistance: (GameBubble, CGFloat)? = collided
         while let collidedBubble = collidedBubbleAndDistance?.0,
@@ -130,27 +143,24 @@ class GameEngine {
         stopProjectileAndRemoveBubbles()
     }
 
+    // Handles the logic when the projectile has landed.
     private func stopProjectileAndRemoveBubbles() {
         currentProjectile.stop()
         gamePlayDelegate?.pauseGameLoop()
         maybeSnapProjectile()
         // Ensure no overlap with other bubbles
-        //print ("after snap", physicsEngine.closestCollidedBubbleAndDistance(projectile))
-        //print ("dist", physicsEngine.closestDistanceFromExistingBubble(projectile))
         assert(physicsEngine.closestDistanceFromExistingBubble(currentProjectile) >= -Config.calculationErrorMargin)
         physicsEngine.addToGraph(currentProjectile)
         guard !projectileTouchingCuttingLine() else {
             gamePlayDelegate?.loseGame()
             return
         }
-        //print ("before removal", physicsEngine.adjList)
         clearRemovedBubbles()
         guard targetBubbleExists() else {
             points += (nextProjectile?.label ?? 0) * Config.unusedPoints
             gamePlayDelegate?.winGame(pointString)
             return
         }
-        //print ("after removal", physicsEngine.adjList)
         guard moveUpProjectile() else {
             gamePlayDelegate?.loseGame()
             return
@@ -165,6 +175,8 @@ class GameEngine {
         let targets = physicsEngine.adjList.keys.filter { $0.target }
         return !targets.isEmpty
     }
+
+    // get all the colors of target bubbles.
     private func targetColors() -> [BubbleColor]? {
         var colors: Set<BubbleColor> = []
         physicsEngine.adjList.keys
@@ -172,6 +184,8 @@ class GameEngine {
             .forEach { colors.insert($0.color) }
         return colors.isEmpty ? nil : Array(colors)
     }
+
+    // Snap bubble if itself is snapping and also it does not contact a non-snapping bubble.
     private func maybeSnapProjectile() {
         if !currentProjectile.snapping {
             return
@@ -186,7 +200,7 @@ class GameEngine {
         }
     }
 
-    // Clear bursted and fallen bubbles.
+    // Clear bursted and fallen bubbles and add points.
     private func clearRemovedBubbles() {
         let powerBursted = physicsEngine.bubblesBurstedByPower(currentProjectile)
         let colorBursted = physicsEngine.getBurstedBubbles(currentProjectile)
@@ -209,11 +223,12 @@ class GameEngine {
         points += Config.burstPoints * burstedTargetCount + Config.fellPoints * fellTargetCount
         gamePlayDelegate?.updatePoints(pointString)
     }
+
     // Add a new projectile waiting to be launched.
     // Color is a random color of the target bubbles.
     // If all target bubbles have no color, randomly choose from all colors.
     // Non-snapping will be set with a probability that respects snappingToNonSnappingRatio.
-    func addNewProjectile() {
+    private func addNewProjectile() {
         guard numOfProjectileLeft > 0 else {
             gamePlayDelegate?.updateNextBubbleLabel(String(noBubbleLeftLabel))
             return
@@ -225,8 +240,7 @@ class GameEngine {
                                       centerY: screenHeight - Config.waitingBubbleBottomHeight - bubbleRadius,
                                       radius: bubbleRadius, label: numOfProjectileLeft)
         let nonSnappingDraw = Int(arc4random_uniform(UInt32(Config.snappingToNonSnappingRatio + 1)))
-        let lotteryNumber = 0
-        if nonSnappingDraw == lotteryNumber {
+        if nonSnappingDraw == nonSnappingLotteryNumber {
             newProjectile.setNonSnapping()
         }
         renderer.addViewToScreen(newProjectile.view)
@@ -236,7 +250,7 @@ class GameEngine {
     }
 
     // Return false if there is no more bubble left to play.
-    func moveUpProjectile() -> Bool {
+    private func moveUpProjectile() -> Bool {
         guard let next = nextProjectile else {
             gamePlayDelegate?.updateCurrentBubbleLabel(String(noBubbleLeftLabel))
             return false
@@ -253,7 +267,7 @@ class GameEngine {
     }
 
     // Build up existing bubble graph.
-    func buildGraph(_ bubbles: [GameBubble]) {
+    private func buildGraph(_ bubbles: [GameBubble]) {
         for bubble in bubbles {
             renderer.addViewToScreen(bubble.view)
         }
@@ -261,13 +275,13 @@ class GameEngine {
     }
 
     // Remove `bubbles` with bursted animation.
-    func removeBurstedBubbles(_ bubbles: [GameBubble]) {
+    private func removeBurstedBubbles(_ bubbles: [GameBubble]) {
         bubbles.forEach { physicsEngine.removeBubbleFromGraph($0) }
         renderer.animateBurstedBubbles(bubbles)
     }
 
     // Remove `bubbles` with falling animation.
-    func removeFellBubbles(_ bubbles: [GameBubble]) {
+    private func removeFellBubbles(_ bubbles: [GameBubble]) {
         bubbles.forEach { physicsEngine.removeBubbleFromGraph($0) }
         renderer.animateFellBubbles(bubbles)
     }
