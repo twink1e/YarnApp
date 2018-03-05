@@ -72,10 +72,13 @@ class Renderer: NSObject {
 
         let isEvenRow = (Int(row) % 2 == 0)
         let x = isEvenRow ? originalX : originalX - bubbleRadius
-        var col = floor(x / bubbleDiameter)
+        var col = floor(max(x, 0) / bubbleDiameter)
         remain = x - col * bubbleDiameter
-        col += remain > bubbleRadius ? 1 : 0
+        col += remain > bubbleRadius + Config.calculationErrorMargin ? 1 : 0
         let finalX = CGFloat(col) * bubbleDiameter + (isEvenRow ? 0 : bubbleRadius)
+        // Make sure the snapped position is in screen.
+        assert(finalX >= 0 && finalX + bubbleDiameter <= screenWidth
+            && finalY >= 0 && finalY + bubbleDiameter <= screenHeight)
         return CGPoint(x: finalX, y: finalY)
     }
 

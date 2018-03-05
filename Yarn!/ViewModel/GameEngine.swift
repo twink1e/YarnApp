@@ -131,14 +131,17 @@ class GameEngine {
     }
 
     private func handleCollision(_ collided: (GameBubble, CGFloat)) {
+        if !collided.0.snapping {
+            currentProjectile.setNonSnapping()
+        }
         var collidedBubbleAndDistance: (GameBubble, CGFloat)? = collided
         while let collidedBubble = collidedBubbleAndDistance?.0,
             let distance = collidedBubbleAndDistance?.1, distance < -Config.calculationErrorMargin {
-            physicsEngine.backtrackToTouching(currentProjectile, with: collidedBubble)
-            if !collidedBubble.snapping {
-                currentProjectile.setNonSnapping()
-            }
-            collidedBubbleAndDistance = physicsEngine.closestCollidedBubbleAndDistance(currentProjectile)
+                physicsEngine.backtrackToTouching(currentProjectile, with: collidedBubble)
+                if !collidedBubble.snapping {
+                    currentProjectile.setNonSnapping()
+                }
+                collidedBubbleAndDistance = physicsEngine.closestCollidedBubbleAndDistance(currentProjectile)
         }
         stopProjectileAndRemoveBubbles()
     }
@@ -193,6 +196,7 @@ class GameEngine {
         let originalPos = CGPoint(x: currentProjectile.leftX, y: currentProjectile.topY)
         let gridPos = renderer.snappedPos(currentProjectile.leftX, currentProjectile.topY)
         renderer.snapBubble(currentProjectile, to: gridPos)
+        // Don't snap if it overlaps with a non-snapping bubble after snap.
         if let collidedBubble = physicsEngine.closestCollidedBubbleAndDistance(currentProjectile)?.0,
             !collidedBubble.snapping {
             currentProjectile.setNonSnapping()
