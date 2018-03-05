@@ -183,38 +183,47 @@ First 5 levels winnable.
 ### Problem 9: The Bells & Whistles
 
 1. Graphics
+
 Including AppIcon, landing screen, canon and bubble redeisgned. Consistent with the overall theme.
 Made by myself except backgrounds and cats silouette from [vecteezy](vecteezy.com).
 
 2. Music and sound effects
+
 Background music, sound effects for bubble buttons in level designer, when canon fires and at end game screens.
 Allow background music to be turned off in the menu screen.
 I added `AvAudioPlayer` in `AppDelegate` and in view controllers.
 Files from [soundbible](soundbible.com). 
 
 3. Screenshot feature in level designer
+
 This provides an easy way for players to share their level design with their friends.
 
 4. Level selector details
+
 Used collection view to display levels as cards with details like overview image, created and updated time.
 Also allow users to update and delete levels
 
 5. Points system
+
 Calculate the points in `GameEngine` after bubbles are removed and at the end of the game.
 
 6. Win and lose 
+
 Added game logic and corresponding scenes.
 Allow user to retry after end of game.
 
 7. Animation 
+
 Used `UIDynamicAnimator` for the falling and bouncing of fallen bubbles.
 Animation of canon firing and bubble bursting with spritesheet.
 Animation of bubble controls in level deisgner.
 
 8. Limited bubble
+
 Added bubble limit in level design
 Check number bubbles left after every projectile has landed. 
 
 ### Problem 10: Final Reflection
 I think MVVM is great especially now I use delegates. It makes the code easier to write and read with clean separation and great extendability.
+
 Right now I use `GameEngine` for the execution of the game logic and keeps track of the projectile, which drives the game. `PhysicsEngine` does the path computation and collision detection and `Renderer` handles animation and display. This seems clear for now. However, when I add more special bubbles, I will need to add more code to `GameEngine` to handle the special behaviors, which makes it hard to maintain. It may be better if I make each special bubble a subclass and handle its own behavior. Then it becomes more extensible. However, this kind of design also means that each bubble needs to know all the bubbles. In my current design there's no such issue.
