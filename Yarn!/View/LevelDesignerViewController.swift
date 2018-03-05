@@ -26,6 +26,7 @@ class LevelDesignerViewController: UIViewController {
     var screenHeight: CGFloat = 0
     let collectionViewVerticalOffset: CGFloat = 6.5
     let emptyCellAlpha: CGFloat = 0.3
+    let buttonHighlightedScale: CGFloat = 1.25
 
     var currentLevelId: Int?
     let saveSuccessMsg = "Level saved!"
@@ -275,7 +276,7 @@ class LevelDesignerViewController: UIViewController {
         for button in bubbleModifierButtons {
             button.transform = CGAffineTransform.identity
             if button.isHighlighted {
-                button.transform = CGAffineTransform(scaleX: 1.25, y: 1.25)
+                button.transform = CGAffineTransform(scaleX: buttonHighlightedScale, y: buttonHighlightedScale)
             }
         }
     }
@@ -372,13 +373,12 @@ extension LevelDesignerViewController: UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier,
                                                       for: indexPath) as! HexGridViewCell
         let cellViewModel = viewModel.getCollectionCellViewModel(at: indexPath)
+        cell.backgroundColor = UIColor.white.withAlphaComponent(emptyCellAlpha)
         if let background = cellViewModel.background {
             let bubbleImage = UIImageView()
             bubbleImage.image = background
             bubbleImage.frame = CGRect(x: 0, y: 0, width: levelDesignCellWidth, height: levelDesignCellWidth)
             cell.contentView.addSubview(bubbleImage)
-        } else {
-            cell.backgroundColor = UIColor.white.withAlphaComponent(emptyCellAlpha)
         }
         return cell
     }
