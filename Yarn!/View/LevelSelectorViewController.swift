@@ -51,6 +51,7 @@ extension LevelSelectorViewController: UICollectionViewDelegate {
         let designerController = UIStoryboard(name: storyBoardName, bundle: nil)
             .instantiateViewController(withIdentifier: designerIdentifier) as! LevelDesignerViewController
         designerController.currentLevelId = viewModel.levelIdAtIndex(indexPath.row)
+        designerController.modalPresentationStyle = .fullScreen
         present(designerController, animated: false, completion: nil)
     }
 }
